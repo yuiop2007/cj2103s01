@@ -35,7 +35,7 @@
     </div>
     
     <button type="submit" class="btn btn-secondary">방명록 등록</button>
-    <button type="reset" class="btn btn-secondary">방명록 등록</button>
+    <button type="reset" class="btn btn-secondary">등록 취소</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='gList.jsp';">돌아가기</button>
     <input type="hidden" name="hostip" value="${pageContext.request.remoteAddr}"/>
   </form>

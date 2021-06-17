@@ -15,13 +15,18 @@ public class GuestServiceImpl implements GuestService {
 	GuestDAO guestDAO;
 
 	@Override
-	public List<GuestVO> getGuestList() {
-		return guestDAO.getGuestList();
+	public List<GuestVO> getGuestList(int startIndexNo, int pageSize) {
+		return guestDAO.getGuestList(startIndexNo, pageSize);
 	}
 
 	@Override
 	public void setGuestInput(GuestVO vo) {
 		guestDAO.setGuestInput(vo);
+	}
+
+	@Override
+	public int totRecCnt() {
+		return guestDAO.totRecCnt();
 	}
 	
 }

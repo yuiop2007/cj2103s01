@@ -34,7 +34,12 @@
     </tr>
     <tr>
       <td>
-        <a href='${ctp}/guest/adminLogin' class='btn btn-outline-secondary btn-sm'>관리자</a>
+        <c:if test="${smid eq 'admin'}">
+          <a href='${ctp}/guest/adminLogout' class='btn btn-outline-secondary btn-sm'>관리자로그아웃</a>
+        </c:if>
+        <c:if test="${smid ne 'admin'}">
+          <a href='${ctp}/guest/adminLogin' class='btn btn-outline-secondary btn-sm'>관리자</a>
+        </c:if>
       </td>
       <td style="text-align:right;">
         <a href="${ctp}/guest/gInput" class="btn btn-outline-secondary btn-sm">글쓰기</a>
@@ -46,7 +51,9 @@
 	    <tr>
 	      <td>
 	        방문번호 : ${vo.idx} &nbsp;
-	        <a href='javascript:delCheck(${vo.idx})' class='btn btn-outline-secondary btn-sm'>삭제</a>	
+	        <c:if test="${smid eq 'admin'}">
+		        <a href='javascript:delCheck(${vo.idx})' class='btn btn-outline-secondary btn-sm'>삭제</a>	
+	        </c:if>
 	      </td>
 	      <td style="text-align:right;">방문IP : ${vo.hostip }</td>
 	    </tr>
@@ -74,6 +81,33 @@
 	  <br/>
   </c:forEach>
 </div>
+<br/>
+<!-- 블록페이징처리 시작 -->
+<div class="container" style="text-align:center;">
+  <ul class="pagination justify-content-center">
+	  <c:set var="startPageNum" value="${pageVo.pag - (pageVo.pag-1)%pageVo.blockSize}"/>  <!-- 해당블록의 시작페이지 구하기 -->
+	  <c:if test="${pag != 1}">
+	    <li class="page-item"><a href="${ctp}/guest/gList?pag=1&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+	    <li class="page-item"><a href="${ctp}/guest/gList?pag=${pageVo.pag-1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◀</a></li>
+	  </c:if>
+	  <c:forEach var="i" begin="0" end="${pageVo.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
+	    <c:if test="${(startPageNum+i) <= pageVo.totPage}">
+		  	<c:if test="${pageVo.pag == (startPageNum+i)}">
+		  	  <li class="page-item active"><a href="${ctp}/guest/gList?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+		  	</c:if>
+		  	<c:if test="${pageVo.pag != (startPageNum+i)}">
+		  	  <li class="page-item"><a href="${ctp}/guest/gList?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+		  	</c:if>
+	  	</c:if>
+	  </c:forEach>
+	  <c:if test="${pageVo.pag != pageVo.totPage}">
+	    <li class="page-item"><a href="${ctp}/guest/gList?pag=${pageVo.pag+1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▶</a></li>
+	    <li class="page-item"><a href="${ctp}/guest/gList?pag=${pageVo.totPage}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
+	  </c:if>
+  </ul>
+</div>
+<!-- 블록페이징처리 끝 -->
+<p><br/></p>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

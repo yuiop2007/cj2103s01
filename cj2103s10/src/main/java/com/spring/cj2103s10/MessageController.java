@@ -27,6 +27,10 @@ public class MessageController {
 			model.addAttribute("msg", "관리자 인증 실패~~~");
 			model.addAttribute("url", "/guest/adminLogin");
 		}
+		else if(msgFlag.equals("adminLogout")) {
+			model.addAttribute("msg", "관리자 로그아웃");
+			model.addAttribute("url", "/guest/gList");
+		}
 		
 		return "include/message";
 	}
