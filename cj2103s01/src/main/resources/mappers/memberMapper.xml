@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.MemberDAO">
+  
+  <insert id="setMemberInput">
+    insert into member values (#{vo.mId}, #{vo.mPwd}, #{vo.mName}, #{vo.mPost}, #{vo.mAddress}, #{vo.mPhone}, #{vo.mEmail}, #{vo.mGender}, default, #{vo.mBirth}, #{vo.mSolar}, default, default, default, #{vo.mCmid});
+  </insert>
+  
+
+</mapper>
