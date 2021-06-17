@@ -55,8 +55,107 @@
     }
     
     function JoinAction(){
+		var check = checkAll();
+		
+		if(check){
+		    joinform.submit();
+		}
+    }
+    
+    function checkExistData(value, dataName){
+    	if(value == ''){
+    		alert(dataName + '입력해주세요.');
+    		return false;
+    	}
+    	return true;
+    }
+    
+    function checkAll(){
+    	if(!checkId(joinform.mId.value)){
+    		return false;
+    	}
+    	else if(!checkPassword(joinform.mId.value, joinform.mPwd.value, joinform.mPwdCheck.value)){
+    		return false;
+    	}
+    	else if(!checkName(joinform.mName.value)){
+    		return false;
+    	}
+    	else if(!checkMail(joinform.mEmail.value)){
+    		return false;
+    	}
+		return true;
+    }
+    
+    function checkId(id){
+    	if(!checkExistData(id, '아이디를'))
+    		return false;
     	
-    	joinform.submit();
+    	var idRegExp = /^[A-Za-z]{1}[a-zA-Z0-9]{4,16}$/;
+    	if(!idRegExp.test(id)){
+    		alert('아이디는 영문 대소문자와 숫자 4~16자리로 입력해야 합니다.');
+    		joinform.mId.value = '';
+    		joinform.mId.focus();
+    		return false;
+    	}
+    	return true;
+    }
+    
+    function checkPassword(id, pwd1, pwd2){
+    	if(!checkExistData(pwd1, '비밀번호를'))
+    		return false;
+    	if(!checkExistData(pwd2, '비밀번호 확인을'))
+    		return false;
+    	
+    	var pwdRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+
+    	if(id == pwd1){
+    		alert('아이디와 비밀번호는 같을 수 없습니다.');
+    		joinform.mPwd.value = '';
+    		joinform.mPwdCheck.value = '';
+    		joinform.mPwd.focus();
+    		return false;
+    	}
+    	if(!pwdRegExp.test(pwd1)){
+    		alert('비밀번호는 영문 대소문자와 숫자 8~16자리로 입력해야 합니다.');
+    		joinform.mPwd.value = '';
+    		joinform.mPwd.focus();
+    		return false;
+    	}
+    	if(pwd1 != pwd2){
+    		alert('두 비밀번호가 맞지 않습니다.');
+    		joinform.mPwdCheck.value = '';
+    		joinform.mPwdCheck.focus();
+    		return false;
+    	}
+    	return true;
+    }
+    	
+    function checkMail(mail){
+    	if(!checkExistData(mail, '이메일을'))
+    		return false;
+    	
+    	var emailRegExp = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
+    	if(!emailRegExp.test(mail)){
+    		alert('이메일 형식이 올바르지 않습니다.');
+    		joinform.mEmail.value = '';
+    		joinform.mEmail.focus();
+    		return false;
+    	}
+    	return true
+    }
+    
+    function checkName(name){
+    	if(!checkExistData(name, '이름을'))
+    		return false;	
+    	
+    	var nameRegExp = /^[가-힣]{2,4}$/;
+    	if(!nameRegExp.test(name)){
+    		alert('이름이 올바르지 않습니다.');
+    		joinform.mName.value = '';
+    		joinform.mName.focus();
+    		return false;
+    	}
+    	return true;
     }
 </script>
 </head>
@@ -72,19 +171,19 @@
 			<table>
 				<tr>
 					<td class="ftd">아이디</td>
-					<td colspan="3"><input type="text" name="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
+					<td colspan="3"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
 				</tr>
 				<tr>
 					<td class="ftd">비밀번호</td>
-					<td colspan="3"><input type="password" name="mPwd" autocomplete="off" maxlength="16" required placeholder="(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)"></td>
+					<td colspan="3"><input type="password" name="mPwd" id="mPwd" autocomplete="off" maxlength="16" required placeholder="(영문 대소문자/숫자 중 2가지 이상 조합, 8자~16자)"></td>
 				</tr>
 				<tr>
 					<td class="ftd">비밀번호 확인</td>
-					<td colspan="3"><input type="password" name="mPwdCheck" autocomplete="off" maxlength="16" required></td>
+					<td colspan="3"><input type="password" name="mPwdCheck" id="mPwdCheck" autocomplete="off" maxlength="16" required></td>
 				</tr>
 				<tr>
 					<td class="ftd">이름</td>
-					<td colspan="3"><input type="text" name="mName" maxlength="30" required></td>
+					<td colspan="3"><input type="text" name="mName" id="mName" maxlength="30" required></td>
 				</tr>
 				<tr>
 					<td class="ftd">주소</td>
@@ -121,7 +220,7 @@
 				</tr>
 				<tr>
 					<td class="ftd">이메일</td>
-					<td colspan="10"><input type="email" name="mEmail"></td>
+					<td colspan="10"><input type="email" name="mEmail" id="mEmail"></td>
 				</tr>
 			</table>
 			<hr />
