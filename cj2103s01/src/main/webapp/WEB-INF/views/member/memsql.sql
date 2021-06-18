@@ -14,9 +14,11 @@ create table member(
 	mBuy int default 0,
 	mDrop varchar(10) default 'NO',
 	mCmid varchar(50) null,
+	mPoint int default 2000,
 	primary key(mId)
 );
 
+drop table member;
 
 desc member;
 

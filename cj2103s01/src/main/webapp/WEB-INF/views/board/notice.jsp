@@ -49,6 +49,8 @@
 			</tbody>
 		</table>
 	</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	<div class="jumbotron">
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	</div>
 </body>
 </html>
