@@ -14,8 +14,9 @@
     var idKey = 0;
     var nickKey = 0;
     
-    // 아이디 중복처리(aJax처리)
     $(document).ready(function(){
+    	
+	    // 아이디 중복처리(aJax처리)
     	$("#subm").attr("disabled", "disabled");
     	$("#idCheck").click(function(){
     		if($("#mid").val().trim() == "") {
@@ -54,7 +55,46 @@
     		  }
     	  }); // aJax종료
     	});		// idCheck jQuery종료
-    });
+    	
+	    // 닉네임 중복처리(aJax처리)
+    	$("#nickCheck").click(function(){
+    		if($("#nickName").val().trim() == "") {
+    		  alert("닉네임을 입력하세요!");
+    		  $("#nickName").focus();
+    		  return false;
+    		}
+    	  else if($("#nickName").val().length<2 || $("#nickName").val().length>20) {
+    		  alert("닉네임는 2~20자로 입력하세요!");
+    		  $("#nickName").focus();
+    		  return false;
+    	  }
+    	  var query = {
+    			  nickName : $("#nickName").val()
+    	  }
+    	  
+    	  $.ajax({
+    		  type : "post",
+    		  url  : "${ctp}/member/nickCheck",
+    		  data : query,
+    		  success: function(data) {
+    			  if(data == "1") {
+    				  alert("이미 사용중인 닉네임 입니다.");
+    				  $("#subm").attr("disabled", "disabled");
+    				  $("#nickName").focus();
+    			  }
+    			  else {
+    				  alert("사용 가능한 닉네임 입니다.");
+    				  nickKey = 1;
+    				  if(idKey == 1) {
+    				  	$("#subm").removeAttr("disabled");
+    				  }
+    				  $("#nickName").attr("readonly", true);
+    			  }
+    		  }
+    	  }); // aJax종료
+    	});		// idCheck jQuery 종료
+    	
+    });			// 최종 jQuery 종료
   
     function fCheck() {
     	var regExpId = /^[a-z|A-Z|0-9|_]*$/; //아이디 체크
@@ -68,7 +108,7 @@
       var email = myform.email.value;
       var name = myform.name.value;
       var nickName = myform.nickName.value;
-      var address = $("#sample6_postcode").val()+"/"+$("#sample6_roadAddress").val()+"/"+$("#sample6_extraAddress").val()+"/"+$("#sample6_detailAddress").val();
+      var address = $("#sample6_postcode").val()+"/"+$("#sample6_address").val()+"/"+$("#sample6_extraAddress").val()+"/"+$("#sample6_detailAddress").val();
       if(address=="///") address="";
       var birthday = myform.birthday.value;
       var job = myform.job.value;

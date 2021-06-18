@@ -116,4 +116,9 @@ public class MemberController {
 		
 		return res;
 	}
+	
+	@RequestMapping(value = "/mUpdateCheck", method = RequestMethod.GET)
+	public String mUpdateCheckGet() {
+		return "member/mUpdateCheck";
+	}
 }

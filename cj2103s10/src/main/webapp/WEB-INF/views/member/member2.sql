@@ -28,3 +28,5 @@ desc member2;
 
 insert into member2 values (default,'admin','1234','관리자','관리맨','남자','2000-01-01','010-3423-2704','cjsk1126@naver.com','blog.daum.net/cjsk1126','(12345)경기도 안성시 공도로 142','학생','등산',default,default,'관리자입니다.',default,0,default,default);
 select * from member2;
+
+delete from member2 where mid = 'admin';

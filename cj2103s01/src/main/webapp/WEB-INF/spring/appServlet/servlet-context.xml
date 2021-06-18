@@ -25,7 +25,13 @@
 	<context:component-scan base-package="com.spring.cj2103s01" />
 	
 	<!-- 인터셉터 설정 -->
-	
+	<beans:bean id="memberInterceptor" class="com.spring.cj2103s01.interceptor.MemberInterceptor"/>
+	<interceptors>
+	  <interceptor>
+	    <mapping path="/member/**"/>
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
+	</interceptors>
 	
 	<!-- 파일 업로드를 위한 설정(용량제한) -->
 	

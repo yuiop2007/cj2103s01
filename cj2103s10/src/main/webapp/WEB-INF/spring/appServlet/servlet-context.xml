@@ -25,9 +25,27 @@
 	<context:component-scan base-package="com.spring.cj2103s10" />
 	
 	<!-- 인터셉터 설정 -->
+	<beans:bean id="memberInterceptor" class="com.spring.cj2103s10.interceptor.MemberInterceptor"/>
+	<beans:bean id="studyInterceptor" class="com.spring.cj2103s10.interceptor.StudyInterceptor"/>
+	<interceptors>
+	  <interceptor>
+	    <mapping path="/member/**"/>
+	    <exclude-mapping path="/member/mLogin"/>
+	    <!-- <exclude-mapping path="/member/mUpdateCheck"/> -->
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/study/**"/>
+	    <beans:ref bean="studyInterceptor"/>
+	  </interceptor>
+	</interceptors>
 	
 	
 	<!-- 파일 업로드를 위한 설정(용량제한) -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	  <beans:property name="maxUploadSize" value="10485760"/>  <!-- 업로드 최대용량 : 10MByte -->
+	  <beans:property name="defaultEncoding" value="utf-8"/>
+	</beans:bean>
 	
 	
 	<!-- 비밀번호 암호화 -->

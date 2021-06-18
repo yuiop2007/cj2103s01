@@ -9,15 +9,24 @@
     <a href="${ctp}/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
     <a href="${ctp}/guest/gList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Guest</a>
     <a href="${ctp}/board/bList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Board</a>
-    <a href="${ctp}/pds/pList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Pds</a>
-    <div class="w3-dropdown-hover w3-hide-small">
-      <button class="w3-padding-large w3-button" title="More">Study <i class="fa fa-caret-down"></i></button>     
-      <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="#" class="w3-bar-item w3-button">Calendar</a>
-        <a href="${ctp}/study/woo" class="w3-bar-item w3-button">우편번호API</a>
-        <a href="#" class="w3-bar-item w3-button">미니쇼핑몰</a>
-      </div>
-    </div>
+    <c:if test="${slevel <= 4}">
+	    <a href="${ctp}/pds/pList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Pds</a>
+	    <div class="w3-dropdown-hover w3-hide-small">
+	      <button class="w3-padding-large w3-button" title="More">Study <i class="fa fa-caret-down"></i></button>     
+	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+	        <a href="#" class="w3-bar-item w3-button">Calendar</a>
+	        <a href="${ctp}/study/woo" class="w3-bar-item w3-button">우편번호API</a>
+	        <a href="#" class="w3-bar-item w3-button">미니쇼핑몰</a>
+	      </div>
+	    </div>
+	    <div class="w3-dropdown-hover w3-hide-small">
+	      <button class="w3-padding-large w3-button" title="More">${snickname} <i class="fa fa-caret-down"></i></button>     
+	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+	        <a href="${ctp}/member/mUpdateCheck" class="w3-bar-item w3-button">정보수정</a>
+	        <a href="javascript:mDeleteCheck();" class="w3-bar-item w3-button">회원탈퇴</a>
+	      </div>
+	    </div>
+	  </c:if>
     <c:if test="${empty slevel}">
       <a href="${ctp}/member/mLogin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
       <a href="${ctp}/member/mJoin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Join</a>

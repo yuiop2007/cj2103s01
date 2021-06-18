@@ -45,7 +45,7 @@ public class MessageController {
 			model.addAttribute("url", "member/mLogin");
 		}
 		else if(msgFlag.equals("mLoginOk")) {
-			model.addAttribute("msg", nickName+"("+strLevel+") 회원님 반갑습니다.");
+			model.addAttribute("msg", nickName+"("+strLevel+")님 반갑습니다.");
 			model.addAttribute("url", "main");
 		}
 		else if(msgFlag.equals("mLoginNo")) {
@@ -55,6 +55,10 @@ public class MessageController {
 		else if(msgFlag.equals("mLogoutOk")) {
 			session.invalidate();
 			model.addAttribute("msg", nickName + "님 로그아웃 되었습니다.");
+			model.addAttribute("url", "main");
+		}
+		else if(msgFlag.equals("useNo")) {
+			model.addAttribute("msg", "사용하실수 없습니다.");
 			model.addAttribute("url", "main");
 		}
 		
