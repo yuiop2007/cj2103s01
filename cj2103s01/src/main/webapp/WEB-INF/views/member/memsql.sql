@@ -10,12 +10,13 @@ create table member(
 	mRdate datetime default now(),
 	mBirth varchar(20) null,
 	mSolar varchar(10) default 'T',
-	mLevel int default 0,
+	mLevel int default 4,
 	mBuy int default 0,
 	mDrop varchar(10) default 'NO',
 	mCmid varchar(50) null,
 	mPoint int default 2000,
-	primary key(mId)
+	primary key(mId),
+	unique(mid)
 );
 
 drop table member;
@@ -27,3 +28,5 @@ select *from member;
 show tables;
 
 show databases;
+
+select * from member where mId = ;

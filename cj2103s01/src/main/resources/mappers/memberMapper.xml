@@ -6,5 +6,7 @@
     insert into member values (#{vo.mId}, #{vo.mPwd}, #{vo.mName}, #{vo.mPost}, #{vo.mAddress}, #{vo.mPhone}, #{vo.mEmail}, #{vo.mGender}, default, #{vo.mBirth}, #{vo.mSolar}, default, default, default, #{vo.mCmid}, default);
   </insert>
   
-
+  <select id="getIdCheck" resultType="com.spring.cj2103s01.vo.MemberVO">
+    select * from member where mId = #{mId};
+  </select>
 </mapper>

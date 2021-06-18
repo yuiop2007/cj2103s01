@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -64,7 +66,7 @@
     
     function checkExistData(value, dataName){
     	if(value == ''){
-    		alert(dataName + '입력해주세요.');
+    		alert(dataName + ' 입력해주세요.');
     		return false;
     	}
     	return true;
@@ -157,7 +159,52 @@
     	}
     	return true;
     }
+    
+    var idKey = 0;
+    
+    //아이디 중복처리 에이젝스
+    $(document).ready(function(){
+    	$("#joinbtn").attr("disabled", "disabled");
+    	$("#idCheck").click(function() {
+			if($("#mId").val().trim() == ""){
+				alert("아이디를 입력하시오!");
+				$("#mId").focus();
+				return false;
+			}
+			else if($("#mId").val().length<4 || $("#mId").val().length>16){
+				alert("아이디는 4~16자로 입력하세요!");
+				$("#mId").focus();
+				return false;
+			}
+			var query = {
+				mId : $("#mId").val()
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/idCheck",
+				data : query,
+				success : function(data){
+					if(data == "1"){
+						alert("이미 사용중인 아이디입니다");
+						$("#joinbtn").attr("disabled", "disabled");
+						$("#mId").focus();
+					}
+					else {
+						alert("사용 가능한 아이디입니다.");
+						idKey = 1;
+						$("#joinbtn").removeAttr("disabled");
+						$("#mPwd").focus();
+					}
+				}
+			});
+		});
+    });
+    
 </script>
+<style>
+
+</style>
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -171,7 +218,8 @@
 			<table>
 				<tr>
 					<td class="ftd">아이디</td>
-					<td colspan="3"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
+					<td colspan="2"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
+					<td class="btninput"><input type="button" id="idCheck" value="중복체크"><br></td>
 				</tr>
 				<tr>
 					<td class="ftd">비밀번호</td>
@@ -187,10 +235,10 @@
 				</tr>
 				<tr>
 					<td class="ftd">주소</td>
-					<td>
+					<td colspan="2">
 						<input type="text" id="sample6_postcode" name="mPost" placeholder="우편번호" readonly="readonly" maxlength="14">
 					</td>
-					<td>
+					<td class="btninput">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					</td>
 				</tr>
@@ -220,11 +268,12 @@
 				</tr>
 				<tr>
 					<td class="ftd">이메일</td>
-					<td colspan="10"><input type="email" name="mEmail" id="mEmail"></td>
+					<td colspan="3"><input type="email" name="mEmail" id="mEmail"></td>
 				</tr>
 			</table>
 			<hr />
 			<h6>추가정보</h6>
+			<hr/>
 			<table>
 				<tr>
 					<td class="ftd">성별</td>
@@ -236,11 +285,11 @@
 				<tr>
 					<td class="ftd">생년월일</td>
 					<td class="birthtd"><input type="text" name="birth_year" maxlength="4"></td>
-					<td>년</td>
+					<td class="btd">년</td>
 					<td class="birthtd"><input type="text" name="birth_month" maxlength="2"></td>
-					<td>월</td>
+					<td class="btd">월</td>
 					<td class="birthtd"><input type="text" name="birth_day" maxlength="2"></td>
-					<td>일&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="btd">일&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td class="radiotd">
 						<input type=radio name="is_solar_calendar" value="T" checked="checked">양력&nbsp;&nbsp;&nbsp; 
 						<input type=radio name="is_solar_calendar" value="F">음력
@@ -252,8 +301,8 @@
 				</tr>
 			</table>
 			<div class="jumbotron text-center">
-				<button type="button" class="btn btn-outline-dark">회원가입취소</button>
-				<button type="button" class="btn btn-dark" onclick="JoinAction()">회원가입</button>
+				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/'">회원가입취소</button>
+				<button type="button" class="btn btn-dark" id="joinbtn" onclick="JoinAction()">회원가입</button>
 			</div>
 		</form>
 	</div>

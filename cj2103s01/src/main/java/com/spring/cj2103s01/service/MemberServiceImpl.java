@@ -16,5 +16,11 @@ public class MemberServiceImpl implements MemberService {
 	public void setMemberInput(MemberVO vo) {
 		memberDAO.setMemberInput(vo);
 	}
+
+	@Override
+	public MemberVO getIdCheck(String mId) {
+		return memberDAO.getIdCheck(mId);
+	}
+	
 	
 }

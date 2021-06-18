@@ -8,6 +8,7 @@
 <title>MINIM</title>
 <link rel="stylesheet" type="text/css" href="resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	function LoginAction(){
 		

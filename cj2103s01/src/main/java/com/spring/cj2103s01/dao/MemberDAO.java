@@ -7,5 +7,7 @@ import com.spring.cj2103s01.vo.MemberVO;
 public interface MemberDAO {
 
 	public void setMemberInput(@Param("vo") MemberVO vo);
+
+	public MemberVO getIdCheck(@Param("mId") String mId);
 	
 }

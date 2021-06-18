@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.NoticeDAO">
+  
+  <select id="getNoticeList" resultType="com.spring.cj2103s01.vo.NoticeVO">
+  	select * from notice order by nId desc limit #{startIndexNo}, #{pageSize};
+  </select>
+  
+  <select id="totRecCnt" resultType="int">
+    select count(*) from notice;
+  </select>
+</mapper>

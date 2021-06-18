@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = {"/","main"}, method = RequestMethod.GET)
 	public String main() {
 		
 		return "main/main";
@@ -25,9 +25,5 @@ public class HomeController {
 	
 	
 	
-	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public String noticeGet() {
-		
-		return "board/notice";
-	}
+	
 }

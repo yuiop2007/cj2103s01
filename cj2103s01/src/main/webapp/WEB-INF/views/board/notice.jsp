@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,9 @@
 <title>MINIM</title>
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
 <link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<script>
 
+</script>
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -28,26 +31,42 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="vo" items="${vos}">
 				<tr>
-					<td class="td1">3</td>
-					<td class="td2">Doe</td>
-					<td class="td3">미님</td>
-					<td class="td4">날짜</td>
+					<td class="td1">${vo.nId}</td>
+					<td class="td2">${vo.nTitle}</td>
+					<td class="td3">${vo.nWriter}</td>
+					<td class="td4">${vo.nRdate}</td>
 				</tr>
-				<tr>
-					<td class="td1">2</td>
-					<td class="td2">Moe</td>
-					<td class="td3">미님</td>
-					<td class="td4">날짜</td>
-				</tr>
-				<tr>
-					<td class="td1">1</td>
-					<td class="td2">Dooley</td>
-					<td class="td3">미님</td>
-					<td class="td4">날짜</td>
-				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
+		<!-- 블록페이징처리 시작 -->
+		<div class="container" style="text-align:center;">
+		  <ul class="pagination justify-content-center">
+			  <c:set var="startPageNum" value="${pageVo.pag - (pageVo.pag-1)%pageVo.blockSize}"/>  <!-- 해당블록의 시작페이지 구하기 -->
+			  <c:if test="${pag != 1}">
+			    <li class="page-item"><a href="${ctp}/notice?pag=1&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.pag-1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◀</a></li>
+			  </c:if>
+			  <c:forEach var="i" begin="0" end="${pageVo.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
+			    <c:if test="${(startPageNum+i) <= pageVo.totPage}">
+				  	<c:if test="${pageVo.pag == (startPageNum+i)}">
+				  	  <li class="page-item active"><a href="${ctp}/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+				  	</c:if>
+				  	<c:if test="${pageVo.pag != (startPageNum+i)}">
+				  	  <li class="page-item"><a href="${ctp}/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+				  	</c:if>
+			  	</c:if>
+			  </c:forEach>
+			  <c:if test="${pageVo.pag != pageVo.totPage}">
+			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.pag+1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▶</a></li>
+			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.totPage}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
+			  </c:if>
+		  </ul>
+		</div>
+		<!-- 블록페이징처리 끝 -->
+		
 	</div>
 	<div class="jumbotron">
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />

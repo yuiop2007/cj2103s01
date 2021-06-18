@@ -14,10 +14,9 @@ public class MemberVO {
 	private String mSolar;
 	private int mLevel;
 	private int mBuy;
-	private int mDrop;
+	private String mDrop;
 	private String mCmid;
 	private int mPoint;
-	
 	public String getmId() {
 		return mId;
 	}
@@ -96,10 +95,10 @@ public class MemberVO {
 	public void setmBuy(int mBuy) {
 		this.mBuy = mBuy;
 	}
-	public int getmDrop() {
+	public String getmDrop() {
 		return mDrop;
 	}
-	public void setmDrop(int mDrop) {
+	public void setmDrop(String mDrop) {
 		this.mDrop = mDrop;
 	}
 	public String getmCmid() {
@@ -121,5 +120,8 @@ public class MemberVO {
 				+ ", mBirth=" + mBirth + ", mSolar=" + mSolar + ", mLevel=" + mLevel + ", mBuy=" + mBuy + ", mDrop="
 				+ mDrop + ", mCmid=" + mCmid + ", mPoint=" + mPoint + "]";
 	}
+	
+
+
 
 }
