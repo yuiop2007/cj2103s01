@@ -1,14 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+  int level = session.getAttribute("slevel")==null ? 99 : (int) session.getAttribute("slevel");
+%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>MINIM</title>
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
-<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	function mDeleteCheck() {
+		  var ans = confirm("정말 탈퇴 하시겠습니까?");
+		  if(ans) {
+			  ans = confirm("탈퇴하시게되면 1개원간 같은 아이디로 재가입 불가입니다.\n탈퇴 하시겠습니까?");
+			  if(ans) location.href = "${ctp}/mDelete?mId=${smid}";
+		  }
+	}
+</script>
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -105,7 +118,7 @@
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
-		   		<a href="${ctp}/mupdate">
+		   		<a href="${ctp}/member/mupdate">
 		    		<strong>modify</strong>
 		    		회원이신 고객님의 개인정보를 관리하는 공간입니다.
 		    		<br/>
@@ -156,12 +169,13 @@
 		    	</a>
 		    </div>	
 		    <div class="col shopMain">
-		    	<a href="#">
-<!-- 		    		<strong>my </strong>
-		    		고객님께서 작성하신 게시물을 관리하는 공간입니다.
-		    		<br/>
-		    		고객님께서 작성하신 글을 한눈에 관리하실 수 있습니다. -->
+		    	<% if(level<5){ %>
+		    	<a href="javascript:mDeleteCheck();">
+ 		    		<strong>Delete</strong>
+		    		회원 탈퇴
+		    		
 		    	</a>
+		    	<%} %>
 		    </div>
 	  	</div>
 	</div>

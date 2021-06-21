@@ -26,6 +26,7 @@
 	    <button type="reset" class="btn btn-secondary">취소</button>&nbsp;
 	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/';">돌아가기</button>&nbsp;
 	  </div>
+	  <input type="hidden" name="mid" value="${smid}"/>
   </form>
 </div>
 <p><br/></p>

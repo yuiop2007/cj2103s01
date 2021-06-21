@@ -12,4 +12,14 @@ public interface MemberService {
 
 	public int setMemberInput(MultipartFile file, MemberVO vo);
 
+	public void setMemberUpdate(MultipartFile mFile, MemberVO vo);
+
+	public void mDelete(String mid);
+
+	public MemberVO getPwdSearch(String mid, String toMail);
+
+	public void setPwdChange(String mid, String encode);
+
+	public MemberVO getIdSearch(String tel, String toMail);
+
 }

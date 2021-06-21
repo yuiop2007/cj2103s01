@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>MINIM</title>
-<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -162,45 +162,6 @@
     
     var idKey = 0;
     
-    //아이디 중복처리 에이젝스
-    $(document).ready(function(){
-    	$("#joinbtn").attr("disabled", "disabled");
-    	$("#idCheck").click(function() {
-			if($("#mId").val().trim() == ""){
-				alert("아이디를 입력하시오!");
-				$("#mId").focus();
-				return false;
-			}
-			else if($("#mId").val().length<4 || $("#mId").val().length>16){
-				alert("아이디는 4~16자로 입력하세요!");
-				$("#mId").focus();
-				return false;
-			}
-			var query = {
-				mId : $("#mId").val()
-			}
-			
-			$.ajax({
-				type : "post",
-				url : "${ctp}/idCheck",
-				data : query,
-				success : function(data){
-					if(data == "1"){
-						alert("이미 사용중인 아이디입니다");
-						$("#joinbtn").attr("disabled", "disabled");
-						$("#mId").focus();
-					}
-					else {
-						alert("사용 가능한 아이디입니다.");
-						idKey = 1;
-						$("#joinbtn").removeAttr("disabled");
-						$("#mPwd").focus();
-					}
-				}
-			});
-		});
-    });
-    
 </script>
 <style>
 
@@ -212,14 +173,13 @@
 		<jsp:include page="/WEB-INF/views/include/nav.jsp"/>
 	</div>
 	<div class="container">
-		<form name="joinform" method="post" action="${ctp}/mupdate">
+		<form name="joinform" method="post" action="${ctp}/member/mupdate">
 			<h6>기본정보</h6>
 			<hr />
 			<table>
 				<tr>
 					<td class="ftd">아이디</td>
-					<td colspan="2"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
-					<td class="btninput"><input type="button" id="idCheck" value="중복체크"><br></td>
+					<td colspan="2"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)" value="${vo.mId}" readonly></td>
 				</tr>
 				<tr>
 					<td class="ftd">비밀번호</td>
@@ -231,12 +191,12 @@
 				</tr>
 				<tr>
 					<td class="ftd">이름</td>
-					<td colspan="3"><input type="text" name="mName" id="mName" maxlength="30" required></td>
+					<td colspan="3"><input type="text" name="mName" id="mName" maxlength="30" required value="${vo.mName}"></td>
 				</tr>
 				<tr>
 					<td class="ftd">주소</td>
 					<td colspan="2">
-						<input type="text" id="sample6_postcode" name="mPost" placeholder="우편번호" readonly="readonly" maxlength="14">
+						<input type="text" id="sample6_postcode" name="mPost" placeholder="우편번호" readonly="readonly" maxlength="14" value="${vo.mPost}">
 					</td>
 					<td class="btninput">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -244,31 +204,31 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td colspan="3"><input type="text" name="add1" id="sample6_address" placeholder="주소" readonly="readonly"><br></td>
+					<td colspan="3"><input type="text" name="add1" id="sample6_address" placeholder="주소" readonly="readonly" value="${add1}"><br></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="adtd" colspan="2"><input type="text" id="sample6_extraAddress" name="add2" placeholder="기본주소" readonly="readonly"></td>
-					<td><input type="text" id="sample6_detailAddress" name="add3" placeholder="상세주소"></td>
+					<td class="adtd" colspan="2"><input type="text" id="sample6_extraAddress" name="add2" placeholder="기본주소" readonly="readonly" value="${add2}"></td>
+					<td><input type="text" id="sample6_detailAddress" name="add3" placeholder="상세주소" value="${add3}"></td>
 				</tr>
 				<tr>
 					<td class="ftd">휴대전화</td>
 					<td class="tel1">
 						<select name="tel1">
-					    	<option value="010">010</option>
-							<option value="011">011</option>
-							<option value="016">016</option>
-							<option value="017">017</option>
-							<option value="018">018</option>
-							<option value="019">019</option>
+					    	<option value="010" <c:if test="${phone1 eq '010'}">selected</c:if>>010</option>
+							<option value="011" <c:if test="${phone1 eq '011'}">selected</c:if>>011</option>
+							<option value="016" <c:if test="${phone1 eq '016'}">selected</c:if>>016</option>
+							<option value="017" <c:if test="${phone1 eq '017'}">selected</c:if>>017</option>
+							<option value="018" <c:if test="${phone1 eq '018'}">selected</c:if>>018</option>
+							<option value="019" <c:if test="${phone1 eq '019'}">selected</c:if>>019</option>
 					    </select>
 					</td>
-					<td class="tel2"><input type="text" name="tel2" maxlength="4" required></td>
-					<td class="tel3"><input type="text" name="tel3" maxlength="4" required></td>
+					<td class="tel2"><input type="text" name="tel2" maxlength="4" required value="${phone2}"></td>
+					<td class="tel3"><input type="text" name="tel3" maxlength="4" required value="${phone3}"></td>
 				</tr>
 				<tr>
 					<td class="ftd">이메일</td>
-					<td colspan="3"><input type="email" name="mEmail" id="mEmail"></td>
+					<td colspan="3"><input type="email" name="mEmail" id="mEmail" value="${vo.mEmail}"></td>
 				</tr>
 			</table>
 			<hr />
@@ -278,26 +238,26 @@
 				<tr>
 					<td class="ftd">성별</td>
 					<td class="radiotd" colspan="3">
-						<input type=radio name="mGender" value="M" checked="checked">남자&nbsp;&nbsp;&nbsp; 
-						<input type=radio name="mGender" value="F">여자
-					</td>
+						<input type=radio name="mGender" value="남자" <c:if test="${vo.mGender eq '남자'}">checked</c:if>>남자&nbsp;&nbsp;&nbsp; 
+						<input type=radio name="mGender" value="여자" <c:if test="${vo.mGender eq '여자'}">checked</c:if>>여자
+					</td> 
 				</tr>
 				<tr>
 					<td class="ftd">생년월일</td>
-					<td class="birthtd"><input type="text" name="birth_year" maxlength="4"></td>
+					<td class="birthtd"><input type="text" name="birth_year" maxlength="4" value="${birth1}"></td>
 					<td class="btd">년</td>
-					<td class="birthtd"><input type="text" name="birth_month" maxlength="2"></td>
+					<td class="birthtd"><input type="text" name="birth_month" maxlength="2" value="${birth2}"></td>
 					<td class="btd">월</td>
-					<td class="birthtd"><input type="text" name="birth_day" maxlength="2"></td>
+					<td class="birthtd"><input type="text" name="birth_day" maxlength="2" value="${birth3}"></td>
 					<td class="btd">일&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td class="radiotd">
-						<input type=radio name="is_solar_calendar" value="T" checked="checked">양력&nbsp;&nbsp;&nbsp; 
-						<input type=radio name="is_solar_calendar" value="F">음력
+						<input type=radio name="mSolar" value="양력" <c:if test="${vo.mSolar eq '양력'}">checked</c:if>>양력&nbsp;&nbsp;&nbsp; 
+						<input type=radio name="mSolar" value="음력" <c:if test="${vo.mSolar eq '음력'}">checked</c:if>>음력
 					</td>
 				</tr>
 			</table>
 			<div class="jumbotron text-center">
-				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/mypage'">수정취소</button>
+				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/member/mypage'">수정취소</button>
 				<button type="button" class="btn btn-dark" id="joinbtn" onclick="JoinAction()">정보수정</button>
 			</div>
 		</form>

@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>MINIM</title>
-<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -212,7 +212,7 @@
 		<jsp:include page="/WEB-INF/views/include/nav.jsp"/>
 	</div>
 	<div class="container">
-		<form name="joinform" method="post" action="${ctp}/join">
+		<form name="joinform" method="post" action="${ctp}/member/join">
 			<h6>기본정보</h6>
 			<hr />
 			<table>
@@ -268,7 +268,7 @@
 				</tr>
 				<tr>
 					<td class="ftd">이메일</td>
-					<td colspan="3"><input type="email" name="mEmail" id="mEmail"></td>
+					<td colspan="3"><input type="email" name="mEmail" id="mEmail" required></td>
 				</tr>
 			</table>
 			<hr />
@@ -278,8 +278,8 @@
 				<tr>
 					<td class="ftd">성별</td>
 					<td class="radiotd" colspan="3">
-						<input type=radio name="mGender" value="M" checked="checked">남자&nbsp;&nbsp;&nbsp; 
-						<input type=radio name="mGender" value="F">여자
+						<input type=radio name="mGender" value="남자" checked="checked">남자&nbsp;&nbsp;&nbsp; 
+						<input type=radio name="mGender" value="여자">여자
 					</td>
 				</tr>
 				<tr>
@@ -291,8 +291,8 @@
 					<td class="birthtd"><input type="text" name="birth_day" maxlength="2"></td>
 					<td class="btd">일&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td class="radiotd">
-						<input type=radio name="is_solar_calendar" value="T" checked="checked">양력&nbsp;&nbsp;&nbsp; 
-						<input type=radio name="is_solar_calendar" value="F">음력
+						<input type=radio name="mSolar" value="양력" checked="checked">양력&nbsp;&nbsp;&nbsp; 
+						<input type=radio name="mSolar" value="음력">음력
 					</td>
 				</tr>
 				<tr>

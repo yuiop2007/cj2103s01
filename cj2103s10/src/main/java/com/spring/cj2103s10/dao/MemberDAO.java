@@ -12,4 +12,14 @@ public interface MemberDAO {
 
 	public void setMemberInput(@Param("vo")  MemberVO vo);
 
+	public void setMemberUpdate(@Param("vo")  MemberVO vo);
+
+	public void mDelete(@Param("mid") String mid);
+
+	public MemberVO getPwdSearch(@Param("mid") String mid, @Param("toMail") String toMail);
+
+	public void setPwdChange(@Param("mid") String mid, @Param("encode") String encode);
+
+	public MemberVO getIdSearch(@Param("tel") String tel, @Param("toMail") String toMail);
+
 }

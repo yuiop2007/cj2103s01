@@ -6,7 +6,7 @@
 	//String atom = request.getParameter("atom");
 %>
 <head>
-<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 
 </head>
 <script>
@@ -52,30 +52,30 @@ $(document).ready(function () {
 		<ul class="navbar-nav">
 <%    if(level == 99) { %>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/login">Login </a>
+				<a class="nav-link" href="${ctp}/member/login">Login </a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/join">join </a>
+				<a class="nav-link" href="${ctp}/member/join">join </a>
 			</li>
 <%    } else { %>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/logout">Logout </a>
+				<a class="nav-link" href="${ctp}/member/logout">Logout </a>
 			</li>
 <% } %>		
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/mypage">Mypage </a>
+				<a class="nav-link" href="${ctp}/member/mypage">Mypage </a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/notice">Notice</a>
+				<a class="nav-link" href="${ctp}/board/notice">Notice</a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/qna">Q&A</a>
+				<a class="nav-link" href="${ctp}/board/qna">Q&A</a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/review">Review</a>
+				<a class="nav-link" href="${ctp}/board/review">Review</a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/event">Event</a>
+				<a class="nav-link" href="${ctp}/board/event">Event</a>
 			</li>      
 		</ul>
 	</nav>

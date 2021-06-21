@@ -1,10 +1,13 @@
 package com.spring.cj2103s10;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -120,5 +123,108 @@ public class MemberController {
 	@RequestMapping(value = "/mUpdateCheck", method = RequestMethod.GET)
 	public String mUpdateCheckGet() {
 		return "member/mUpdateCheck";
+	}
+	
+	@RequestMapping(value = "/mUpdateCheck", method = RequestMethod.POST)
+	public String mUpdateCheckPost(String mid, String pwd) {
+		MemberVO vo = memberService.getIdCheck(mid);
+		
+		if(vo != null && bCryptPasswordEncoder.matches(pwd, vo.getPwd()) && vo.getUserDel().equals("NO")) {
+			msgFlag = "pwdCheckOk";
+		}
+		else {
+			msgFlag = "pwdCheckNo";
+		}
+		
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	@RequestMapping(value = "/mUpdate", method = RequestMethod.GET)
+	public String mUpdateGet(HttpSession session, Model model) {
+		String mid = (String) session.getAttribute("smid");
+		MemberVO vo = memberService.getIdCheck(mid);
+		model.addAttribute("vo", vo);
+		
+		return "member/mUpdate";
+	}
+	
+	@RequestMapping(value = "/mUpdate", method = RequestMethod.POST)
+	public String mUpdatePost(MultipartFile mFile, MemberVO vo, HttpSession session, Model model) {
+		String nickName = (String) session.getAttribute("snickname");
+		
+		// 닉네임 중복체크
+		if(!nickName.equals(vo.getNickName())) {
+			if(memberService.getNicknameCheck(vo.getNickName()) != null) {
+				msgFlag = "nickCheckNo";
+				return "redirect:/msg/" + msgFlag;
+			}
+		}
+		
+		// 비밀번호 암호화 처리
+		vo.setPwd(bCryptPasswordEncoder.encode(vo.getPwd()));
+		
+		memberService.setMemberUpdate(mFile, vo);
+		
+		return "redirect:/msg/mUpdateOk";
+	}
+	
+	// 회원 탈퇴처리
+	@RequestMapping(value = "/mDelete", method = RequestMethod.GET)
+	public String mDeleteGet(String mid) {
+		memberService.mDelete(mid);
+		
+		return "redirect:/msg/mDeleteOk";
+	}
+	
+	// 회원 아이디 찾기
+	@RequestMapping(value = "/mIdSearch", method = RequestMethod.GET)
+	public String mIdSearchGet() {
+		return "member/mIdSearch";
+	}
+	
+	// 회원 아이디 찾기(메일보내기위한 준비)
+	@RequestMapping(value = "/mIdSearch", method = RequestMethod.POST)
+	public String mIdSearchPost(String tel, String toMail) {
+		MemberVO vo = memberService.getIdSearch(tel, toMail);
+		if(vo != null) {
+			String content = vo.getMid();
+			
+			//msgFlag = "pwdConfirmOk";
+			return "redirect:/mail/idConfirmMailForm/"+toMail+"/"+content+"/";
+		}
+		else {
+			msgFlag = "idConfirmNo";
+			return "redirect:/msg/" + msgFlag;
+		}
+		
+	}
+	
+	// 회원 비밀번호 찾기
+	@RequestMapping(value = "/mPwdSearch", method = RequestMethod.GET)
+	public String mPwdSearchGet() {
+		return "member/mPwdSearch";
+	}
+	
+	// 회원 비밀번호 찾기(메일보내기위한 준비)
+	@RequestMapping(value = "/mPwdSearch", method = RequestMethod.POST)
+	public String mPwdSearchPost(String mid, String toMail) {
+		MemberVO vo = memberService.getPwdSearch(mid, toMail);
+		String pwd = "";
+		if(vo != null) {
+			// 임시비밀번호를 발급한다.
+			UUID uid = UUID.randomUUID();
+			pwd = uid.toString().substring(0,8);
+			memberService.setPwdChange(mid, bCryptPasswordEncoder.encode(pwd));
+			
+			String content = pwd;
+			
+			//msgFlag = "pwdConfirmOk";
+			return "redirect:/mail/pwdConfirmMailForm/"+toMail+"/"+content+"/";
+		}
+		else {
+			msgFlag = "pwdConfirmNo";
+			return "redirect:/msg/" + msgFlag;
+		}
+		
 	}
 }

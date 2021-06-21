@@ -9,5 +9,15 @@ public interface MemberDAO {
 	public void setMemberInput(@Param("vo") MemberVO vo);
 
 	public MemberVO getIdCheck(@Param("mId") String mId);
-	
+
+	public void setMemberUpdate(@Param("vo") MemberVO vo);
+ 
+	public void mDelete(@Param("mId") String mId);
+
+	public MemberVO getPwdSearch(@Param("mId") String mId, @Param("mEmail") String mEmail);
+
+	public void setPwdChange(@Param("mId") String mId, @Param("encode") String encode);
+
+	public MemberVO getNameSearch(@Param("mName") String mName, @Param("mEmail") String mEmail);
+
 }

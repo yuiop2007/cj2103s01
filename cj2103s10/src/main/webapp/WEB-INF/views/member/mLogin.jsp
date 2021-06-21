@@ -30,7 +30,9 @@
 	    <button type="submit" class="btn btn-secondary">인증하기</button>&nbsp;
 	    <button type="reset" class="btn btn-secondary">취소</button>&nbsp;
 	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/';">돌아가기</button>&nbsp;
-	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mJoin';">회원가입</button>
+	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mJoin';">회원가입</button>&nbsp;
+	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mIdSearch';">아이디찾기</button>&nbsp;
+	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mPwdSearch';">비밀번호찾기</button>
 	  </div>
   </form>
 </div>

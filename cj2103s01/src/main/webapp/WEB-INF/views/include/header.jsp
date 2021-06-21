@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <head>
-	<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+	<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 
 </head>
 <header id="hname">

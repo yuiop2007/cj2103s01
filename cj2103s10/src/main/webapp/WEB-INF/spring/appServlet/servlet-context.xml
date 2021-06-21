@@ -31,6 +31,11 @@
 	  <interceptor>
 	    <mapping path="/member/**"/>
 	    <exclude-mapping path="/member/mLogin"/>
+	    <exclude-mapping path="/member/mJoin"/>
+	    <exclude-mapping path="/member/idCheck"/>
+	    <exclude-mapping path="/member/nickCheck"/>
+	    <exclude-mapping path="/member/mPwdSearch"/>
+	    <exclude-mapping path="/member/mIdSearch"/>
 	    <!-- <exclude-mapping path="/member/mUpdateCheck"/> -->
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>

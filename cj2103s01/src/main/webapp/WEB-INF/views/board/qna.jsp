@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>MINIM</title>
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
-<link rel="stylesheet" type="text/css" href="resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 
 </head>
 <body>

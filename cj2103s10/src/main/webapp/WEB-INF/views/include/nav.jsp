@@ -2,6 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <%@ include file="/WEB-INF/views/include/bs.jsp" %>
+<script>
+  function mDeleteCheck() {
+	  var ans = confirm("정말 탈퇴 하시겠습니까?");
+	  if(ans) {
+		  ans = confirm("탈퇴하시게되면 1개원간 같은 아이디로 재가입 불가입니다.\n탈퇴 하시겠습니까?");
+		  if(ans) location.href = "${ctp}/member/mDelete?mid=${smid}";
+	  }
+  }
+</script>
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card">
@@ -22,6 +31,7 @@
 	    <div class="w3-dropdown-hover w3-hide-small">
 	      <button class="w3-padding-large w3-button" title="More">${snickname} <i class="fa fa-caret-down"></i></button>     
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+	        <a href="${ctp}/mail/mailForm" class="w3-bar-item w3-button">메일보내기</a>
 	        <a href="${ctp}/member/mUpdateCheck" class="w3-bar-item w3-button">정보수정</a>
 	        <a href="javascript:mDeleteCheck();" class="w3-bar-item w3-button">회원탈퇴</a>
 	      </div>

@@ -8,4 +8,28 @@
   <select id="getNicknameCheck" resultType="com.spring.cj2103s10.vo.MemberVO">
     select * from member2 where nickName = #{nickName};
   </select>
+  
+  <insert id="setMemberInput">
+    insert into member2 values (default,#{vo.mid},#{vo.pwd},#{vo.name},#{vo.nickName},#{vo.gender},#{vo.birthday},#{vo.tel},#{vo.email},#{vo.homepage},#{vo.address},#{vo.job},#{vo.hobby},default,#{vo.photo},#{vo.content},default,default,#{vo.userInfor},default);
+  </insert>
+  
+  <update id="setMemberUpdate">
+  	update member2 set pwd=#{vo.pwd},name=#{vo.name},nickName=#{vo.nickName},gender=#{vo.gender},birthday=#{vo.birthday},tel=#{vo.tel},email=#{vo.email},homepage=#{vo.homepage},address=#{vo.address},job=#{vo.job},hobby=#{vo.hobby},photo=#{vo.photo},content=#{vo.content},userInfor=#{vo.userInfor} where idx=#{vo.idx};
+  </update>
+  
+  <update id="mDelete">
+  	update member2 set userDel = 'OK' where mid=#{mid};
+  </update>
+  
+  <select id="getPwdSearch" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 where mid = #{mid} and email = #{toMail};
+  </select>
+  
+  <update id="setPwdChange">
+  	update member2 set pwd = #{encode} where mid=#{mid};
+  </update>
+  
+  <select id="getIdSearch" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 where replace(tel,'-','')=#{tel} and email=#{toMail};
+  </select>
 </mapper>

@@ -21,6 +21,31 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getIdCheck(String mId) {
 		return memberDAO.getIdCheck(mId);
 	}
+
+	@Override
+	public void setMemberUpdate(MemberVO vo) {
+		memberDAO.setMemberUpdate(vo);
+	}
+
+	@Override
+	public void mDelete(String mId) {
+		memberDAO.mDelete(mId);
+	}
+
+	@Override
+	public MemberVO getPwdSearch(String mId, String mEmail) {
+		return memberDAO.getPwdSearch(mId, mEmail);
+	}
+
+	@Override
+	public void setPwdChange(String mId, String encode) {
+		memberDAO.setPwdChange(mId, encode);
+	}
+
+	@Override
+	public MemberVO getNameSearch(String mName, String mEmail) {
+		return memberDAO.getNameSearch(mName, mEmail);
+	}
 	
 	
 }

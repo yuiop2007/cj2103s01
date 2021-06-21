@@ -15,6 +15,7 @@ import com.spring.cj2103s01.service.NoticeService;
 import com.spring.cj2103s01.vo.NoticeVO;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 	
 	@Autowired
@@ -25,7 +26,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
 	public String noticeGet(@RequestParam(name="pag", defaultValue="1", required=false) int pag,
-			@RequestParam(name="pageSize", defaultValue="2", required=false) int pageSize,
+			@RequestParam(name="pageSize", defaultValue="10", required=false) int pageSize,
 			Model model) {
 		if(pag<1) {
 			pag=1;
