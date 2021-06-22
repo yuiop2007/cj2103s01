@@ -34,7 +34,7 @@
 			<c:forEach var="vo" items="${vos}">
 				<tr>
 					<td class="td1">${vo.nId}</td>
-					<td class="td2">${vo.nTitle}</td>
+					<td class="td2"><a href="#">${vo.nTitle}</a></td>
 					<td class="td3">${vo.nWriter}</td>
 					<td class="td4">${vo.nRdate}</td>
 				</tr>
@@ -46,22 +46,22 @@
 		  <ul class="pagination justify-content-center">
 			  <c:set var="startPageNum" value="${pageVo.pag - (pageVo.pag-1)%pageVo.blockSize}"/>  <!-- 해당블록의 시작페이지 구하기 -->
 			  <c:if test="${pag != 1}">
-			    <li class="page-item"><a href="${ctp}/notice?pag=1&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
-			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.pag-1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◀</a></li>
+			    <li class="page-item"><a href="${ctp}/board/notice?pag=1&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+			    <li class="page-item"><a href="${ctp}/board/notice?pag=${pageVo.pag-1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◀</a></li>
 			  </c:if>
 			  <c:forEach var="i" begin="0" end="${pageVo.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
 			    <c:if test="${(startPageNum+i) <= pageVo.totPage}">
 				  	<c:if test="${pageVo.pag == (startPageNum+i)}">
-				  	  <li class="page-item active"><a href="${ctp}/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+				  	  <li class="page-item active"><a href="${ctp}/board/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
 				  	</c:if>
 				  	<c:if test="${pageVo.pag != (startPageNum+i)}">
-				  	  <li class="page-item"><a href="${ctp}/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+				  	  <li class="page-item"><a href="${ctp}/board/notice?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
 				  	</c:if>
 			  	</c:if>
 			  </c:forEach>
 			  <c:if test="${pageVo.pag != pageVo.totPage}">
-			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.pag+1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▶</a></li>
-			    <li class="page-item"><a href="${ctp}/notice?pag=${pageVo.totPage}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
+			    <li class="page-item"><a href="${ctp}/board/notice?pag=${pageVo.pag+1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▶</a></li>
+			    <li class="page-item"><a href="${ctp}/board/notice?pag=${pageVo.totPage}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
 			  </c:if>
 		  </ul>
 		</div>

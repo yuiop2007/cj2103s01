@@ -102,6 +102,10 @@ public class MessageController {
 			model.addAttribute("msg", "검색된 아이디가 메일로 전송되었습니다.\\n메일을 확인하세요.");
 			model.addAttribute("url", "member/mLogin");
 		}
+		else if(msgFlag.equals("bInputOk")) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("url", "board/bList");
+		}
 		
 		
 		

@@ -27,6 +27,7 @@
 	<!-- 인터셉터 설정 -->
 	<beans:bean id="memberInterceptor" class="com.spring.cj2103s10.interceptor.MemberInterceptor"/>
 	<beans:bean id="studyInterceptor" class="com.spring.cj2103s10.interceptor.StudyInterceptor"/>
+	<beans:bean id="boardInterceptor" class="com.spring.cj2103s10.interceptor.BoardInterceptor"/>
 	<interceptors>
 	  <interceptor>
 	    <mapping path="/member/**"/>
@@ -42,6 +43,11 @@
 	  <interceptor>
 	    <mapping path="/study/**"/>
 	    <beans:ref bean="studyInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/board/**"/>
+	    <exclude-mapping path="/board/bList"/>
+	    <beans:ref bean="boardInterceptor"/>
 	  </interceptor>
 	</interceptors>
 	

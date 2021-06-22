@@ -9,12 +9,7 @@
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	function LoginAction(){
-		
-		loginform.submit();
-	}
-</script>
+
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -37,7 +32,7 @@
 			</table>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/'">로그인취소</button>
-				<button type="button" class="btn btn-dark" onclick="LoginAction()">로그인</button>
+				<button type="submit" class="btn btn-dark">로그인</button>
 				<br/><br/>
 				<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${ctp}/member/mIdSearch';">아이디찾기</button>&nbsp;
 	    		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${ctp}/member/mPwdSearch';">비밀번호찾기</button>

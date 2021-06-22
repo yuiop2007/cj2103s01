@@ -133,6 +133,10 @@ html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form
   color: black;
   font-size: 11pt;
 }
+.nav-item3 > .nav-link{
+  color: black;
+  font-size: 17px;
+}
 
 .nav-link:hover{
   color: gray;
@@ -143,7 +147,9 @@ html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form
 .nav1{
 	opacity: 0.8;
 }
-
+.nav3{
+	border: 1px gray;
+}
 
 
 
@@ -176,7 +182,7 @@ body, code {
 .btd {
 	width: 10px;
 }
-input[type=text], input[type=password], input[type=email], select{
+input[type=text], input[type=password],input[type=number], input[type=email], select{
 	width: 100%;
 	padding: 10px 20px;
 	margin: 1px 0 8px 0;
@@ -186,7 +192,18 @@ input[type=text], input[type=password], input[type=email], select{
 	transition: 0.5s;
 	outline: none;
 }
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, select:focus{
+textarea {
+	width: 100%;
+	height: 400px;
+	padding: 10px 20px;
+	margin: 1px 0 8px 0;
+	box-sizing: border-box;
+	border: 3px solid #ccc;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=email]:focus, select:focus{
 	border: 3px solid #555;
 }
 table, tbody {
@@ -238,7 +255,7 @@ td {
     vertical-align: middle;
 }
 
-.td1{
+.td1, .ptd1{
 	width: 5%;
 }
 
@@ -246,10 +263,32 @@ td {
 	width: 70%;
 	text-align: left;
 }
+.td2 a{
+	font-size: 11px;
+}
 .td3{
 	width: 10%;
 }
 .td4{
+	width: 15%;
+}
+
+.ptd2{
+	width: 55%;
+}
+.ptd2 a{
+	font-size: 11px;
+}
+.ptd3{
+	width: 10%;
+}
+.ptd4{
+	width: 10%;
+}
+.ptd5{
+	width: 5%;
+}
+.ptd6{
 	width: 15%;
 }
 

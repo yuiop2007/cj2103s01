@@ -11,7 +11,14 @@
 </head>
 <script>
 $(document).ready(function () {
-    var menu = $('.nav1');
+	var menu;
+	var level = "<c:out value='${level}'/>";
+	if(level != 0){
+    	menu = $('.nav1');
+	}
+	else{
+		menu = $('.nav3');
+	}
     var origOffsetY = menu.offset().top;
     function scroll() {
         if ($(window).scrollTop() >= origOffsetY) {
@@ -48,6 +55,33 @@ $(document).ready(function () {
 			</li>
 		</ul>
 	</nav>
+	<% if(level == 0) { %>
+	<nav class="nav3 navbar navbar-expand-sm bg-light justify-content-center">
+		<ul class="navbar-nav">
+			<li class="nav-item3">
+				<a class="nav-link" href="${ctp}/product/pList">상품목록</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="${ctp}/product/pInput">상품등록</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="#">MADE</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="#">OUTER</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="#">TOP</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="#">BOTTOM</a>
+			</li>
+			<li class="nav-item3">
+				<a class="nav-link" href="#">ACC</a>
+			</li>
+		</ul>
+	</nav>
+	<% } %>
 	<nav class="nav2 navbar navbar-expand-sm bg-light justify-content-center">
 		<ul class="navbar-nav">
 <%    if(level == 99) { %>
@@ -77,5 +111,10 @@ $(document).ready(function () {
 			<li class="nav-item2">
 				<a class="nav-link" href="${ctp}/board/event">Event</a>
 			</li>      
+			<% if(level == 0) { %>
+			<li class="nav-item2">
+				<a class="nav-link" href="${ctp}/admin/admin">Manager</a>
+			</li>      
+			<% } %>
 		</ul>
 	</nav>

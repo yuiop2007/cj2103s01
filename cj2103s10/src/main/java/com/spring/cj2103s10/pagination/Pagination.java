@@ -3,6 +3,7 @@ package com.spring.cj2103s10.pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.cj2103s10.dao.BoardDAO;
 import com.spring.cj2103s10.dao.GuestDAO;
 
 @Service
@@ -10,8 +11,8 @@ public class Pagination {
   @Autowired
   GuestDAO guestDAO;
   
-//  @Autowired
-//  BoardDAO boardDAO;
+  @Autowired
+  BoardDAO boardDAO;
 
 	public PaginationVO pagination(int pag, int pageSize, String partName, String partValue) {
 		int blockSize = 3;
@@ -22,9 +23,9 @@ public class Pagination {
 		if(partName.equals("guest")) {
 		  totRecCnt = guestDAO.totRecCnt();
 		}
-//		else if(partName.equals("board")) {
-//			totRecCnt = boardDAO.totRecCnt();
-//		}
+		else if(partName.equals("board")) {
+			totRecCnt = boardDAO.totRecCnt();
+		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (int)(totRecCnt / pageSize) +1;
 		int startIndexNo = (pag - 1) * pageSize;

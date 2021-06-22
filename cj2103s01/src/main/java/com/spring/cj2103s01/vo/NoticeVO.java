@@ -1,14 +1,14 @@
 package com.spring.cj2103s01.vo;
 
 public class NoticeVO {
-	int nId;
-	String nWriter;
-	String nPwd;
-	String nTitle;
-	String nContent;
-	String nFile;
-	String nRdate;
-	int nHit;
+	private int nId;
+	private String nWriter;
+	private String nPwd;
+	private String nTitle;
+	private String nContent;
+	private String nFile;
+	private String nRdate;
+	private int nHit;
 
 	public int getnId() {
 		return nId;

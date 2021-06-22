@@ -69,6 +69,15 @@ public class MessageController {
 			model.addAttribute("msg", "아이디가 메일로 전송되었습니다.\\n메일을 확인하세요.");
 			model.addAttribute("url", "member/join");
 		}
+		else if(msgFlag.equals("pInputOk")) {
+			model.addAttribute("msg", "상품이 등록되었습니다.");
+			model.addAttribute("url", "product/pList");
+		}
+		else if(msgFlag.equals("pInputNo")) {
+			model.addAttribute("msg", "상품등록에 실패하였습니다.");
+			model.addAttribute("url", "product/pList");
+		}
+	
 			
 		return "include/message";
 	}
