@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
+import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.vo.ProductVO;
 
@@ -28,6 +29,9 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ImageService imageService;
+	
 	@RequestMapping(value = "/pInput", method = RequestMethod.GET)
 	public String pInputGet() {
 		return "product/pInput";
@@ -36,16 +40,17 @@ public class ProductController {
 	@RequestMapping(value = "/pInput", method = RequestMethod.POST)
 	public String pInputPost(MultipartFile file, ProductVO vo, HttpServletRequest request) {
 	  	
+		String root = "pInput";
 	  	String uploadPath = request.getRealPath("/resources/ckeditor/images/");  // ckeditor를 통해서 저장된 모든 파일이 있는곳
 	 
 	  	// 이미지파일 시작위치(42) : src="/cj2103s01/resources/ckeditor/images/210622142615_1.png"
 	  	
-	  	productService.imgCheck(vo.getpContent(), uploadPath, 42);  // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
+	  	imageService.imgCheck(vo.getpContent(), uploadPath, 42);  // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
 	  	
 	  	vo.setpContent(vo.getpContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/")); // DB에 저장되는 실제 파일 정보의 위치
 	  	
-	  	int res = productService.setProductInput(file, vo);
-	  	System.out.println(res);
+	  	int res = productService.setProductInput(file, vo, root);
+	  	
 		if(res == 1) msgFlag = "pInputOk";
 		else msgFlag = "pInputNo";
 		

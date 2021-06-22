@@ -12,4 +12,6 @@ public interface NoticeDAO {
 
 	public int totRecCnt();
 
+	public void setNoticeInput(@Param("vo") NoticeVO vo);
+
 }

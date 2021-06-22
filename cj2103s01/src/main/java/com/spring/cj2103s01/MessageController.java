@@ -77,6 +77,14 @@ public class MessageController {
 			model.addAttribute("msg", "상품등록에 실패하였습니다.");
 			model.addAttribute("url", "product/pList");
 		}
+		else if(msgFlag.equals("nInputOk")) {
+			model.addAttribute("msg", "공지사항이 등록되었습니다.");
+			model.addAttribute("url", "board/notice");
+		}
+		else if(msgFlag.equals("nInputNo")) {
+			model.addAttribute("msg", "공지사항 등록에 실패하였습니다.");
+			model.addAttribute("url", "board/notice");
+		}
 	
 			
 		return "include/message";

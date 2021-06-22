@@ -2,9 +2,9 @@ package com.spring.cj2103s01.vo;
 
 public class NoticeVO {
 	private int nId;
+	private String nTitle;
 	private String nWriter;
 	private String nPwd;
-	private String nTitle;
 	private String nContent;
 	private String nFile;
 	private String nRdate;

@@ -46,6 +46,7 @@ public class MemberController {
 			else  strLevel = "준회원";
 			
 			session.setAttribute("smid", mId);
+			session.setAttribute("sname", vo.getmName());
 			session.setAttribute("slevel", vo.getmLevel());
 			session.setAttribute("sStrLevel", strLevel);
 			

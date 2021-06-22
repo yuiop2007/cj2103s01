@@ -12,8 +12,6 @@ public interface ProductService {
 
 	public int totRecCnt();
 
-	public int setProductInput(MultipartFile file, ProductVO vo);
-
-	public void imgCheck(String getpContent, String uploadPath, int i);
+	public int setProductInput(MultipartFile file, ProductVO vo, String root);
 
 }

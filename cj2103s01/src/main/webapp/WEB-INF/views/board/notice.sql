@@ -1,8 +1,8 @@
 create table notice(
 	nId int not null auto_increment,
-	nWriter varchar(100) null,
-	nPwd varchar(100) null,
 	nTitle varchar(100) null,
+	nWriter varchar(100) null default '미님',
+	nPwd varchar(100) null,
 	nContent mediumtext null,
 	nFile varchar(4000) null,
 	nRdate datetime default now(),
@@ -10,9 +10,11 @@ create table notice(
 	primary key(nId)	
 );
 
-insert into notice values (default, '관리자', 1234, '제목입니다.', '내용입니다.', default, default, default);
+insert into notice values (default, '제목입니다.', default, 1234, '내용입니다.', default, default, default);
 
 show tables;
+
+drop table notice;
 
 select *from notice;
 

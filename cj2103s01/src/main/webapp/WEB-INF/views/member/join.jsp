@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>MINIM</title>
-<link rel="stylesheet" type="text/css" href="${ctp}resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -82,6 +82,9 @@
     	else if(!checkName(joinform.mName.value)){
     		return false;
     	}
+    	else if(!checkPhone(joinform.tel2.value, joinform.tel3.value)){
+    		return false;
+    	}
     	else if(!checkMail(joinform.mEmail.value)){
     		return false;
     	}
@@ -89,8 +92,10 @@
     }
     
     function checkId(id){
-    	if(!checkExistData(id, '아이디를'))
+    	if(!checkExistData(id, '아이디를')){
+    		joinform.mId.focus();
     		return false;
+    	}
     	
     	var idRegExp = /^[A-Za-z]{1}[a-zA-Z0-9]{4,16}$/;
     	if(!idRegExp.test(id)){
@@ -103,10 +108,14 @@
     }
     
     function checkPassword(id, pwd1, pwd2){
-    	if(!checkExistData(pwd1, '비밀번호를'))
+    	if(!checkExistData(pwd1, '비밀번호를')){
+    		joinform.mPwd.focus();
     		return false;
-    	if(!checkExistData(pwd2, '비밀번호 확인을'))
+    	}
+    	if(!checkExistData(pwd2, '비밀번호 확인을')){
+    		joinform.mPwdCheck.focus();
     		return false;
+    	}
     	
     	var pwdRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
 
@@ -131,10 +140,40 @@
     	}
     	return true;
     }
+    
+    function checkPhone(tel2, tel3){
+    	if(!checkExistData(tel2, '휴대폰 번호를')){
+    		joinform.tel2.focus();
+    		return false;
+    	}
+    	if(!checkExistData(tel3, '휴대폰 번호를')){
+    		joinform.tel3.focus();
+    		return false;
+    	}
+    	
+    	var tel2RegExp = /^[0-9]{3,4}$/;
+    	var tel3RegExp = /^[0-9]{4}$/;
+    	
+    	if(!tel2RegExp.test(tel2)){
+    		alert('휴대폰 형식이 올바르지 않습니다.')
+    		joinform.tel2.value = '';
+    		joinform.tel2.focus();
+    		return false;
+    	}
+    	if(!tel3RegExp.test(tel3)){
+    		alert('휴대폰 형식이 올바르지 않습니다.')
+    		joinform.tel3.value = '';
+    		joinform.tel3.focus();
+    		return false;
+    	}
+    	return true;
+    }
     	
     function checkMail(mail){
-    	if(!checkExistData(mail, '이메일을'))
+    	if(!checkExistData(mail, '이메일을')){
+    		joinform.mEmail.focus();    		
     		return false;
+    	}
     	
     	var emailRegExp = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
     	if(!emailRegExp.test(mail)){
@@ -147,8 +186,10 @@
     }
     
     function checkName(name){
-    	if(!checkExistData(name, '이름을'))
+    	if(!checkExistData(name, '이름을')){
+    		joinform.mName.focus();
     		return false;	
+    	}
     	
     	var nameRegExp = /^[가-힣]{2,4}$/;
     	if(!nameRegExp.test(name)){
@@ -182,7 +223,7 @@
 			
 			$.ajax({
 				type : "post",
-				url : "${ctp}/idCheck",
+				url : "${ctp}/member/idCheck",
 				data : query,
 				success : function(data){
 					if(data == "1"){

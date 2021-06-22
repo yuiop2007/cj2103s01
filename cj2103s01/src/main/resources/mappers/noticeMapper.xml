@@ -9,4 +9,8 @@
   <select id="totRecCnt" resultType="int">
     select count(*) from notice;
   </select>
+  
+    <insert id="setNoticeInput">
+    insert into notice values (default, #{vo.nTitle}, #{vo.nWriter}, #{vo.nPwd}, #{vo.nContent}, #{vo.nFile}, default, default);
+  </insert>
 </mapper>

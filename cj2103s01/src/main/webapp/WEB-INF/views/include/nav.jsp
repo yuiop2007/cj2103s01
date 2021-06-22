@@ -3,7 +3,6 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <%
   int level = session.getAttribute("slevel")==null ? 99 : (int) session.getAttribute("slevel");
-	//String atom = request.getParameter("atom");
 %>
 <head>
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
@@ -11,14 +10,8 @@
 </head>
 <script>
 $(document).ready(function () {
-	var menu;
 	var level = "<c:out value='${level}'/>";
-	if(level != 0){
-    	menu = $('.nav1');
-	}
-	else{
-		menu = $('.nav3');
-	}
+	var menu = $('.nav1');
     var origOffsetY = menu.offset().top;
     function scroll() {
         if ($(window).scrollTop() >= origOffsetY) {

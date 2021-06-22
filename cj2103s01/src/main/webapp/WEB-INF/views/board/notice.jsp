@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+  int level = session.getAttribute("slevel")==null ? 99 : (int) session.getAttribute("slevel");
+%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -27,7 +30,11 @@
 					<th scope="col">NO</th>
 					<th scope="col"></th>
 					<th scope="col"></th>
-					<th scope="col"></th>
+					<th scope="col">
+						<% if(level==0){ %>
+						<a href="${ctp}/board/nInput">작성하기</a>
+						<% } %>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
