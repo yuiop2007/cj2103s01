@@ -14,4 +14,18 @@ public interface BoardDAO {
 
 	public void bInputOk(@Param("vo") BoardVO vo);
 
+	public int totSearchRecCnt(@Param("search") String search, @Param("searchString") String searchString);
+
+	public List<BoardVO> getBoardSearchList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("search") String search, @Param("searchString") String searchString);
+
+	public BoardVO getBoardContent(@Param("idx") int idx);
+
+	public void addReadNum(@Param("idx") int idx);
+
+	public void addGood(@Param("idx") int idx);
+
+	public BoardVO passwordCheck(@Param("idx") int idx, @Param("pwd") String pwd);
+
+	public void boardUpdateOk(@Param("vo") BoardVO vo);
+
 }

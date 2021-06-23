@@ -61,7 +61,7 @@ public class GuestController {
 			@RequestParam(name="pageSize", defaultValue="2", required=false) int pageSize,
 			Model model) {
 		
-		PaginationVO pageVo = pagination.pagination(pag, pageSize, "guest", "");
+		PaginationVO pageVo = pagination.pagination(pag, pageSize, "guest", "", "");
 		
 		List<GuestVO> vos = guestService.getGuestList(pageVo.getStartIndexNo(), pageSize);
 		

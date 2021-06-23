@@ -78,12 +78,20 @@ public class MessageController {
 			model.addAttribute("url", "product/pList");
 		}
 		else if(msgFlag.equals("nInputOk")) {
-			model.addAttribute("msg", "공지사항이 등록되었습니다.");
+			model.addAttribute("msg", "게시물이 등록되었습니다.");
 			model.addAttribute("url", "board/notice");
 		}
 		else if(msgFlag.equals("nInputNo")) {
-			model.addAttribute("msg", "공지사항 등록에 실패하였습니다.");
+			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
 			model.addAttribute("url", "board/notice");
+		}
+		else if(msgFlag.equals("eInputOk")) {
+			model.addAttribute("msg", "게시물이 등록되었습니다.");
+			model.addAttribute("url", "board/event");
+		}
+		else if(msgFlag.equals("eInputNo")) {
+			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
+			model.addAttribute("url", "board/event");
 		}
 	
 			

@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
-<% 
-	String name = session.getAttribute("sname")==null ? "" : (String) session.getAttribute("sname");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +21,8 @@
 		<form name="nInputform" method="post" action="${ctp}/board/nInput" enctype="multipart/form-data">
 			<h6>공지 등록</h6>
 			<hr />
-				<input type="hidden" id="nWriter" name="nWriter" value="<%=name%>">
+				<input type="hidden" name="nWriter" value="${smid}">
+				<input type="hidden" name="nName" value="${sname}">
 				<label>제목</label>
 					<input type="text" id="nTitle" name="nTitle" maxlength="50" required>
 				<label>첨부 파일</label><br/>

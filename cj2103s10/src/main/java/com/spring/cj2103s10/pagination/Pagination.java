@@ -14,7 +14,7 @@ public class Pagination {
   @Autowired
   BoardDAO boardDAO;
 
-	public PaginationVO pagination(int pag, int pageSize, String partName, String partValue) {
+	public PaginationVO pagination(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 3;
 		int totRecCnt = 0;
 		
@@ -24,7 +24,14 @@ public class Pagination {
 		  totRecCnt = guestDAO.totRecCnt();
 		}
 		else if(partName.equals("board")) {
-			totRecCnt = boardDAO.totRecCnt();
+			if(searchString.equals("")) {
+			  totRecCnt = boardDAO.totRecCnt();
+			}
+			else {
+				String search = partValue;
+				totRecCnt = boardDAO.totSearchRecCnt(search, searchString);
+				System.out.println("board 조건 : " + totRecCnt);
+			}
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (int)(totRecCnt / pageSize) +1;

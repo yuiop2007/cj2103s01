@@ -10,7 +10,25 @@
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <script>
-
+	function sChange() {
+		searchForm.searchString.focus();
+	}
+	
+	function sCheck() {
+		var searchString = searchForm.searchString.value;
+		if (searchString == "") {
+			alert("검색어를 입력하세요");
+			searchForm.searchString.focus();
+		} else {
+			searchForm.submit();
+		}
+	}
+	
+	// 페이지사이즈 처리
+	function pageCheck() {
+		var pageSize = pageForm.pageSize.value;
+		location.href = "${ctp}/product/pList?pag=${pageVO.pag}&pageSize="+ pageSize;
+	}
 </script>
 </head>
 <body>
@@ -48,24 +66,24 @@
 		<!-- 블록페이징처리 시작 -->
 		<div class="container" style="text-align:center;">
 		  <ul class="pagination justify-content-center">
-			  <c:set var="startPageNum" value="${pageVo.pag - (pageVo.pag-1)%pageVo.blockSize}"/>  <!-- 해당블록의 시작페이지 구하기 -->
+			  <c:set var="startPageNum" value="${pageVO.pag - (pageVO.pag-1)%pageVO.blockSize}"/>  <!-- 해당블록의 시작페이지 구하기 -->
 			  <c:if test="${pag != 1}">
-			    <li class="page-item"><a href="${ctp}/product/pList?pag=1&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
-			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVo.pag-1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">◀</a></li>
+			    <li class="page-item"><a href="${ctp}/product/pList?pag=1&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
 			  </c:if>
-			  <c:forEach var="i" begin="0" end="${pageVo.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
-			    <c:if test="${(startPageNum+i) <= pageVo.totPage}">
-				  	<c:if test="${pageVo.pag == (startPageNum+i)}">
-				  	  <li class="page-item active"><a href="${ctp}/product/pList?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+			  <c:forEach var="i" begin="0" end="${pageVO.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
+			    <c:if test="${(startPageNum+i) <= pageVO.totPage}">
+				  	<c:if test="${pageVO.pag == (startPageNum+i)}">
+				  	  <li class="page-item active"><a href="${ctp}/product/pList?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
 				  	</c:if>
-				  	<c:if test="${pageVo.pag != (startPageNum+i)}">
-				  	  <li class="page-item"><a href="${ctp}/product/pList?pag=${startPageNum+i}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+				  	<c:if test="${pageVO.pag != (startPageNum+i)}">
+				  	  <li class="page-item"><a href="${ctp}/product/pList?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
 				  	</c:if>
 			  	</c:if>
 			  </c:forEach>
-			  <c:if test="${pageVo.pag != pageVo.totPage}">
-			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVo.pag+1}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▶</a></li>
-			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVo.totPage}&pageSize=${pageVo.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
+			  <c:if test="${pageVO.pag != pageVO.totPage}">
+			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▶</a></li>
+			    <li class="page-item"><a href="${ctp}/product/pList?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
 			  </c:if>
 		  </ul>
 		</div>

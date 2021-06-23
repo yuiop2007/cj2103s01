@@ -2,13 +2,15 @@ package com.spring.cj2103s01.vo;
 
 public class NoticeVO {
 	private int nId;
-	private String nTitle;
 	private String nWriter;
+	private String nTitle;
+	private String nName;
 	private String nPwd;
 	private String nContent;
 	private String nFile;
 	private String nRdate;
 	private int nHit;
+	private int diffTime;
 
 	public int getnId() {
 		return nId;
@@ -72,6 +74,22 @@ public class NoticeVO {
 
 	public void setnHit(int nHit) {
 		this.nHit = nHit;
+	}
+
+	public int getDiffTime() {
+		return diffTime;
+	}
+
+	public void setDiffTime(int diffTime) {
+		this.diffTime = diffTime;
+	}
+
+	public String getnName() {
+		return nName;
+	}
+
+	public void setnName(String nName) {
+		this.nName = nName;
 	}
 
 	@Override

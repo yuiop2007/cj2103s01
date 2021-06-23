@@ -12,6 +12,9 @@ public class BoardVO {
 	private int good;
 	private String content;
 	
+	private int diffTime;       // 시간을 sql에서 구하여 저장하는 필드
+	private String oriContent;  // 수정시에 변경되기전의 원본 content의 내용을 저장시켜두기 위한 필드
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -72,10 +75,22 @@ public class BoardVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getDiffTime() {
+		return diffTime;
+	}
+	public void setDiffTime(int diffTime) {
+		this.diffTime = diffTime;
+	}
+	public String getOriContent() {
+		return oriContent;
+	}
+	public void setOriContent(String oriContent) {
+		this.oriContent = oriContent;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [idx=" + idx + ", name=" + name + ", title=" + title + ", email=" + email + ", pwd=" + pwd
 				+ ", wDate=" + wDate + ", readNum=" + readNum + ", hostIp=" + hostIp + ", good=" + good + ", content=" + content
-				+ "]";
+				+ ", diffTime=" + diffTime + ", oriContent=" + oriContent + "]";
 	}
 }

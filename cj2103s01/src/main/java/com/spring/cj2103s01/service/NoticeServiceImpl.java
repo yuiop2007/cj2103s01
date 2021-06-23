@@ -26,11 +26,6 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public int totRecCnt() {
-		return noticeDAO.totRecCnt();
-	}
-
-	@Override
 	public int setNoticeInput(MultipartFile file, NoticeVO vo, String root) {
 		int res = 0;
 		try {
@@ -59,8 +54,19 @@ public class NoticeServiceImpl implements NoticeService{
 		return res;
 	}
 
+	@Override
+	public List<NoticeVO> getNoticeSearchList(int startIndexNo, int pageSize, String search, String searchString) {
+		return noticeDAO.getNoticeSearchList(startIndexNo, pageSize, search, searchString);
+	}
 
+	@Override
+	public void addReadNum(int idx) {
+		noticeDAO.addReadNum(idx);
+	}
 
-	
+	@Override
+	public NoticeVO getNoticeContent(int idx) {
+		return noticeDAO.getNoticeContent(idx);
+	}
 
 }

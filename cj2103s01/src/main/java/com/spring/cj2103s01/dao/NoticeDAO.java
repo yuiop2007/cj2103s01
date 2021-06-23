@@ -14,4 +14,12 @@ public interface NoticeDAO {
 
 	public void setNoticeInput(@Param("vo") NoticeVO vo);
 
+	public List<NoticeVO> getNoticeSearchList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("search") String search, @Param("searchString") String searchString);
+
+	public int totSearchRecCnt(@Param("search") String search, @Param("searchString") String searchString);
+
+	public void addReadNum(@Param("idx") int idx);
+
+	public NoticeVO getNoticeContent(@Param("idx") int idx);
+
 }

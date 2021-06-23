@@ -111,7 +111,15 @@ public class MessageController {
 		
 		
 		
-		
+		// 예) msgFlag = "boardPasswordNo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
+		else if(msgFlag.substring(0,15).equals("boardPasswordNo")) {
+			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
+			model.addAttribute("url", "board/bContent?"+msgFlag.substring(16));
+		}
+		else if(msgFlag.substring(0,13).equals("boardUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/bContent?"+msgFlag.substring(14));
+		}
 		
 		
 		return "include/message";

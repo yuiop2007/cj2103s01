@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.spring.cj2103s01.vo.ProductVO;
 
 @Service
 public class FileService {
@@ -32,8 +29,13 @@ public class FileService {
 				root = "pMainImages";
 			}
 			else if(root.equals("nInput")){
-				root = "noticefile";
+				root = "boardfile";
 			}
+			else if(root.equals("eInput")) {
+				root = "boardfile";
+			}
+			
+			
 			String uploadPath = request.getSession().getServletContext().getRealPath("/resources/"+ root +"/");
 
 			FileOutputStream fos = new FileOutputStream(uploadPath + saveFileName);

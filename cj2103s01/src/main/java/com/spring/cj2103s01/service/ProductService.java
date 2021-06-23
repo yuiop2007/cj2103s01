@@ -8,10 +8,8 @@ import com.spring.cj2103s01.vo.ProductVO;
 
 public interface ProductService {
 
-	public List<ProductVO> getpList(int startIndexNo, int pageSize);
-
-	public int totRecCnt();
-
 	public int setProductInput(MultipartFile file, ProductVO vo, String root);
+
+	public List<ProductVO> getProductList(int startIndexNo, int pageSize);
 
 }

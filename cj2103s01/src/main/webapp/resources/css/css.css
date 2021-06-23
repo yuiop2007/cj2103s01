@@ -210,6 +210,8 @@ table, tbody {
 	width: 100%;
 	text-align: center;
 }
+
+
 .tel1 {
 	width: 100px;
 }
@@ -505,4 +507,88 @@ li {
     margin: 20px 0 50px -5px;
     width: 99.8%;
     clear: both;
+}
+
+.boardtable {
+    table-layout: fixed;
+    border: 0px solid #eee;
+    color: #000;
+    line-height: 180%;
+}
+.boardtable tr:first-child {
+    line-height: 30px;
+}
+.boardtable th {
+    width: 110px;
+    padding: 6px 0 8px 20px;
+    font-family: 'Lato','Nanum Gothic';
+    color: #666;
+    font-weight: normal;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-top: 1px solid #eee;
+    border-right: 0px solid #eee;
+    background-color: #fff;
+    text-align: left;
+    font-weight: normal;
+}
+.boardtable td {
+    width: auto;
+    padding: 6px 0 5px 10px;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+}
+.boardtable td.subject {
+    line-height: 30px;
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 0px;
+    text-align: left;
+}
+.boardtable td.subject2 {
+    line-height: 30px;
+    font-size: 13px !important;
+    letter-spacing: 0px;
+    text-align: left;
+}
+.boardtable tr.etcArea td {
+    padding: 0;
+    border: 0;
+}
+.boardtable tr.etcArea ul {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+.boardtable tr.etcArea ul li {
+    float: left;
+}
+
+.boardtable tr.view td {
+    padding: 0;
+    border: 0;
+    line-height: 140%;
+}
+.boardtable tr.view .detail {
+    position: relative;
+    color: #333;
+    margin: -1px 0 0;
+    padding: 30px 0 30px 20px;
+    border-top: 1px solid #eee;
+    word-break: break-all;
+    line-height: normal;
+    line-height: 20px;
+}
+.boardbtn a {
+    padding: 7px 15px;
+    font-size: 12px;
+    font-family: 'Lato','Nanum Gothic';
+    font-weight: normal;
+    color: #333;
+    line-height: 40px;
+    border: 1px solid #ccc;
 }

@@ -48,33 +48,7 @@ $(document).ready(function () {
 			</li>
 		</ul>
 	</nav>
-	<% if(level == 0) { %>
-	<nav class="nav3 navbar navbar-expand-sm bg-light justify-content-center">
-		<ul class="navbar-nav">
-			<li class="nav-item3">
-				<a class="nav-link" href="${ctp}/product/pList">상품목록</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="${ctp}/product/pInput">상품등록</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="#">MADE</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="#">OUTER</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="#">TOP</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="#">BOTTOM</a>
-			</li>
-			<li class="nav-item3">
-				<a class="nav-link" href="#">ACC</a>
-			</li>
-		</ul>
-	</nav>
-	<% } %>
+
 	<nav class="nav2 navbar navbar-expand-sm bg-light justify-content-center">
 		<ul class="navbar-nav">
 <%    if(level == 99) { %>

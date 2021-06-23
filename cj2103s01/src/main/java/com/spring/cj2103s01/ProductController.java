@@ -16,6 +16,7 @@ import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.ProductService;
+import com.spring.cj2103s01.vo.NoticeVO;
 import com.spring.cj2103s01.vo.ProductVO;
 
 @Controller
@@ -58,20 +59,19 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/pList", method = RequestMethod.GET)
-	public String pListGet(@RequestParam(name="pag", defaultValue="1", required=false) int pag,
-			@RequestParam(name="pageSize", defaultValue="10", required=false) int pageSize,
-			Model model) {
-		if(pag<1) {
-			pag=1;
+	public String pListGet(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
 		}
-		
-		PagenationVO pageVo = pagenation.pagenation(pag, pageSize, "pList", "");
-		
-		List<ProductVO> vos = productService.getpList(pageVo.getStartIndexNo(), pageSize);
-		
+
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
+
+		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
+
 		model.addAttribute("vos", vos);
-		model.addAttribute("pageVo", pageVo);
-		
+		model.addAttribute("pageVO", pageVO);
+
 		return "product/pList";
 	}
 	

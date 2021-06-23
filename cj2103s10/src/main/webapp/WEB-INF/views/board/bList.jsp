@@ -59,11 +59,11 @@
 	      </td>
 	      <td style="text-align:right;margin:0px;padding:0px;width:80%;">
 	        <!-- 페이징처리 -->
-	        <c:if test="${pageVO.pag != 1}"><a href="bList.bo?pag=1&pageSize=${pageVO.pageSize}" title="첫페이지로">◀</a></c:if>
-	        <c:if test="${pageVO.pag != 1}"><a href="bList.bo?pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}">◁</a></c:if>
+	        <c:if test="${pageVO.pag != 1}"><a href="bList.do?pag=1&pageSize=${pageVO.pageSize}" title="첫페이지로">◀</a></c:if>
+	        <c:if test="${pageVO.pag != 1}"><a href="bList.do?pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}">◁</a></c:if>
 	        ${pageVO.pag}Page / ${pageVO.totPage}Pages
-	        <c:if test="${pageVO.pag != pageVO.totPage}"><a href="bList.bo?pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}">▷</a></c:if>
-	        <c:if test="${pageVO.pag != pageVO.totPage}"><a href="bList.bo?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" title="마지막페이지로">▶</a></c:if>
+	        <c:if test="${pageVO.pag != pageVO.totPage}"><a href="bList.do?pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}">▷</a></c:if>
+	        <c:if test="${pageVO.pag != pageVO.totPage}"><a href="bList.do?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" title="마지막페이지로">▶</a></c:if>
 	        <!-- 페이징처리 -->
 	      </td>
 	    </tr>
@@ -83,17 +83,13 @@
 		      <td>${curScrStartNo}</td>
 		      <td style="text-align:left;">
 		        <a href="${ctp}/board/bContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.title}</a>
-		        <%-- 
-		        <c:if test="${vo.wNdate <= 24}"><img src="${ctp}/images/new.gif"/></c:if>
-		        <c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if>
-		         --%>
+		        <c:if test="${vo.diffTime <= 24}"><img src="${ctp}/images/new.gif"/></c:if>
+		        <%-- <c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if> --%>
 		      </td>
 		      <td>${vo.name}</td>
-		      <td>${vo.wDate}
-		      <%-- 
-		        <c:if test="${vo.wNdate <= 24}">${fn:substring(vo.wDate,11,19)}</c:if>
-		        <c:if test="${vo.wNdate > 24}">${fn:substring(vo.wDate,0,10)}</c:if>
-		       --%>  
+		      <td>
+		        <c:if test="${vo.diffTime <= 24}">${fn:substring(vo.wDate,11,19)}</c:if>
+		        <c:if test="${vo.diffTime > 24}">${fn:substring(vo.wDate,0,10)}</c:if>
 		      </td>
 		      <td>${vo.readNum}</td>
 		      <td>${vo.good}</td>
@@ -133,7 +129,7 @@
 <br/>
 <!-- 검색기 처리 시작 -->
 <div class="container" style="text-align:center">
-  <form name="searchForm" method="post" action="${ctp}/board/bSearch">
+  <form name="searchForm" method="get" action="${ctp}/board/bSearch">
     <b>검색 : </b>
     <select name="search" onchange="sChange()">
     	<option value="title" selected>글제목</option>

@@ -10,9 +10,9 @@ CKEDITOR.editorConfig = function( config ) {
 
   // movie 아이콘보기
   config.extraPlugins = 'html5video';
-
+  
 	// 컬러버튼...
-	config.extraPlugins = 'colorbutton';
+	//config.extraPlugins = 'colorbutton';
 	
   // 컬러스킨 변경...
   config.skin = 'moonocolor';

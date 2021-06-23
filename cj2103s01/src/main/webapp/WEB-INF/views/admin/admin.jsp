@@ -102,21 +102,23 @@
 	  	
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/product/pInput">
 		    		<strong>상품 등록</strong>
+		    		상품을 빠르게 등록 할 수 있습니다.
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
-		   		<a href="#">
+		   		<a href="${ctp}/product/pList">
 		    		<strong>상품 목록</strong>
+		    		총 상품 목록 : 0
 		    	</a>
 		    </div>
 	  	</div>
 		<div class="row myshopMain">
 		    <div class="col shopMain">
 		    	<a href="#">
-		    		<strong>wish list</strong>
-		    		관심상품으로 등록하신 상품의 목록을 보여드립니다.
+		    		<strong>회원 관리</strong>
+		    		전체 회원을 관리 할 수 있습니다.
 		    		<br/>
 		    	</a>
 		    </div>
