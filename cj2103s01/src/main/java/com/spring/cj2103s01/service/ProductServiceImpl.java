@@ -53,5 +53,35 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> getProductList(int startIndexNo, int pageSize) {
 		return productDAO.getProductList(startIndexNo, pageSize);
 	}
+
+	@Override
+	public List<ProductVO> getProductSearchList(int startIndexNo, int pageSize, String search, String searchString) {
+		return productDAO.getProductSearchList(startIndexNo, pageSize, search, searchString);
+	}
+
+	@Override
+	public void addReadNum(int pId) {
+		productDAO.addReadNum(pId);
+	}
+
+	@Override
+	public ProductVO getProductContent(int pId) {
+		return productDAO.getProductContent(pId);
+	}
+
+	@Override
+	public ProductVO getIdCheck(int pId) {
+		return productDAO.getIdCheck(pId);
+	}
+
+	@Override
+	public void productUpdateOk(ProductVO vo) {
+		productDAO.productUpdateOk(vo);
+	}
+
+	@Override
+	public void pDelete(int pId) {
+		productDAO.pDelete(pId);
+	}
 	
 }

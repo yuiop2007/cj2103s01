@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.cj2103s10.pagination.Pagination;
 import com.spring.cj2103s10.pagination.PaginationVO;
 import com.spring.cj2103s10.service.BoardService;
+import com.spring.cj2103s10.vo.BoardReplyVO;
 import com.spring.cj2103s10.vo.BoardVO;
 
 @Controller
@@ -112,8 +113,8 @@ public class BoardController {
   	return "";
   }
   
-  @RequestMapping(value="/bUpdate", method=RequestMethod.GET)
-  public String bGoodGet(int idx, String pwd, HttpServletRequest request,
+  @RequestMapping(value="/bContent", method=RequestMethod.POST)
+  public String bContentPost(int idx, String pwd, HttpServletRequest request,
   		@RequestParam(name="pag", defaultValue="1", required=false) int pag,
 			@RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize,
 			Model model) {
@@ -124,13 +125,26 @@ public class BoardController {
   		msgFlag = "boardPasswordNo$idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
   		return "redirect:/msg/" + msgFlag;
   	}
-  	// 비밀번호 맞을때 처리, 먼저 기존의 src폴더의 그림파일을 images폴더로 백업시켜둔다.
-  	String uploadPath = request.getRealPath("/resources/ckeditor/images/src/");  // ckeditor를 통해서 저장된 모든 파일이 있는곳
-  	boardService.imgCheck(vo.getContent(), uploadPath, 46);
+  	else {
+  		// 비밀번호 맞을때 처리, 먼저 기존의 src폴더의 그림파일을 images폴더로 백업시켜둔다.
+	  	String uploadPath = request.getRealPath("/resources/ckeditor/images/src/");  // ckeditor를 통해서 저장된 모든 파일이 있는곳
+	  	boardService.imgCheck(vo.getContent(), uploadPath, 46);
+	  	
+	  	msgFlag = "boardPasswordOk$idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
+  		return "redirect:/msg/" + msgFlag;
+  	}
+  }
+  
+  @RequestMapping(value="/bUpdate", method=RequestMethod.GET)
+  public String bUpdateGet(int idx,
+  		@RequestParam(name="pag", defaultValue="1", required=false) int pag,
+			@RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize,
+			Model model) {
   	
-  	PaginationVO pageVO = pagination.pagination(pag, pageSize, "board", "", "");
+    PaginationVO pageVO = pagination.pagination(pag, pageSize, "board", "", "");
+    BoardVO vo = boardService.getBoardContent(idx);
+    
   	model.addAttribute("pageVO", pageVO);
-  	
   	model.addAttribute("vo", vo);
   	
   	return "board/bUpdate";
@@ -138,15 +152,14 @@ public class BoardController {
   
   @RequestMapping(value="/bUpdate", method=RequestMethod.POST)
   public String bUpdatePost(BoardVO vo, Model model, HttpServletRequest request) {
-  	
-  	// 이곳에 오기전에 content안의 그림을 image폴더에 백업받아 두었다.
+  	// 이곳에 오기전에 content안의 그림을 만약에 대비하여 image폴더에 백업받아 두었다.
   	// 수정작업이 되었고(텍스트 or 그림포함), 이때 content안의 'src='태그속성이 있다면, image에 있는 그림파일을 src폴더로 복사작업한다.
   	if(!vo.getOriContent().equals(vo.getContent()) && vo.getContent().indexOf("src=\"/") != -1) {
   		vo.setContent(vo.getContent().replace("/resources/ckeditor/images/src/", "/resources/ckeditor/images/"));
   		
   		// 기존에 src폴더에 존재하는 그림들을 모두 삭제처리한다. 
   		String uploadPath = request.getRealPath("/resources/ckeditor/images/src/");
-  		boardService.imgDelete(vo.getOriContent(), uploadPath, 42);
+  		boardService.imgDelete(vo.getOriContent(), uploadPath, 46);
   		
   		// src폴더의 원본 그림을 모두 삭제시킨후, 새롭게 업로드시킨 그림을 다시 src폴더에 복사한다.
   		uploadPath = request.getRealPath("/resources/ckeditor/images/");  // ckeditor를 통해서 저장된 모든 파일이 있는곳
@@ -157,7 +170,6 @@ public class BoardController {
     	
     	vo.setContent(vo.getContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/")); // DB에 저장되는 실제 파일 정보의 위치
   	}
-  	System.out.println("vo : " + vo);
   	boardService.boardUpdateOk(vo);  // 잘 정비된 VO를 DB에 저장한다.
   	
   	int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
@@ -165,5 +177,20 @@ public class BoardController {
   	msgFlag = "boardUpdateOk$idx="+vo.getIdx()+"&pag="+pag+"&pageSize="+pageSize;
   	
   	return "redirect:/msg/" + msgFlag;
+  }
+  
+  // 댓글처리(댓글저장, 처음댓글의 level과 levelOrder은 0)
+  @ResponseBody
+  @RequestMapping(value="/bReplyInsert", method=RequestMethod.POST)
+  public int bReplyInsertPost(BoardReplyVO cVo) {
+  	// 현재 본문글에 해당하는 댓글의 levelOrder값을 구한다.
+  	int levelOrder = 0;
+  	String strLevelOrder = boardService.maxLevelOrder(cVo.getBoardIdx());
+  	if(strLevelOrder != null) levelOrder = Integer.parseInt(strLevelOrder) + 1;
+  	cVo.setLevelOrder(levelOrder);
+  	
+  	boardService.setReplyInsert(cVo);
+  	
+  	return 1;
   }
 }

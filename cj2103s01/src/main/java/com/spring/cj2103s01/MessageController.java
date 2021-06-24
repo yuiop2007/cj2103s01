@@ -94,7 +94,54 @@ public class MessageController {
 			model.addAttribute("url", "board/event");
 		}
 	
-			
+		
+		
+		// 예) msgFlag = "boardPasswordNo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
+		else if(msgFlag.substring(0,15).equals("eventPasswordNo")) {
+			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
+			model.addAttribute("url", "board/eContent?"+msgFlag.substring(16));
+		}
+		else if(msgFlag.substring(0,15).equals("eventPasswordOk")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "board/eUpdate?"+msgFlag.substring(16));
+		}
+		else if(msgFlag.substring(0,13).equals("eventDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "board/event?"+msgFlag.substring(14));
+		}
+		else if(msgFlag.substring(0,13).equals("eventUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/eContent?"+msgFlag.substring(14));
+		}
+		else if(msgFlag.substring(0,16).equals("noticePasswordNo")) {
+			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
+			model.addAttribute("url", "board/nContent?"+msgFlag.substring(17));
+		}
+		else if(msgFlag.substring(0,16).equals("noticePasswordOk")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "board/nUpdate?"+msgFlag.substring(17));
+		}
+		else if(msgFlag.substring(0,14).equals("noticeDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "board/notice?"+msgFlag.substring(15));
+		}
+		else if(msgFlag.substring(0,14).equals("noticeUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/nContent?"+msgFlag.substring(15));
+		}
+		else if(msgFlag.substring(0,13).equals("productUpdate")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "product/pUpdate?"+msgFlag.substring(14));
+		}
+		else if(msgFlag.substring(0,15).equals("productDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "product/pList?"+msgFlag.substring(16));
+		}
+		else if(msgFlag.substring(0,15).equals("productUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "product/pContent?"+msgFlag.substring(16));
+		}
+		
 		return "include/message";
 	}
 }

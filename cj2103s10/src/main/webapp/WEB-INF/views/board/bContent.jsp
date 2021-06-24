@@ -40,7 +40,7 @@
     		myform.pwd.focus();
     	}
     	else {
-    		location.href="${ctp}/board/bUpdate?idx=${vo.idx}&pwd="+pwd+"&pag=${pag}&pageSize=${pageSize}";
+    		myform.submit();
     	}
     }
     
@@ -63,14 +63,37 @@
     
     // 댓글 입력처리
     function replyCheck() {
+    	var boardIdx = "${vo.idx}";
+    	var mid = "${smid}";
+    	var nickName = "${snickname}";
+    	var hostIp = "${pageContext.request.remoteAddr}";
     	var content = replyForm.content.value;
+    	
     	if(content == "") {
     		alert("댓글을 입력하세요?");
     		replyForm.content.focus();
+    		return false;
     	}
-    	else {
-    		replyForm.submit();
+    	
+    	var query = {
+    			boardIdx : boardIdx,
+    			mid      : mid,
+    			nickName : nickName,
+    			hostIp   : hostIp,
+    			content  : content
     	}
+    	
+    	$.ajax({
+    		type : "post",
+    		url  : "${ctp}/board/bReplyInsert",
+    		data : query,
+    		success : function(data) {
+    			if(data == 1) {
+    				alert("댓글 입력완료!!!");
+    				location.reload();
+    			}
+    		}
+    	});
     }
     
     // 댓글 삭제(aJax 처리)
@@ -98,7 +121,7 @@
   <p><br/></p>
   <h2>글 내 용 보 기</h2>
   <br/>
-  <form name="myform">
+  <form name="myform" method="post">
 	  <table class="table table-bordered">
 	    <tr>
 	      <th>글쓴이</th>
@@ -140,6 +163,9 @@
 	      </td>
 	    </tr>
 	  </table>
+	  <input type="hidden" name="pag" value="${pag}"/>
+	  <input type="hidden" name="pageSize" value="${pageSize}"/>
+	  <input type="hidden" name="idx" value="${vo.idx}"/>
   </form>
   <p></p>
 </div>

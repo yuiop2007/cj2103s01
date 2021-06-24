@@ -12,4 +12,16 @@ public interface ProductService {
 
 	public List<ProductVO> getProductList(int startIndexNo, int pageSize);
 
+	public List<ProductVO> getProductSearchList(int startIndexNo, int pageSize, String search, String searchString);
+
+	public void addReadNum(int pId);
+
+	public ProductVO getProductContent(int pId);
+
+	public ProductVO getIdCheck(int pId);
+
+	public void productUpdateOk(ProductVO vo);
+
+	public void pDelete(int pId);
+
 }

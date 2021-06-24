@@ -35,7 +35,15 @@
 	            $(this).remove (); // remove the button
 	        });
 	    }); // end click                                            
+	}); // end ready
+	
+	$(document).ready (function () {                
+	    $('.infoRemove').click (function () {                                        
+            $(this).prev().remove (); // remove the textbox
+            $(this).remove (); // remove the button
+	    }); // end click                                            
 	}); // end ready 
+	
 </script>
 <style>
 .color > input[type=text]{
@@ -54,6 +62,10 @@ label{
 	margin-bottom: 0;
 	margin-top: 15px;
 }
+.btnAdd, .btnAdd2, .btnRemove, .btnRemove2, .infoRemove{
+	margin-left: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -62,18 +74,18 @@ label{
 		<jsp:include page="/WEB-INF/views/include/nav.jsp"/>
 	</div>
 	<div class="container">
-		<form name="pInputform" method="post" action="${ctp}/product/pInput" enctype="multipart/form-data">
+		<form name="pUpdateform" method="post" action="${ctp}/product/pUpdate" enctype="multipart/form-data">
 			<h6>상품 등록</h6>
 			<hr />
 				<label>상품 이름</label>
-					<input type="text" id="pName" name="pName" maxlength="20" required><br/>
+					<input type="text" id="pName" name="pName" maxlength="20" value="${vo.pName}" required><br/>
 				<label>카테고리</label>
 					<select name="pCate">
-				    	<option value="OUTER">OUTER</option>
-						<option value="TOP">TOP</option>
-						<option value="BOTTOM">BOTTOM</option>
-						<option value="ACC">ACC</option>
-						<option value="MADE">MADE</option>
+				    	<option value="OUTER" <c:if test="${vo.pCate eq 'OUTER'}">selected</c:if>>OUTER</option>
+						<option value="TOP" <c:if test="${vo.pCate eq 'TOP'}">selected</c:if>>TOP</option>
+						<option value="BOTTOM" <c:if test="${vo.pCate eq 'BOTTOM'}">selected</c:if>>BOTTOM</option>
+						<option value="ACC" <c:if test="${vo.pCate eq 'ACC'}">selected</c:if>>ACC</option>
+						<option value="MADE" <c:if test="${vo.pCate eq 'MADE'}">selected</c:if>>MADE</option>
 				    </select><br/>
 				<div class="pin">
 						<div class="color boardbtn">
@@ -86,15 +98,19 @@ label{
 						</div>
 				</div>	
 				<label>상품 가격</label>
-					<input type="number" id="pPrice" name="pPrice" required><br/>
+					<input type="number" id="pPrice" name="pPrice" value="${vo.pPrice}" required><br/>
 				<label>재고</label>
-					<input type="number" id="pStock" name="pStock" value="0"><br/><br/><br/><br/>
+					<input type="number" id="pStock" name="pStock" value="${vo.pStock}"><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
-					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required><br/><br/><br/>
+					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required>
+					<div class="boardbtn">
+						<img src="${ctp}/resources/pMainImages/${vo.pImage}"/><a href="#" class="infoRemove">삭제</a>
+					</div>
+					<br/><br/><br/>
+				<label>제품 정보</label>
+					<textarea rows="3" cols="20" name="pInfo" value="${vo.pInfo}" required></textarea>
 				<label>상세 내용</label>
-					<textarea rows="5" cols="50" name="pInfo" required></textarea>
-				<label>상세 내용</label>
-					<textarea rows="5" cols="50" name="pContent" id="CKEDITOR" required></textarea>
+					<textarea rows="5" cols="50" name="pContent" id="CKEDITOR" required>${vo.pContent}</textarea>
 					<script>
 						CKEDITOR.replace("pContent",{
 							uploadUrl:"${ctp}/imageUpload",
@@ -103,8 +119,12 @@ label{
 				        });
 					</script>
 			<div class="jumbotron text-center">
-				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/admin/admin'">취소</button>
+				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}'">취소</button>
 				<button type="submit" class="btn btn-dark">등록하기</button>
+				<input type="hidden" name="pId" value="${vo.pId}"/>
+			    <input type="hidden" name="pag" value="${pageVO.pag}"/>
+			    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>
+				<input type="hidden" name="oriContent"/>
 			</div>
 		</form>
 	</div>

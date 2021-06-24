@@ -32,3 +32,5 @@ select count(eId) from event where eTitle like concat('%','제목','%');
 select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from event bb where eTitle like concat('%','제','%')  order by eId desc limit 1,10;
 
 select count(eId) from event where eTitle like concat('%', '제' ,'%');
+
+delete from event where eId = 1;

@@ -40,11 +40,11 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	</div>
 	<div class="container">
-		<h6>이벤트</h6>
+		<h6>공지사항</h6>
 		</br>
 		</br>
 		</br>
-		</br>(<font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.)
+		</br><font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.
 		<form name="pageForm">
 			<table class="table table-borderless">
 				<c:if test="${searchCount != 0}">

@@ -40,7 +40,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	</div>
 	<div class="container">
-		<h6>이벤트</h6>
+		<h6>공지사항</h6>
 		</br>
 		</br>
 		</br>
@@ -57,12 +57,12 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<% } %>
 						</th>
 						<th scope="col" style="padding-bottom: 5px;">
-						
 						<select name="pageSize" onchange="pageCheck()" style="text-align: left; padding: 5px 0px; margin: 0;">
 								<option value="10" ${pageVO.pageSize==10 ? 'selected' : ''}>10건</option>
 								<option value="15" ${pageVO.pageSize==15 ? 'selected' : ''}>15건</option>
 								<option value="20" ${pageVO.pageSize==20 ? 'selected' : ''}>20건</option>
-						</select></tr>
+						</select>
+					</tr>
 				</thead>
 				<tbody>
 				<c:set var="curScrStartNo" value="${pageVO.curScrStartNo}" />

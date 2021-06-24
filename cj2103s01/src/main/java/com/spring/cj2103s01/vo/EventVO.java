@@ -11,6 +11,7 @@ public class EventVO {
 	private String eRdate;
 	private int eHit;
 	private int diffTime;
+	private String oriContent;
 	
 	public int geteId() {
 		return eId;
@@ -90,6 +91,15 @@ public class EventVO {
 
 	public void seteName(String eName) {
 		this.eName = eName;
+	}
+	
+	
+	public String getOriContent() {
+		return oriContent;
+	}
+
+	public void setOriContent(String oriContent) {
+		this.oriContent = oriContent;
 	}
 
 	@Override

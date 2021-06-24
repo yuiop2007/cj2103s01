@@ -11,7 +11,8 @@ public class NoticeVO {
 	private String nRdate;
 	private int nHit;
 	private int diffTime;
-
+	private String oriContent;
+	
 	public int getnId() {
 		return nId;
 	}
@@ -90,6 +91,15 @@ public class NoticeVO {
 
 	public void setnName(String nName) {
 		this.nName = nName;
+	}
+
+	
+	public String getOriContent() {
+		return oriContent;
+	}
+
+	public void setOriContent(String oriContent) {
+		this.oriContent = oriContent;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.cj2103s10.dao.BoardDAO;
+import com.spring.cj2103s10.vo.BoardReplyVO;
 import com.spring.cj2103s10.vo.BoardVO;
 
 @Service
@@ -128,8 +129,7 @@ public class BoardServiceImpl implements BoardService {
 		while(sw) {
 			String imgFile = nextImg.substring(0, nextImg.indexOf("\""));  // 순수한 그림파일명만 발췌
 			String delFilePath = uploadPath + imgFile;   				// 원본  그림이 들어있는 '경로명+파일명'
-			
-			fileDeleteCheck(delFilePath);
+			fileDeleteCheck(delFilePath);  // 기존파일을 삭제한다.
 			
 			if(nextImg.indexOf("src=\"/") == -1) {
 				sw = false;
@@ -149,6 +149,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void boardUpdateOk(BoardVO vo) {
 		boardDAO.boardUpdateOk(vo);
+	}
+
+	@Override
+	public String maxLevelOrder(int boardIdx) {
+		return boardDAO.maxLevelOrder(boardIdx);
+	}
+
+	@Override
+	public void setReplyInsert(BoardReplyVO cVo) {
+		boardDAO.setReplyInsert(cVo);
 	}
 	
 }

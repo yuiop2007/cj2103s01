@@ -4,16 +4,22 @@ public class ProductVO {
 	private int pId;
 	private String pName;
 	private String pCate;
+	private String pColor;
+	private String pSize;
 	private int pPrice;
 	private int pSale;
 	private int pStock;
 	private String pImage;
+	private String pInfo;
 	private String pContent;
 	private String pDelivery;
 	private String pRdate;
 	private int pHit;
 	private int pSell;
-
+	
+	private int diffTime;
+	private String oriContent;
+	
 	public int getpId() {
 		return pId;
 	}
@@ -109,12 +115,56 @@ public class ProductVO {
 	public void setpSell(int pSell) {
 		this.pSell = pSell;
 	}
+	
+	public String getpColor() {
+		return pColor;
+	}
+
+	public void setpColor(String pColor) {
+		this.pColor = pColor;
+	}
+
+	public String getpSize() {
+		return pSize;
+	}
+
+	public void setpSize(String pSize) {
+		this.pSize = pSize;
+	}
+
+	public int getDiffTime() {
+		return diffTime;
+	}
+
+	public void setDiffTime(int diffTime) {
+		this.diffTime = diffTime;
+	}
+
+	public String getOriContent() {
+		return oriContent;
+	}
+
+	public void setOriContent(String oriContent) {
+		this.oriContent = oriContent;
+	}
+	
+	
+	public String getpInfo() {
+		return pInfo;
+	}
+
+	public void setpInfo(String pInfo) {
+		this.pInfo = pInfo;
+	}
 
 	@Override
 	public String toString() {
-		return "ProductVO [pId=" + pId + ", pName=" + pName + ", pCate=" + pCate + ", pPrice=" + pPrice + ", pSale="
-				+ pSale + ", pStock=" + pStock + ", pImage=" + pImage + ", pContent=" + pContent + ", pDelivery="
-				+ pDelivery + ", pRdate=" + pRdate + ", pHit=" + pHit + ", pSell=" + pSell + "]";
+		return "ProductVO [pId=" + pId + ", pName=" + pName + ", pCate=" + pCate + ", pColor=" + pColor + ", pSize="
+				+ pSize + ", pPrice=" + pPrice + ", pSale=" + pSale + ", pStock=" + pStock + ", pImage=" + pImage
+				+ ", pContent=" + pContent + ", pDelivery=" + pDelivery + ", pRdate=" + pRdate + ", pHit=" + pHit
+				+ ", pSell=" + pSell + "]";
 	}
+
+	
 
 }

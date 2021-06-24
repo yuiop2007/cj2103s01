@@ -18,4 +18,10 @@ public interface NoticeService {
 
 	public NoticeVO getNoticeContent(int idx);
 
+	public NoticeVO getIdCheck(int idx);
+
+	public void noticeUpdateOk(NoticeVO vo);
+
+	public void nDelete(int idx);
+
 }

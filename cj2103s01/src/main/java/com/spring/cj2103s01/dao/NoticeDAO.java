@@ -22,4 +22,10 @@ public interface NoticeDAO {
 
 	public NoticeVO getNoticeContent(@Param("idx") int idx);
 
+	public NoticeVO getIdCheck(@Param("idx") int idx);
+
+	public void noticeUpdateOk(@Param("vo") NoticeVO vo);
+
+	public void nDelete(@Param("idx") int idx);
+
 }

@@ -38,4 +38,16 @@
   	select * from board2 where idx = #{idx} and pwd = #{pwd};
   </select>
   
+  <update id="boardUpdateOk">
+    update board2 set name=#{vo.name},title=#{vo.title},email=#{vo.email},pwd=#{vo.pwd},hostIp=#{vo.hostIp},content=#{vo.content} where idx=#{vo.idx};
+  </update>
+  
+  <select id="maxLevelOrder" resultType="String">
+  	select max(levelOrder) from boardReply2 where boardIdx = #{boardIdx};
+  </select>
+  
+  <insert id="setReplyInsert">
+    insert into boardReply2 values (default,#{cVo.boardIdx},#{cVo.mid},#{cVo.nickName},default,#{cVo.hostIp},#{cVo.content},default,#{cVo.levelOrder});
+  </insert>
+  
 </mapper>

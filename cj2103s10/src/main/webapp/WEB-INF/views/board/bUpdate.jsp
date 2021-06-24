@@ -39,22 +39,6 @@
     		myform.submit();
     	}
     }
-    
-    // 비밀번호 체크버튼을 활성화 하였을때 처리(jQuery처리)
-    /* 
-    $(document).ready(function(){
-    	$("#pwdModify").click(function(){
-    		if($("#pwdModify").is(":checked")==true) {
-    			$("#pwd").attr("readonly", false);
-    			$("#pwd").focus();
-    		}
-    		else {
-    			$("#pwd").val("");
-    			$("#pwd").attr("readonly", true);
-    		}
-    	});
-    });
-     */
   </script>
 </head>
 <body>
@@ -92,14 +76,14 @@
           });
         </script>
       </tr>
+      
       <tr>
         <th>비밀번호</th>
         <td>
-          <!-- <input type="checkbox" name="pwdModify" id="pwdModify"/>비밀글 수정 &nbsp; -->
-          <input type="password" name="pwd" id="pwd" size="20"/>
-          <!-- (비밀번호 수정시는 체크버튼을 활성화 하세요) -->
+          <input type="password" name="pwd" size="20"/>
         </td>
       </tr>
+       
       <tr>
         <td colspan="2" style="text-align:center">
           <input type="button" value="글수정하기" onclick="fCheck()" class="btn btn-secondary"/> &nbsp;

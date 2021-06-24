@@ -44,7 +44,7 @@
 		</br>
 		</br>
 		</br>
-		</br>(<font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.)
+		</br><font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.
 		<form name="pageForm">
 			<table class="table table-borderless">
 				<c:if test="${searchCount != 0}">

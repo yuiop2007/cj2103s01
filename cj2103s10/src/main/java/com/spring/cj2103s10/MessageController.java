@@ -116,6 +116,10 @@ public class MessageController {
 			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
 			model.addAttribute("url", "board/bContent?"+msgFlag.substring(16));
 		}
+		else if(msgFlag.substring(0,15).equals("boardPasswordOk")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "board/bUpdate?"+msgFlag.substring(16));
+		}
 		else if(msgFlag.substring(0,13).equals("boardUpdateOk")) {
 			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
 			model.addAttribute("url", "board/bContent?"+msgFlag.substring(14));

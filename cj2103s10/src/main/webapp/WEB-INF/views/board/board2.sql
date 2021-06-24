@@ -1,3 +1,4 @@
+show tables;
 /* board2.sql */
 create table board2 (
   idx		int not null auto_increment,		/* 게시글의 고유번호 */
@@ -23,7 +24,7 @@ select * from board2 where idx = 16;
 select * from board2 where idx < 16 order by idx desc limit 1;  /* 이전글 */
 select * from board2 where idx > 16 limit 1;										 /* 다음글 */
 
-----------------댓글테이블(replyBoard)------------------------------
+----------------댓글테이블(replyBoard2)------------------------------
 
 create table replyBoard2(
   idx   		int  	not null auto_increment primary key,	/* 댓글의 고유번호 */
@@ -33,10 +34,13 @@ create table replyBoard2(
   wDate			datetime		default now(),	/* 댓글을 쓴 날짜 */
   hostIp		varchar(50)	not null,				/* 댓글쓴 PC의 IP */
   content		text				not null,				/* 댓글내용 */
-  foreign key(boardIdx) references board(idx)
+  level     int  not null  default 0,		/* 댓글레벨(수준)- 부모댓글의 level은 '0' */
+  levelOrder int not null  default 0,   /* 댓글들의 순서 - 부모댓글의 levelOrder은 '0' */ 
+  foreign key(boardIdx) references board2(idx)
   	on update cascade
   	on delete restrict
 );
+drop table replyBoard2;
 desc replyBoard2;
 
 select * from replyBoard2 order by idx desc;
@@ -44,8 +48,8 @@ select * from replyBoard2 order by idx desc;
 select count(*) from replyBoard2;
 select count(*) from replyBoard2 where boardIdx = 17;
 
-select *, (select count(*) from replyBoard2 where boardIdx = board.idx) as replyCount  from board order by idx desc limit 0, 5;
-select *, (select count(*) from replyBoard2 where boardIdx = board.idx) as replyCount from board where name = '홍장군' order by idx desc limit 0, 5;
+select *, (select count(*) from replyBoard2 where boardIdx = board2.idx) as replyCount  from board2 order by idx desc limit 0, 5;
+select *, (select count(*) from replyBoard2 where boardIdx = board2.idx) as replyCount from board2 where name = '홍장군' order by idx desc limit 0, 5;
 
 
 ------- 날짜 함수 연습 ---------------------------------------------------------------

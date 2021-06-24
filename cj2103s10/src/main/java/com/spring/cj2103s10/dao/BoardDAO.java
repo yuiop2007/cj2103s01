@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.cj2103s10.vo.BoardReplyVO;
 import com.spring.cj2103s10.vo.BoardVO;
 
 public interface BoardDAO {
@@ -27,5 +28,9 @@ public interface BoardDAO {
 	public BoardVO passwordCheck(@Param("idx") int idx, @Param("pwd") String pwd);
 
 	public void boardUpdateOk(@Param("vo") BoardVO vo);
+
+	public String maxLevelOrder(@Param("idx") int boardIdx);
+
+	public void setReplyInsert(@Param("cVo") BoardReplyVO cVo);
 
 }

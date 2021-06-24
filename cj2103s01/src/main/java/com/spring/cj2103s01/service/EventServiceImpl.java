@@ -69,5 +69,20 @@ public class EventServiceImpl implements EventService{
 		return eventDAO.getEventContent(idx);
 	}
 
+	@Override
+	public void eventUpdateOk(EventVO vo) {
+		eventDAO.eventUpdateOk(vo);
+	}
+
+	@Override
+	public EventVO getIdCheck(int idx) {
+		return eventDAO.getIdCheck(idx);
+	}
+
+	@Override
+	public void eDelete(int idx) {
+		eventDAO.eDelete(idx);
+	}
+
 
 }

@@ -69,4 +69,19 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDAO.getNoticeContent(idx);
 	}
 
+	@Override
+	public NoticeVO getIdCheck(int idx) {
+		return noticeDAO.getIdCheck(idx);
+	}
+
+	@Override
+	public void noticeUpdateOk(NoticeVO vo) {
+		noticeDAO.noticeUpdateOk(vo);
+	}
+
+	@Override
+	public void nDelete(int idx) {
+		noticeDAO.nDelete(idx);
+	}
+
 }

@@ -68,5 +68,9 @@ public class FileService {
 			}
 		}
 
-		
+		// 파일 삭제 메소드
+		public void fileDeleteCheck(String delFilePath) {
+			File delFile = new File(delFilePath);
+			if(delFile.exists()) delFile.delete();
+		}
 }

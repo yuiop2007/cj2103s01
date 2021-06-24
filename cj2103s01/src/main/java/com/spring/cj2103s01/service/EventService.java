@@ -17,4 +17,10 @@ public interface EventService {
 	public void addReadNum(int idx);
 
 	public EventVO getEventContent(int idx);
+
+	public void eventUpdateOk(EventVO vo);
+
+	public EventVO getIdCheck(int idx);
+
+	public void eDelete(int idx);
 }

@@ -2,6 +2,7 @@ package com.spring.cj2103s10.service;
 
 import java.util.List;
 
+import com.spring.cj2103s10.vo.BoardReplyVO;
 import com.spring.cj2103s10.vo.BoardVO;
 
 public interface BoardService {
@@ -25,5 +26,9 @@ public interface BoardService {
 	public void imgDelete(String oriContent, String uploadPath, int position);
 
 	public void boardUpdateOk(BoardVO vo);
+
+	public String maxLevelOrder(int boardIdx);
+
+	public void setReplyInsert(BoardReplyVO cVo);
 
 }

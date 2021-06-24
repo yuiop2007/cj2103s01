@@ -2,31 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cj2103s01.dao.EventDAO">
   
-  <select id="getEventList" resultType="com.spring.cj2103s01.vo.EventVO">
-  	select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from event bb order by eId desc limit #{startIndexNo},#{pageSize};
-  </select>
-  
-  <select id="totRecCnt" resultType="int">
-    select count(*) from event;
-  </select>
-  
-  <select id="totSearchRecCnt" resultType="int">
-  	select count(eId) from event where ${search} like concat('%', #{searchString} ,'%');
-  </select>
-  
-  <insert id="setEventInput">
-    insert into event values (default, #{vo.eWriter} ,#{vo.eTitle}, #{vo.eName}, #{vo.ePwd}, #{vo.eContent}, #{vo.eFile}, default, default);
-  </insert>
-  
-  <select id="getEventSearchList" resultType="com.spring.cj2103s01.vo.EventVO">
-  	select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from event bb where ${search} like concat('%',#{searchString},'%')  order by eId desc limit #{startIndexNo},#{pageSize};
-  </select>
-  
-  <update id="addReadNum">
-    update event set eHit = eHit + 1 where eId = #{idx};
-  </update>
-  
-  <select id="getEventContent" resultType="com.spring.cj2103s01.vo.EventVO">
-  	select * from event where eId = #{idx};
-  </select>
+	<select id="getEventList" resultType="com.spring.cj2103s01.vo.EventVO">
+		select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from event bb order by eId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+	  select count(*) from event;
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+		select count(eId) from event where ${search} like concat('%', #{searchString} ,'%');
+	</select>
+	
+	<insert id="setEventInput">
+	  insert into event values (default, #{vo.eWriter} ,#{vo.eTitle}, #{vo.eName}, #{vo.ePwd}, #{vo.eContent}, #{vo.eFile}, default, default);
+	</insert>
+	
+	<select id="getEventSearchList" resultType="com.spring.cj2103s01.vo.EventVO">
+		select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from event bb where ${search} like concat('%',#{searchString},'%')  order by eId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<update id="addReadNum">
+	  update event set eHit = eHit + 1 where eId = #{idx};
+	</update>
+	
+	<select id="getEventContent" resultType="com.spring.cj2103s01.vo.EventVO">
+		select * from event where eId = #{idx};
+	</select>
+	
+	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.EventVO">
+	  select * from event where eId = #{idx};
+	</select>
+	
+	<update id="eventUpdateOk">
+	  update event set eTitle=#{vo.eTitle}, ePwd=#{vo.ePwd}, eContent=#{vo.eContent}, eFile=#{vo.eFile} where eId=#{vo.eId};
+	</update>
+
+	<delete id="eDelete">
+		delete from event where eId = #{idx};
+	</delete>
 </mapper>

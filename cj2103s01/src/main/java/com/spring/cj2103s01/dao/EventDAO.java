@@ -22,4 +22,10 @@ public interface EventDAO {
 
 	public EventVO getEventContent(@Param("idx") int idx);
 
+	public void eventUpdateOk(@Param("vo") EventVO vo);
+
+	public EventVO getIdCheck(@Param("idx") int idx);
+
+	public void eDelete(@Param("idx") int idx);
+
 }

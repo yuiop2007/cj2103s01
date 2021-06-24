@@ -38,7 +38,7 @@ public class Pagenation {
 				totRecCnt = productDAO.totRecCnt();
 			}
 			else {
-//				totRecCnt = productDAO.totSearchRecCnt(search, searchString);
+				totRecCnt = productDAO.totSearchRecCnt(search, searchString);
 			}
 		}
 		else if (partName.equals("event")) {

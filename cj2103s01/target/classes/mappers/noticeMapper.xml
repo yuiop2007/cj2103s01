@@ -2,31 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cj2103s01.dao.NoticeDAO">
   
-  <select id="getNoticeList" resultType="com.spring.cj2103s01.vo.NoticeVO">
-  	select bb.*, cast(timestampdiff(minute, bb.nRdate, now())/60 as signed integer) as diffTime from notice bb order by nId desc limit #{startIndexNo},#{pageSize};
-  </select>
+	<select id="getNoticeList" resultType="com.spring.cj2103s01.vo.NoticeVO">
+		select bb.*, cast(timestampdiff(minute, bb.nRdate, now())/60 as signed integer) as diffTime from notice bb order by nId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+	  select count(*) from notice;
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+		select count(nId) from notice where ${search} like concat('%', #{searchString} ,'%');
+	</select>
+	
+	<insert id="setNoticeInput">
+	  insert into notice values (default, #{vo.nWriter} ,#{vo.nTitle}, #{vo.nName}, #{vo.nPwd}, #{vo.nContent}, #{vo.nFile}, default, default);
+	</insert>
+	
+	<select id="getNoticeSearchList" resultType="com.spring.cj2103s01.vo.NoticeVO">
+		select bb.*, cast(timestampdiff(minute, bb.nRdate, now())/60 as signed integer) as diffTime from notice bb where ${search} like concat('%',#{searchString},'%')  order by nId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<update id="addReadNum">
+	  update notice set nHit = nHit + 1 where nId = #{idx};
+	</update>
+	
+	<select id="getNoticeContent" resultType="com.spring.cj2103s01.vo.NoticeVO">
+		select * from notice where nId = #{idx};
+	</select>
   
-  <select id="totRecCnt" resultType="int">
-    select count(*) from notice;
-  </select>
-  
-  <select id="totSearchRecCnt" resultType="int">
-  	select count(nId) from notice where ${search} like concat('%', #{searchString} ,'%');
-  </select>
-  
-  <insert id="setNoticeInput">
-    insert into notice values (default, #{vo.nWriter} ,#{vo.nTitle}, #{vo.nName}, #{vo.nPwd}, #{vo.nContent}, #{vo.nFile}, default, default);
-  </insert>
-  
-  <select id="getNoticeSearchList" resultType="com.spring.cj2103s01.vo.NoticeVO">
-  	select bb.*, cast(timestampdiff(minute, bb.nRdate, now())/60 as signed integer) as diffTime from notice bb where ${search} like concat('%',#{searchString},'%')  order by nId desc limit #{startIndexNo},#{pageSize};
-  </select>
-  
-  <update id="addReadNum">
-    update notice set nHit = nHit + 1 where nId = #{idx};
-  </update>
-  
-  <select id="getNoticeContent" resultType="com.spring.cj2103s01.vo.NoticeVO">
-  	select * from notice where nId = #{idx};
-  </select>
+  	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.NoticeVO">
+	  select * from notice where nId = #{idx};
+	</select>
+	
+	<update id="noticeUpdateOk">
+	  update notice set nTitle=#{vo.nTitle}, nPwd=#{vo.nPwd}, nContent=#{vo.nContent}, nFile=#{vo.nFile} where nId=#{vo.nId};
+	</update>
+	
+	<delete id="nDelete">
+		delete from notice where nId = #{idx};
+	</delete>
 </mapper>
