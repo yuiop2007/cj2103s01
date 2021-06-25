@@ -26,25 +26,25 @@ $(document).ready(function () {
 	<nav class="nav1 navbar navbar-expand-sm bg-light justify-content-center">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="#">ALL</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=ALL">ALL</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">NEW</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">MADE</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=MADE">MADE</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">OUTER</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=OUTER">OUTER</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">TOP</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=TOP">TOP</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">BOTTOM</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=BOTTOM">BOTTOM</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">ACC</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=ACC">ACC</a>
 			</li>
 		</ul>
 	</nav>

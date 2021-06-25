@@ -1,5 +1,7 @@
+<%@page import="com.spring.cj2103s01.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -12,32 +14,6 @@
 <script src="${ctp}/resources/ckeditor/ckeditor.js"></script>
 <script>
 	$(document).ready (function () {                
-	    $('.btnAdd').click (function () {                                        
-	        $('.color').append (                        
-	            '<input type="text" name="pColor"><a href="#" class="btnRemove">삭제</a><br/>'                    
-	        ); // end append                            
-	        $('.btnRemove').on('click', function () { 
-	            $(this).prev().remove (); // remove the textbox
-	            $(this).next ().remove (); // remove the <br>
-	            $(this).remove (); // remove the button
-	        });
-	    }); // end click                                            
-	}); // end ready
-	
-	$(document).ready (function () {                
-	    $('.btnAdd2').click (function () {                                        
-	        $('.size').append (                        
-	            '<input type="text" name="pSize"><a href="#" class="btnRemove2">삭제</a><br/>'                    
-	        ); // end append                            
-	        $('.btnRemove2').on('click', function () { 
-	            $(this).prev().remove (); // remove the textbox
-	            $(this).next ().remove (); // remove the <br>
-	            $(this).remove (); // remove the button
-	        });
-	    }); // end click                                            
-	}); // end ready
-	
-	$(document).ready (function () {                
 	    $('.infoRemove').click (function () {                                        
             $(this).prev().remove (); // remove the textbox
             $(this).remove (); // remove the button
@@ -46,14 +22,8 @@
 	
 </script>
 <style>
-.color > input[type=text]{
-	width: 100px;
-}
-.size > input[type=text]{
-	width: 100px;
-}
 .color{
-	width: 200px;
+	width: 450px;
 }
 .pin{
 	display: flex;
@@ -89,12 +59,28 @@ label{
 				    </select><br/>
 				<div class="pin">
 						<div class="color boardbtn">
-							<label>색상</label><br/>
-							<input type="text" name="pColor"><a href="#" class="btnAdd">추가</a><br/>
+							<label>색상</label><br/><br/>
+							<input type="checkbox" name="pColor" value="블랙" <c:if test="${fn:contains(vo.pColor,'블랙')}">checked</c:if>>&nbsp;블랙 &nbsp;
+							<input type="checkbox" name="pColor" value="화이트" <c:if test="${fn:contains(vo.pColor,'화이트')}">checked</c:if>>&nbsp;화이트 &nbsp;
+							<input type="checkbox" name="pColor" value="차콜" <c:if test="${fn:contains(vo.pColor,'차콜')}">checked</c:if>>&nbsp;차콜 &nbsp;
+							<input type="checkbox" name="pColor" value="그레이" <c:if test="${fn:contains(vo.pColor,'그레이')}">checked</c:if>>&nbsp;그레이 &nbsp;
+							<input type="checkbox" name="pColor" value="아이보리" <c:if test="${fn:contains(vo.pColor,'아이보리')}">checked</c:if>>&nbsp;아이보리 &nbsp;
+							<input type="checkbox" name="pColor" value="베이지" <c:if test="${fn:contains(vo.pColor,'베이지')}">checked</c:if>>&nbsp;베이지 &nbsp;<br/><br/>
+							<input type="checkbox" name="pColor" value="블루" <c:if test="${fn:contains(vo.pColor,'블루')}">checked</c:if>>&nbsp;블루 &nbsp;
+							<input type="checkbox" name="pColor" value="스카이블루" <c:if test="${fn:contains(vo.pColor,'스카이블루')}">checked</c:if>>&nbsp;스카이블루 &nbsp;
+							<input type="checkbox" name="pColor" value="핑크" <c:if test="${fn:contains(vo.pColor,'핑크')}">checked</c:if>>&nbsp;핑크 &nbsp;
+							<input type="checkbox" name="pColor" value="그린" <c:if test="${fn:contains(vo.pColor,'그린')}">checked</c:if>>&nbsp;그린 &nbsp;
+							<input type="checkbox" name="pColor" value="레드" <c:if test="${fn:contains(vo.pColor,'레드')}">checked</c:if>>&nbsp;레드 &nbsp;
+							<input type="checkbox" name="pColor" value="옐로우" <c:if test="${fn:contains(vo.pColor,'옐로우')}">checked</c:if>>&nbsp;옐로우 &nbsp;
+							<input type="checkbox" name="pColor" value="오렌지" <c:if test="${fn:contains(vo.pColor,'오렌지')}">checked</c:if>>&nbsp;오렌지 &nbsp;
 						</div>
 						<div class="size boardbtn">
-							<label>사이즈</label><br/>
-							<input type="text" name="pSize"><a href="#" class="btnAdd2">추가</a><br/>
+							<label>사이즈</label><br/><br/>
+							<input type="checkbox" name="pSize" value="XS" <c:if test="${fn:contains(vo.pSize,'XS')}">checked</c:if>>&nbsp;XS &nbsp;
+							<input type="checkbox" name="pSize" value="S" <c:if test="${fn:contains(vo.pSize,'S')}">checked</c:if>>&nbsp;S &nbsp;
+							<input type="checkbox" name="pSize" value="M" <c:if test="${fn:contains(vo.pSize,'M')}">checked</c:if>>&nbsp;M &nbsp;
+							<input type="checkbox" name="pSize" value="L" <c:if test="${fn:contains(vo.pSize,'L')}">checked</c:if>>&nbsp;L &nbsp;
+							<input type="checkbox" name="pSize" value="XL" <c:if test="${fn:contains(vo.pSize,'XL')}">checked</c:if>>&nbsp;XL &nbsp;	
 						</div>
 				</div>	
 				<label>상품 가격</label>
@@ -104,11 +90,11 @@ label{
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required>
 					<div class="boardbtn">
-						<img src="${ctp}/resources/pMainImages/${vo.pImage}"/><a href="#" class="infoRemove">삭제</a>
+						<img src="${ctp}/resources/pMainImages/${vo.pImage}" width="300px;"/><a href="#" class="infoRemove">삭제</a>
 					</div>
 					<br/><br/><br/>
 				<label>제품 정보</label>
-					<textarea rows="3" cols="20" name="pInfo" value="${vo.pInfo}" required></textarea>
+					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;">${vo.pInfo}</textarea>
 				<label>상세 내용</label>
 					<textarea rows="5" cols="50" name="pContent" id="CKEDITOR" required>${vo.pContent}</textarea>
 					<script>
@@ -120,7 +106,7 @@ label{
 					</script>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}'">취소</button>
-				<button type="submit" class="btn btn-dark">등록하기</button>
+				<button type="submit" class="btn btn-dark">수정하기</button>
 				<input type="hidden" name="pId" value="${vo.pId}"/>
 			    <input type="hidden" name="pag" value="${pageVO.pag}"/>
 			    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>

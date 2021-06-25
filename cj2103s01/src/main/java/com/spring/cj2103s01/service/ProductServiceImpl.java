@@ -75,8 +75,33 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void productUpdateOk(ProductVO vo) {
-		productDAO.productUpdateOk(vo);
+	public int productUpdateOk(MultipartFile file, ProductVO vo, String root) {
+		int res = 0;
+		try {
+			String oFileName = file.getOriginalFilename();
+			if (oFileName != "") {
+				// 파일 업로드처리 과정(파일명 중복을 방지시킨후 파일을 업로드한다.)
+
+				// UUID를 이용한 파일명 중복방지처리
+				UUID uid = UUID.randomUUID();
+				String saveFileName = uid + "_" + oFileName;
+				
+				
+				// 파일업로드처리
+				fileService.writeFile(file, saveFileName, root); // 메소드를 통해서 파일을 서버에 저장시킨다.
+				vo.setpImage(saveFileName);
+			} else {
+				res = 0;
+			}
+			
+			// 정상 파일 업로드된 자료의 DB처리
+			productDAO.productUpdateOk(vo);
+			res = 1;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return res;
 	}
 
 	@Override

@@ -161,9 +161,10 @@ public class ProductVO {
 	public String toString() {
 		return "ProductVO [pId=" + pId + ", pName=" + pName + ", pCate=" + pCate + ", pColor=" + pColor + ", pSize="
 				+ pSize + ", pPrice=" + pPrice + ", pSale=" + pSale + ", pStock=" + pStock + ", pImage=" + pImage
-				+ ", pContent=" + pContent + ", pDelivery=" + pDelivery + ", pRdate=" + pRdate + ", pHit=" + pHit
-				+ ", pSell=" + pSell + "]";
+				+ ", pInfo=" + pInfo + ", pContent=" + pContent + ", pDelivery=" + pDelivery + ", pRdate=" + pRdate
+				+ ", pHit=" + pHit + ", pSell=" + pSell + ", diffTime=" + diffTime + ", oriContent=" + oriContent + "]";
 	}
+
 
 	
 

@@ -35,7 +35,7 @@
 	</select>
 
 	<update id="productUpdateOk">
-	  update product set pName=#{vo.pName}, pCate=#{vo.pCate}, nColor=#{vo.pColor}, pSize=#{vo.pSize}, pPrice=#{vo.pPrice}, pStock=#{vo.pStock}, pImage={vo.pImage}, pInfo=#{vo.pInfo}, pContent=#{vo.pContent} where pId=#{vo.pId};
+	    update product set pName=#{vo.pName}, pCate=#{vo.pCate}, pColor=#{vo.pColor}, pSize=#{vo.pSize}, pPrice=#{vo.pPrice}, pStock=#{vo.pStock}, pImage=#{vo.pImage}, pInfo=#{vo.pInfo}, pContent=#{vo.pContent} where pId=#{vo.pId};
 	</update>
 	
 	<delete id="pDelete">

@@ -1,3 +1,4 @@
+<%@page import="com.spring.cj2103s01.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -37,7 +38,21 @@
 			});
 		}
 	}
-	
+	$(document).ready(function(){
+    	$("#pSize").prop("disabled", true)
+	    	$("#pColor").on("change", function(){
+					$("#pSize").removeAttr("disabled").on("change", function(){
+						var color = $("#pColor").val();
+						var size = $("#pSize").val();
+						var content = "<thead><tr><th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead><tbody class='option_products'><tr class='option_product '><td><p class='product'><span>"+color+"/"+size+"</span></p></td><td><span class='quantity' style='width: 65px;'><input type='number' min='1' max='10' style='padding: 1px; border: 0px; width: 30px;' type='text' name='quantity_opt[]' class='pbtn' value='1'><a href='#none' class='up eProductQuantityUpClass' '='' data-target='option_box1_up'></span><a href='#none' class='delete'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a></td><td class='right'><span id='option_box1_price'><input type='hidden' class='option_box_price' value='39000' product-no='153' item_code='P00000FX000B'><span class='ec-front-product-item-price' code='P00000FX000B' product-no='153'>39,000원</span></span></td></tr></tbody><tbody class='add_products'></tbody><tfoot><tr><td colspan='3'><strong>TOTAL </strong><span class='total'><strong><em>39,000원</em></strong> (1개)</span></td></tr></tfoot>";
+
+						$("#pOpt").append(content);
+
+					});
+				});
+		});
+
+		
 </script>
 </head>
 <body>
@@ -61,7 +76,7 @@
 					</c:if>
 				</div>
 					<div class="imgArea">
-						<img src="${ctp}/resources/pMainImages/${vo.pImage}"/>
+						<img src="${ctp}/resources/pMainImages/${vo.pImage}" style="width: 500px;"/>
 					</div>
 					<div class="infoArea">
 						<div class="xans-element- xans-product xans-product-detaildesign">
@@ -74,7 +89,7 @@
 									<th scope="row"><span style="font-size:13px;color:#000000;font-weight:bold;">${vo.pPrice}</span></th>
 								</tr>
 								<tr class=" xans-record-">
-									<th scope="row"><span style="font-size:12px;color:#333333;">${vo.pInfo}</span></th>
+									<th scope="row"><span style="font-size:13px;color:#333333;"><pre>${vo.pInfo}</pre></span></th>
 								</tr>
 								</tbody>
 							</table>
@@ -84,24 +99,36 @@
 								<tr>
 									<th scope="row">COLOR</th>
 									<td>
-										<select option_product_no="153" option_select_element="ec-option-select-finder" option_sort_no="1" option_type="T" item_listing_type="S" option_title="COLOR" product_type="product_option" product_option_area="product_option_153_0" name="option1" id="product_option_id1" class="ProductOption0" option_style="select" required="true">
-											<option value="*" selected="" link_image="">- [필수] 옵션을 선택해 주세요 -</option>
+										<select name="pColor" id="pColor" class="ProductOption0" option_style="select" required="true">
+											<option value="" selected="">- [필수] 옵션을 선택해 주세요 -</option>
 											<option value="**" disabled="" link_image="">-------------------</option>
-											<c:forEach var="vo" items="${vos}">
-												<option value="${vo.pColor}" link_image="">${vo.pColor}</option>
-											</c:forEach>
+												<c:if test="${fn:contains(vo.pColor,'블랙')}"><option value="블랙" link_image="">블랙</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'화이트')}"><option value="화이트" link_image="">화이트</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'차콜')}"><option value="차콜" link_image="">차콜</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그레이')}"><option value="그레이" link_image="">그레이</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'아이보리')}"><option value="아이보리" link_image="">아이보리</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'베이지')}"><option value="베이지" link_image="">베이지</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'블루')}"><option value="블루" link_image="">블루</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><option value="스카이블루" link_image="">스카이블루</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'핑크')}"><option value="핑크" link_image="">핑크</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그린')}"><option value="그린" link_image="">그린</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'레드')}"><option value="레드" link_image="">레드</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'옐로우')}"><option value="옐로우" link_image="">옐로우</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'오렌지')}"><option value="오렌지" link_image="">오렌지</option></c:if>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">SIZE</th>
 									<td>
-										<select option_product_no="153" option_select_element="ec-option-select-finder" option_sort_no="1" option_type="T" item_listing_type="S" option_title="COLOR" product_type="product_option" product_option_area="product_option_153_0" name="option1" id="product_option_id1" class="ProductOption0" option_style="select" required="true">
+										<select name="pSize" id="pSize" class="ProductOption0" option_style="select" required="true">
 											<option value="*" selected="" link_image="">- [필수] 옵션을 선택해 주세요 -</option>
 											<option value="**" disabled="" link_image="">-------------------</option>
-											<c:forEach var="vo" items="${vos}">
-												<option value="${vo.pSize}" link_image="">${vo.pSize}</option>
-											</c:forEach>
+												<c:if test="${fn:contains(vo.pSize,'XS')}"><option value="XS" link_image="">XS</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'S')}"><option value="S" link_image="">S</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'M')}"><option value="M" link_image="">M</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'L')}"><option value="L" link_image="">L</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'XL')}"><option value="XL" link_image="">XL</option></c:if>
 										</select>
 									</td>
 								</tr>
@@ -109,7 +136,7 @@
 						</table>
 						<div id="totalProducts" class="">
 	
-							<table border="1" summary="">
+							<table id="pOpt" border="1" summary="">
 								<colgroup>
 									<col style="width: 284px;">
 									<col style="width: 80px;">
@@ -124,13 +151,13 @@
 									</tr>
 								</thead>
 									<tbody class="option_products">
-										<tr class="option_product " data-option-index="1" target-key="153">
+										<tr class="option_product ">
 											<td>
 												<p class="product">
-													화이트 와이드 데님 팬츠<br> - <span>화이트/M</span>
+													<span></span>
 												</p>
 											</td>
-											<td><span class="quantity" style="width: 65px;"><input style="padding: 1px; border: 0px; width: 20px;" type="text" name="quantity_opt[]" class="pbtn" value="1" product-no="153"><a href="#none" class="up eProductQuantityUpClass" "="" data-target="option_box1_up"><img src="//img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif" id="option_box1_up" class="option_box_up" alt="수량증가"></a><a href="#none" class="down eProductQuantityDownClass" data-target="option_box1_down"><img src="//img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif" id="option_box1_down" class="option_box_down" alt="수량감소"></a></span><a href="#none" class="delete"><img src="//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif" alt="삭제" id="option_box1_del" class="option_box_del"></a></td>
+											<td><span class="quantity" style="width: 65px;"><input style="padding: 1px; border: 0px; width: 20px;" type="text" name="quantity_opt[]" class="pbtn" value="1"><a href="#none" class="up eProductQuantityUpClass" "="" data-target="option_box1_up"></span><a href="#none" class="delete"><img src="//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif" alt="삭제" id="option_box1_del" class="option_box_del"></a></td>
 											<td class="right"><span id="option_box1_price"><input type="hidden" class="option_box_price" value="39000" product-no="153" item_code="P00000FX000B"><span class="ec-front-product-item-price" code="P00000FX000B" product-no="153">39,000원</span></span></td>
 										</tr>
 									</tbody>

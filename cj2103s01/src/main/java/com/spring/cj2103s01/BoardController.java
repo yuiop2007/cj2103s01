@@ -216,7 +216,7 @@ public class BoardController {
 		} else {
 			noticeService.nDelete(idx);
 
-			msgFlag = "noticeDeleteOk$&pag=" + pag + "&pageSize=" + pageSize;
+			msgFlag = "noticeDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;
 		}
 	}
@@ -401,7 +401,7 @@ public class BoardController {
 		} else {
 			eventService.eDelete(idx);
 
-			msgFlag = "eventDeleteOk$&pag=" + pag + "&pageSize=" + pageSize;
+			msgFlag = "eventDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;
 		}
 	}

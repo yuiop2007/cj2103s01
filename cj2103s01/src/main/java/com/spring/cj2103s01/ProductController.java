@@ -3,6 +3,7 @@ package com.spring.cj2103s01;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -133,9 +134,13 @@ public class ProductController {
 		String uploadPath = request.getRealPath("/resources/ckeditor/images/src/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
 		imageService.imgCheck(vo.getpContent(), uploadPath, 46);
 
-		msgFlag = "productUpdate$pId=" + pId + "&pag=" + pag + "&pageSize=" + pageSize;
+		msgFlag = "productUpdateIn$pId=" + vo.getpId() + "&pag=" + pag + "&pageSize=" + pageSize;
 		return "redirect:/msg/" + msgFlag;
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/pUpdate", method = RequestMethod.GET)
 	public String pUpdateGet(int pId, @RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
@@ -153,6 +158,9 @@ public class ProductController {
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/pUpdate", method = RequestMethod.POST)
 	public String pUpdatePost(MultipartFile file, ProductVO vo, Model model, HttpServletRequest request) {
+		
+		String root = "pInput";
+		
 		// 이곳에 오기전에 content안의 그림을 만약에 대비하여 image폴더에 백업받아 두었다.
 		// 수정작업이 되었고(텍스트 or 그림포함), 이때 content안의 'src='태그속성이 있다면, image에 있는 그림파일을 src폴더로
 		// 복사작업한다.
@@ -173,13 +181,17 @@ public class ProductController {
 
 			vo.setpContent(vo.getpContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/"));
 		}
-
-		productService.productUpdateOk(vo); // 잘 정비된 VO를 DB에 저장한다.
+		
+		int res = productService.productUpdateOk(file, vo, root); // 잘 정비된 VO를 DB에 저장한다.
 
 		int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
-		int pageSize = request.getParameter("pageSize") == null ? 1
-				: Integer.parseInt(request.getParameter("pageSize"));
-		msgFlag = "productUpdateOk$pId=" + vo.getpId() + "&pag=" + pag + "&pageSize=" + pageSize;
+		int pageSize = request.getParameter("pageSize") == null ? 1 : Integer.parseInt(request.getParameter("pageSize"));
+		System.out.println(res);
+		if(res==1) {
+			msgFlag = "productUpdateOk$pId=" + vo.getpId() + "&pag=" + pag + "&pageSize=" + pageSize;
+		} else {
+			msgFlag = "productUpdateNo$pId=" + vo.getpId() + "&pag=" + pag + "&pageSize=" + pageSize;
+		}
 
 		return "redirect:/msg/" + msgFlag;
 	}
@@ -192,8 +204,26 @@ public class ProductController {
 
 		productService.pDelete(pId);
 
-		msgFlag = "productDeleteOk$&pag=" + pag + "&pageSize=" + pageSize;
+		msgFlag = "productDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
 		return "redirect:/msg/" + msgFlag;
-		
 	}
+	
+	@RequestMapping(value = "/proShow", method = RequestMethod.GET)
+	public String pproShowGet(@RequestParam String cate,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "24", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
+		}
+		
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
+		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
+
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("cate", cate);
+		
+		return "product/proShow";
+	}
+	
 }

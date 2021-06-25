@@ -20,7 +20,7 @@ public interface ProductService {
 
 	public ProductVO getIdCheck(int pId);
 
-	public void productUpdateOk(ProductVO vo);
+	public int productUpdateOk(MultipartFile file, ProductVO vo, String root);
 
 	public void pDelete(int pId);
 

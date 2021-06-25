@@ -759,3 +759,161 @@ productAct {
     margin: 100px auto;
     padding: 20px 20px 20px 40px;
 }
+
+	* {
+	  margin: 0;
+	  padding: 0;
+	  box-sizing:border-box;
+	}
+	
+	/* Slideshow container */
+	.slideshow-container {
+	  max-width: 1200px;
+	  max-height: 750px;
+	  position: relative;
+	  margin: auto;
+	}
+	.slideshow-container .mySlides img {
+	  height: 750px;
+	}
+	
+	/* Hide the images by default */
+	.mySlides {
+	  display: none;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+	  width: auto;
+	  margin-top: -22px;
+	  padding: 16px;
+	  color: white;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 0 3px 3px 0;
+	  user-select: none;
+	}
+	
+	/* Position the "next button" to the right */
+	.next {
+	  right: 0;
+	  border-radius: 3px 0 0 3px;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: rgba(0,0,0,0.8);
+	}
+	
+	/* Caption text */
+	.text {
+	  color: #f2f2f2;
+	  font-size: 15px;
+	  padding: 8px 12px;
+	  position: absolute;
+	  bottom: 8px;
+	  width: 100%;
+	  text-align: center;
+	}
+	
+	/* The dots/bullets/indicators */
+	.dot {
+	  cursor: pointer;
+	  height: 15px;
+	  width: 15px;
+	  margin: 0 2px;
+	  background-color: #bbb;
+	  border-radius: 50%;
+	  display: inline-block;
+	  transition: background-color 0.6s ease;
+	}
+	
+	.active, .dot:hover {
+	  background-color: #717171;
+	}
+	
+	/* Fading animation */
+	.fade {
+	  -webkit-animation-name: fade;
+	  -webkit-animation-duration: 0.2s;
+	  animation-name: fade;
+	  animation-duration: 3s;
+	}
+	
+	@-webkit-keyframes fade {
+	  from {opacity: .4}
+	  to {opacity: 1}
+	}
+	
+	@keyframes fade {
+	  from {opacity: .4}
+	  to {opacity: 1}
+	}
+.proList {
+    display: table;
+    width: 100%;
+    min-width: 700px;
+    margin: 10px auto 0;
+    margin-left: 0px;
+    font-size: 0;
+    line-height: 0;
+}
+.item {
+    display: inline-block;
+    margin: 20px 0px 30px;
+    border-right: 7px solid #fff;
+    border-left: 7px solid #fff;
+    box-sizing: border-box;
+    color: #757575;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+    
+}
+.mainProduct ul.column4 li.item {
+    width: 25%;
+}
+.pImg {
+    width: 100%;
+}
+li.item .box {
+    width: 100%;
+}
+.proImg {
+    position: relative;
+}
+.proName {
+    margin-left: 3px;
+    font-family: 'Lato','Nanum Gothic';
+    margin-bottom: 0px;
+    font-size: 11px;
+    display: block;
+    line-height: 28px;
+}
+.listitem {
+    padding-left: 3px;
+    line-height: 18px;
+    letter-spacing: .5px;
+}
+.listitem li {
+    font-family: 'Lato','Nanum Gothic';
+    border-top: 0px solid #eee;
+}
+.proColor {
+    overflow: hidden;
+    display: inline-block;
+    margin: 0px 0 0 0;
+}
+.chips {
+    float: left;
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
+    border: 1px solid #ddd;
+    font-size: 0;
+    line-height: 0;
+}

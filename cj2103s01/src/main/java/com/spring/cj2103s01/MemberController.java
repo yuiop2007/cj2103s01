@@ -40,10 +40,7 @@ public class MemberController {
 		if(vo != null && bCryptPasswordEncoder.matches(mPwd, vo.getmPwd()) && vo.getmDrop().equals("NO")) {
 			String strLevel = "";
 			if(vo.getmLevel()==0) strLevel = "관리자";
-			else if(vo.getmLevel()==1) strLevel = "특별회원";
-			else if(vo.getmLevel()==2) strLevel = "우수회원";
-			else if(vo.getmLevel()==3) strLevel = "정회원";
-			else  strLevel = "준회원";
+			else  strLevel = "회원";
 			
 			session.setAttribute("smid", mId);
 			session.setAttribute("sname", vo.getmName());

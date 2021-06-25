@@ -10,42 +10,10 @@
 <jsp:include page="/WEB-INF/views/include/bs.jsp"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="${ctp}/resources/ckeditor/ckeditor.js"></script>
-<script>
-	$(document).ready (function () {                
-	    $('.btnAdd').click (function () {                                        
-	        $('.color').append (                        
-	            '<input type="text" name="pColor"><a href="#" class="btnRemove">삭제</a><br/>'                    
-	        ); // end append                            
-	        $('.btnRemove').on('click', function () { 
-	            $(this).prev().remove (); // remove the textbox
-	            $(this).next ().remove (); // remove the <br>
-	            $(this).remove (); // remove the button
-	        });
-	    }); // end click                                            
-	}); // end ready
-	
-	$(document).ready (function () {                
-	    $('.btnAdd2').click (function () {                                        
-	        $('.size').append (                        
-	            '<input type="text" name="pSize"><a href="#" class="btnRemove2">삭제</a><br/>'                    
-	        ); // end append                            
-	        $('.btnRemove2').on('click', function () { 
-	            $(this).prev().remove (); // remove the textbox
-	            $(this).next ().remove (); // remove the <br>
-	            $(this).remove (); // remove the button
-	        });
-	    }); // end click                                            
-	}); // end ready 
-</script>
+
 <style>
-.color > input[type=text]{
-	width: 100px;
-}
-.size > input[type=text]{
-	width: 100px;
-}
 .color{
-	width: 200px;
+	width: 450px;
 }
 .pin{
 	display: flex;
@@ -77,12 +45,28 @@ label{
 				    </select><br/>
 				<div class="pin">
 						<div class="color boardbtn">
-							<label>색상</label><br/>
-							<input type="text" name="pColor"><a href="#" class="btnAdd">추가</a><br/>
+							<label>색상</label><br/><br/>
+							<input type="checkbox" name="pColor" value="블랙">&nbsp;블랙 &nbsp;
+							<input type="checkbox" name="pColor" value="화이트">&nbsp;화이트 &nbsp;
+							<input type="checkbox" name="pColor" value="차콜">&nbsp;차콜 &nbsp;
+							<input type="checkbox" name="pColor" value="그레이">&nbsp;그레이 &nbsp;
+							<input type="checkbox" name="pColor" value="아이보리">&nbsp;아이보리 &nbsp;
+							<input type="checkbox" name="pColor" value="베이지">&nbsp;베이지 &nbsp;<br/><br/>
+							<input type="checkbox" name="pColor" value="블루">&nbsp;블루 &nbsp;
+							<input type="checkbox" name="pColor" value="스카이블루">&nbsp;스카이블루 &nbsp;
+							<input type="checkbox" name="pColor" value="핑크">&nbsp;핑크 &nbsp;
+							<input type="checkbox" name="pColor" value="그린">&nbsp;그린 &nbsp;
+							<input type="checkbox" name="pColor" value="레드">&nbsp;레드 &nbsp;
+							<input type="checkbox" name="pColor" value="옐로우">&nbsp;옐로우 &nbsp;
+							<input type="checkbox" name="pColor" value="오렌지">&nbsp;오렌지 &nbsp;
 						</div>
 						<div class="size boardbtn">
-							<label>사이즈</label><br/>
-							<input type="text" name="pSize"><a href="#" class="btnAdd2">추가</a><br/>
+							<label>사이즈</label><br/><br/>
+							<input type="checkbox" name="pSize" value="XS">&nbsp;XS &nbsp;
+							<input type="checkbox" name="pSize" value="S">&nbsp;S &nbsp;
+							<input type="checkbox" name="pSize" value="M">&nbsp;M &nbsp;
+							<input type="checkbox" name="pSize" value="L">&nbsp;L &nbsp;
+							<input type="checkbox" name="pSize" value="XL">&nbsp;XL &nbsp;						
 						</div>
 				</div>	
 				<label>상품 가격</label>
@@ -91,8 +75,8 @@ label{
 					<input type="number" id="pStock" name="pStock" value="0"><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required><br/><br/><br/>
-				<label>상세 내용</label>
-					<textarea rows="5" cols="50" name="pInfo" required></textarea>
+				<label>제품 정보</label>
+					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;"></textarea>
 				<label>상세 내용</label>
 					<textarea rows="5" cols="50" name="pContent" id="CKEDITOR" required></textarea>
 					<script>

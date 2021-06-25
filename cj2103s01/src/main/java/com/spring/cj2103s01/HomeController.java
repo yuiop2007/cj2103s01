@@ -7,22 +7,51 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.cj2103s01.dao.ProductDAO;
+import com.spring.cj2103s01.pagenation.Pagenation;
+import com.spring.cj2103s01.pagenation.PagenationVO;
+import com.spring.cj2103s01.service.ProductService;
+import com.spring.cj2103s01.vo.ProductVO;
+
 @Controller
 public class HomeController {
 	
+	@Autowired
+	ProductService productService;
+	
+	@Autowired
+	Pagenation pagenation;
+	
 	@RequestMapping(value = {"/","main"}, method = RequestMethod.GET)
-	public String main() {
+	public String main(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "24", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
+		}
+		String cate = "ALL";
+		
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
+		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
+
+		model.addAttribute("cate", cate);
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+		
 		return "main/main";
 	}
 	

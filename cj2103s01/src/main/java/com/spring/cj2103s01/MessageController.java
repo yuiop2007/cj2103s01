@@ -14,6 +14,7 @@ public class MessageController {
 	@RequestMapping(value = "/msg/{msgFlag}", method = RequestMethod.GET)
 	public String msgGet(@PathVariable String msgFlag, Model model, HttpSession session) {
 		String smid = session.getAttribute("smid")==null ? "" : (String) session.getAttribute("smid");
+		String sStrLevel = session.getAttribute("sStrLevel")==null ? "" : (String) session.getAttribute("sStrLevel");
 		
 		if(msgFlag.equals("mJoinOk")) {
 			model.addAttribute("msg", "회원 가입을 환영합니다.");
@@ -24,7 +25,11 @@ public class MessageController {
 			model.addAttribute("url", "member/join");
 		}
 		else if(msgFlag.equals("mLoginOk")) {
-			model.addAttribute("msg", "회원님 반갑습니다.");
+			if(sStrLevel.equals("관리자")) {
+				model.addAttribute("msg", sStrLevel +"님 반갑습니다.");
+				model.addAttribute("url", "admin/admin");
+			}
+			model.addAttribute("msg", sStrLevel +"님 반갑습니다.");
 			model.addAttribute("url", "main");
 		}
 		else if(msgFlag.equals("mLoginNo")) {
@@ -129,9 +134,9 @@ public class MessageController {
 			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
 			model.addAttribute("url", "board/nContent?"+msgFlag.substring(15));
 		}
-		else if(msgFlag.substring(0,13).equals("productUpdate")) {
+		else if(msgFlag.substring(0,15).equals("productUpdateIn")) {
 			model.addAttribute("msg", "수정창으로 이동합니다.");
-			model.addAttribute("url", "product/pUpdate?"+msgFlag.substring(14));
+			model.addAttribute("url", "product/pUpdate?"+msgFlag.substring(16));
 		}
 		else if(msgFlag.substring(0,15).equals("productDeleteOk")) {
 			model.addAttribute("msg", "삭제되었습니다.");
@@ -139,6 +144,10 @@ public class MessageController {
 		}
 		else if(msgFlag.substring(0,15).equals("productUpdateOk")) {
 			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "product/pContent?"+msgFlag.substring(16));
+		}
+		else if(msgFlag.substring(0,15).equals("productUpdateNo")) {
+			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
 			model.addAttribute("url", "product/pContent?"+msgFlag.substring(16));
 		}
 		
