@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.QnaDAO">
+  
+	<select id="getQnaList" resultType="com.spring.cj2103s01.vo.QnaVO">
+		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb order by qId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+ 	<select id="totRecCnt" resultType="int">
+	    select count(*) from qna;
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+		select count(qId) from qna where ${search} like concat('%', #{searchString} ,'%');
+	</select>
+	
+	<select id="getQnaContentList" resultType="com.spring.cj2103s01.vo.QnaVO">
+		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb where pId = ${pId} order by qId desc limit #{startIndexNo},#{qpageSize};
+	</select>
+	
+	<insert id="setQnaInput">
+	    insert into qna values (default, #{vo.pId}, #{vo.qCate}, #{vo.qWriter} ,#{vo.qTitle}, #{vo.qName}, #{vo.qPwd}, #{vo.qContent}, #{vo.qSecret}, default, default);
+	</insert>
+	
+	<update id="addReadNum">
+	    update qna set qHit = qHit + 1 where qId = #{qId};
+	</update>
+	
+	<select id="getQnaContent" resultType="com.spring.cj2103s01.vo.QnaVO">
+		select * from qna where qId = #{qId};
+	</select>
+<!--	
+	<select id="totpIdRecCnt" resultType="int">
+	    select count(*) from qna where pId = #{pId};
+	</select>
+	
+	
+	
+
+	
+
+	
+	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.qnaVO">
+	    select * from qna where rId = #{rId};
+	</select>
+	
+	<delete id="rDelete">
+		delete from qna where rId = #{rId};
+	</delete>
+	
+
+	
+
+	
+	<update id="qnaUpdateOk">
+	    update qna set rTitle=#{vo.rTitle}, rRating=#{vo.rRating}, rPwd=#{vo.rPwd}, rContent=#{vo.rContent} where rId=#{vo.rId};
+	</update>
+
+	<select id="getqnaSearchList" resultType="com.spring.cj2103s01.vo.qnaVO">
+		select bb.*, cast(timestampdiff(minute, bb.eRdate, now())/60 as signed integer) as diffTime from qna bb where ${search} like concat('%',#{searchString},'%')  order by eId desc limit #{startIndexNo},#{pageSize};
+	</select> -->
+
+</mapper>

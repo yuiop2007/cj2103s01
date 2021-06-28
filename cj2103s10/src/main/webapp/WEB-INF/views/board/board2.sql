@@ -24,9 +24,9 @@ select * from board2 where idx = 16;
 select * from board2 where idx < 16 order by idx desc limit 1;  /* 이전글 */
 select * from board2 where idx > 16 limit 1;										 /* 다음글 */
 
-----------------댓글테이블(replyBoard2)------------------------------
+----------------댓글테이블(boardReply2)------------------------------
 
-create table replyBoard2(
+create table boardReply2(
   idx   		int  	not null auto_increment primary key,	/* 댓글의 고유번호 */
   boardIdx 	int 	not null,						/* 원본글의 고유번호 */
   mid			 	varchar(20) not null,				/* 올린이의 아이디 */
@@ -40,16 +40,16 @@ create table replyBoard2(
   	on update cascade
   	on delete restrict
 );
-drop table replyBoard2;
-desc replyBoard2;
+drop table boardReply2;
+desc boardReply2;
 
-select * from replyBoard2 order by idx desc;
+select * from boardReply2 order by idx desc;
 
-select count(*) from replyBoard2;
-select count(*) from replyBoard2 where boardIdx = 17;
+select count(*) from boardReply2;
+select count(*) from boardReply2 where boardIdx = 17;
 
-select *, (select count(*) from replyBoard2 where boardIdx = board2.idx) as replyCount  from board2 order by idx desc limit 0, 5;
-select *, (select count(*) from replyBoard2 where boardIdx = board2.idx) as replyCount from board2 where name = '홍장군' order by idx desc limit 0, 5;
+select *, (select count(*) from boardReply2 where boardIdx = board2.idx) as replyCount  from board2 order by idx desc limit 0, 5;
+select *, (select count(*) from boardReply2 where boardIdx = board2.idx) as replyCount from board2 where name = '홍장군' order by idx desc limit 0, 5;
 
 
 ------- 날짜 함수 연습 ---------------------------------------------------------------

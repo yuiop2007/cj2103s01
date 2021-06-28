@@ -25,6 +25,7 @@
 				<input type="hidden" name="nName" value="${sname}">
 				<label>제목</label>
 					<input type="text" id="nTitle" name="nTitle" maxlength="50" required>
+					<br/><br/><br/>
 				<label>첨부 파일</label><br/>
 					<input type="file" id="file" name="file"><br/><br/><br/>
 				<label>상세 내용</label>
@@ -36,6 +37,7 @@
 				        	height : 400
 				        });
 					</script>
+					<br/><br/><br/>
 				<label>비밀번호</label>
 					<input type="password" id="nPwd" name="nPwd" required>
 			<div class="jumbotron text-center">

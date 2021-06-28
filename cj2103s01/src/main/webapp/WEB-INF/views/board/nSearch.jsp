@@ -116,7 +116,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		  <form name="searchForm" method="get" action="${ctp}/board/nSearch">
 		    <select name="search" onchange="sChange()" style="width: 100px; height: 40px;">
 		    	<option value="nTitle" selected>제목</option>
-		    	<option value="nWriter">글쓴이</option>
+		    	<option value="nName">글쓴이</option>
 		    </select>
 		    <input type="text" name="searchString" style="width: 250px; height: 40px;"/>
 		    <a href="#" onclick="sCheck()">SEARCH</a>

@@ -25,6 +25,7 @@
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
 	        <a href="#" class="w3-bar-item w3-button">Calendar</a>
 	        <a href="${ctp}/study/woo" class="w3-bar-item w3-button">우편번호API</a>
+	        <a href="${ctp}/study/kakao" class="w3-bar-item w3-button">카카오지도API</a>
 	        <a href="#" class="w3-bar-item w3-button">미니쇼핑몰</a>
 	      </div>
 	    </div>
@@ -34,6 +35,9 @@
 	        <a href="${ctp}/mail/mailForm" class="w3-bar-item w3-button">메일보내기</a>
 	        <a href="${ctp}/member/mUpdateCheck" class="w3-bar-item w3-button">정보수정</a>
 	        <a href="javascript:mDeleteCheck();" class="w3-bar-item w3-button">회원탈퇴</a>
+	        <c:if test="${slevel == 0}">
+	          <a href="${ctp}/admin/aCheck" class="w3-bar-item w3-button">관리자메뉴</a>
+	        </c:if>
 	      </div>
 	    </div>
 	  </c:if>

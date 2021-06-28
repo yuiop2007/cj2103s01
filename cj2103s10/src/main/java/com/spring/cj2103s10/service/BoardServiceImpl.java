@@ -160,5 +160,25 @@ public class BoardServiceImpl implements BoardService {
 	public void setReplyInsert(BoardReplyVO cVo) {
 		boardDAO.setReplyInsert(cVo);
 	}
+
+	@Override
+	public List<BoardReplyVO> getBoardReply(int idx) {
+		return boardDAO.getBoardReply(idx);
+	}
+
+	@Override
+	public void setReplyDelete(int replyIdx) {
+		boardDAO.setReplyDelete(replyIdx);
+	}
+
+	@Override
+	public void levelOrderPlusUpdate(BoardReplyVO cVo) {
+		boardDAO.levelOrderPlusUpdate(cVo);
+	}
+
+	@Override
+	public void bReplyInsert2(BoardReplyVO cVo) {
+		boardDAO.bReplyInsert2(cVo);
+	}
 	
 }

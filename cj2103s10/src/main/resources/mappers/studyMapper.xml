@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s10.dao.StudyDAO">
+  <select id="getAddress1" resultType="String">
+    select distinct address1 from area;
+  </select>
+   
+  <select id="getAddress2" resultType="com.spring.cj2103s10.vo.AreaVO">
+    select * from area where address1 = #{address1} order by address2;
+  </select> 
+</mapper>

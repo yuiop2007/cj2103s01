@@ -98,6 +98,22 @@ public class MessageController {
 			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
 			model.addAttribute("url", "board/event");
 		}
+		else if(msgFlag.equals("rInputOk")) {
+			model.addAttribute("msg", "게시물이 등록되었습니다.");
+			model.addAttribute("url", "/member/mypage");
+		}
+		else if(msgFlag.equals("rInputNo")) {
+			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
+			model.addAttribute("url", "/member/mypage");
+		}
+		else if(msgFlag.equals("qInputOk")) {
+			model.addAttribute("msg", "게시물이 등록되었습니다.");
+			model.addAttribute("url", "/member/mypage");
+		}
+		else if(msgFlag.equals("qInputNo")) {
+			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
+			model.addAttribute("url", "/member/mypage");
+		}
 	
 		
 		
@@ -150,7 +166,22 @@ public class MessageController {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
 			model.addAttribute("url", "product/pContent?"+msgFlag.substring(16));
 		}
-		
+		else if(msgFlag.substring(0,16).equals("reviewPasswordNo")) {
+			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
+			model.addAttribute("url", "board/rContent?"+msgFlag.substring(17));
+		}
+		else if(msgFlag.substring(0,16).equals("reviewPasswordOk")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "board/rUpdate?"+msgFlag.substring(17));
+		}
+		else if(msgFlag.substring(0,14).equals("reviewDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "board/pContent?"+msgFlag.substring(15));
+		}
+		else if(msgFlag.substring(0,14).equals("reviewUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/rContent?"+msgFlag.substring(15));
+		}
 		return "include/message";
 	}
 }

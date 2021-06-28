@@ -99,7 +99,11 @@ public class BoardController {
   	// 원본글 가져오기
   	BoardVO vo = boardService.getBoardContent(idx);
   	
+  	// 댓글 가져오기
+  	List<BoardReplyVO> cVos = boardService.getBoardReply(idx);
+  	
   	model.addAttribute("vo", vo);
+  	model.addAttribute("cVos", cVos);
   	model.addAttribute("pag", pag);
   	model.addAttribute("pageSize", pageSize);
   	
@@ -181,8 +185,8 @@ public class BoardController {
   
   // 댓글처리(댓글저장, 처음댓글의 level과 levelOrder은 0)
   @ResponseBody
-  @RequestMapping(value="/bReplyInsert", method=RequestMethod.POST)
-  public int bReplyInsertPost(BoardReplyVO cVo) {
+  @RequestMapping(value="/bReplyInsert", method=RequestMethod.GET)
+  public String bReplyInsertGet(BoardReplyVO cVo) {
   	// 현재 본문글에 해당하는 댓글의 levelOrder값을 구한다.
   	int levelOrder = 0;
   	String strLevelOrder = boardService.maxLevelOrder(cVo.getBoardIdx());
@@ -190,7 +194,28 @@ public class BoardController {
   	cVo.setLevelOrder(levelOrder);
   	
   	boardService.setReplyInsert(cVo);
+  	//System.out.println("cVo : " + cVo);
   	
-  	return 1;
+  	return "1";
+  }
+  
+  @ResponseBody
+  @RequestMapping(value="/bReplyDelete", method=RequestMethod.GET)
+  public String bReplyDeleteGet(int replyIdx) {
+  	boardService.setReplyDelete(replyIdx);
+  	return "";
+  }
+  
+  // 부모댓글에 대한 답변글(대댓글) 입력처리
+  @ResponseBody
+  @RequestMapping(value="/bReplyInsert2", method=RequestMethod.GET)
+  public String bReplyInsert2Get(BoardReplyVO cVo) {
+  	boardService.levelOrderPlusUpdate(cVo); 	// 부모댓글의 levelOrder값보다 큰 모든 댓글의 levelOrder값을 +1 시켜준다.(update)
+  	cVo.setLevel(cVo.getLevel()+1);						// 자신의 level은 부모 level보다 +1 한다.
+  	cVo.setLevelOrder(cVo.getLevelOrder()+1);	// 자신의 levelOrder은 부모 levelOrder보다 +1 한다.
+  	
+  	boardService.bReplyInsert2(cVo);		// 모든 설정을 마친 cVo에 담긴 내용을 댓글테이블에 등록한다.
+  	
+  	return "";
   }
 }

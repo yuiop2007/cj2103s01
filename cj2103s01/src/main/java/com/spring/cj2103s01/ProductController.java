@@ -17,8 +17,12 @@ import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.ProductService;
+import com.spring.cj2103s01.service.QnaService;
+import com.spring.cj2103s01.service.ReviewService;
 import com.spring.cj2103s01.vo.NoticeVO;
 import com.spring.cj2103s01.vo.ProductVO;
+import com.spring.cj2103s01.vo.QnaVO;
+import com.spring.cj2103s01.vo.ReviewVO;
 
 @Controller
 @RequestMapping("/product")
@@ -33,6 +37,12 @@ public class ProductController {
 
 	@Autowired
 	ImageService imageService;
+	
+	@Autowired
+	ReviewService reviewService;
+	
+	@Autowired
+	QnaService qnaService;
 
 	@RequestMapping(value = "/pInput", method = RequestMethod.GET)
 	public String pInputGet() {
@@ -111,9 +121,30 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/pContent", method = RequestMethod.GET)
-	public String pContentGet(Model model, int pId, int pag, int pageSize) {
+	public String pContentGet(Model model, int pId, int pag, int pageSize, 
+			@RequestParam(name = "rpag", defaultValue = "1", required = false) int rpag,
+			@RequestParam(name = "rpageSize", defaultValue = "5", required = false) int rpageSize,
+			@RequestParam(name = "qpag", defaultValue = "1", required = false) int qpag,
+			@RequestParam(name = "qpageSize", defaultValue = "5", required = false) int qpageSize) {
+		if (rpag < 1) {
+			rpag = 1;
+		}
 		// 조회수 증가
 		productService.addReadNum(pId);
+		
+		PagenationVO rpageVO = pagenation.pagenation(rpag, rpageSize, "preview", Integer.toString(pId) , "");
+		
+		List<ReviewVO> rvos = reviewService.getReviewContentList(pId ,rpageVO.getStartIndexNo(), rpageSize);
+
+		model.addAttribute("rvos", rvos);
+		model.addAttribute("rpageVO", rpageVO);
+		
+		PagenationVO qpageVO = pagenation.pagenation(qpag, qpageSize, "pqna", Integer.toString(pId) , "");
+		
+		List<QnaVO> qvos = qnaService.getQnaContentList(pId ,qpageVO.getStartIndexNo(), qpageSize);
+		
+		model.addAttribute("qvos", qvos);
+		model.addAttribute("qpageVO", qpageVO);
 
 		// 원본글 가져오기
 		ProductVO vo = productService.getProductContent(pId);

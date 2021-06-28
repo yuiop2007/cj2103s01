@@ -18,8 +18,12 @@ import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.EventService;
 import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.NoticeService;
+import com.spring.cj2103s01.service.QnaService;
+import com.spring.cj2103s01.service.ReviewService;
 import com.spring.cj2103s01.vo.EventVO;
 import com.spring.cj2103s01.vo.NoticeVO;
+import com.spring.cj2103s01.vo.QnaVO;
+import com.spring.cj2103s01.vo.ReviewVO;
 
 @Controller
 @RequestMapping("/board")
@@ -31,6 +35,12 @@ public class BoardController {
 
 	@Autowired
 	EventService eventService;
+	
+	@Autowired
+	ReviewService reviewService;
+	
+	@Autowired
+	QnaService qnaService;
 
 	@Autowired
 	Pagenation pagenation;
@@ -221,11 +231,6 @@ public class BoardController {
 		}
 	}
 
-	@RequestMapping(value = "/qna", method = RequestMethod.GET)
-	public String qnaGet() {
-
-		return "board/qna";
-	}
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventGet(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
@@ -404,5 +409,250 @@ public class BoardController {
 			msgFlag = "eventDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;
 		}
+	}
+	
+	
+	@RequestMapping(value = "/review", method = RequestMethod.GET)
+	public String reviewGet(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
+		}
+
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "review", "", "");
+
+		List<ReviewVO> vos = reviewService.getReviewList(pageVO.getStartIndexNo(), pageSize);
+
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+
+		return "board/review";
+	}
+	
+	@RequestMapping(value = "/rInput", method = RequestMethod.GET)
+	public String rInputGet(int pId) {
+		
+		return "board/rInput";
+	}
+	
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value = "/rInput", method = RequestMethod.POST)
+	public String rInputPost(ReviewVO vo, HttpServletRequest request) {
+		vo.setrPwd(bCryptPasswordEncoder.encode(vo.getrPwd()));
+		
+		
+		String uploadPath = request.getRealPath("/resources/ckeditor/images/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
+
+		// 이미지파일 시작위치(42) :
+		// src="/cj2103s01/resources/ckeditor/images/210622142615_1.png"
+
+		imageService.imgCheck(vo.getrContent(), uploadPath, 42); // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
+
+		// DB에 저장되는 실제 파일 정보의 위치
+		vo.setrContent(vo.getrContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/"));
+
+		int res = reviewService.setReviewInput(vo);
+
+		if (res == 1)
+			msgFlag = "rInputOk";
+		else
+			msgFlag = "rInputNo";
+
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	@RequestMapping(value = "/rContent", method = RequestMethod.GET)
+	public String rContentGet(Model model, int rId, int pId, int pag, int pageSize) {
+		// 조회수 증가
+		reviewService.addReadNum(rId);
+
+		// 원본글 가져오기
+		ReviewVO vo = reviewService.getReviewContent(rId);
+		model.addAttribute("vo", vo);
+		model.addAttribute("pag", pag);
+		model.addAttribute("pageSize", pageSize);
+
+		return "board/rContent";
+	}
+	
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value = "/rContent", method = RequestMethod.POST)
+	public String rContentPost(int rId,  int pId, String rPwd, HttpServletRequest request,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		ReviewVO vo = reviewService.getIdCheck(rId);
+
+		if (!bCryptPasswordEncoder.matches(rPwd, vo.getrPwd())) { // 비밀번호 오류일때 처리
+			msgFlag = "reviewPasswordNo$rId=" + rId +"&pId="+ pId + "&pag=" + pag + "&pageSize=" + pageSize;
+			return "redirect:/msg/" + msgFlag;
+		} else {
+			// 비밀번호 맞을때 처리, 먼저 기존의 src폴더의 그림파일을 images폴더로 백업시켜둔다.
+			String uploadPath = request.getRealPath("/resources/ckeditor/images/src/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
+			imageService.imgCheck(vo.getrContent(), uploadPath, 46);
+
+			msgFlag = "reviewPasswordOk$rId=" + rId +"&pId="+ pId + "&pag=" + pag + "&pageSize=" + pageSize;
+			return "redirect:/msg/" + msgFlag;
+		}
+	}
+
+	
+	
+	@RequestMapping(value = "/rDelete", method = RequestMethod.POST)
+	public String rDeleteGet(int rId, int pId, String rPwd, HttpServletRequest request,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		ReviewVO vo = reviewService.getIdCheck(rId);
+
+		if (!bCryptPasswordEncoder.matches(rPwd, vo.getrPwd())) { // 비밀번호 오류일때 처리
+			msgFlag = "reviewPasswordNo$rId=" + rId +"&pId="+ pId +"&pag=" + pag + "&pageSize=" + pageSize;
+			return "redirect:/msg/" + msgFlag;
+		} else {
+			reviewService.rDelete(rId);
+
+			msgFlag = "reviewDeleteOk$pId=" + pId + "&pag=" + pag + "&pageSize=" + pageSize;
+			return "redirect:/msg/" + msgFlag;
+		}
+	}
+	
+	@RequestMapping(value = "/rUpdate", method = RequestMethod.GET)
+	public String rUpdateGet(int rId, @RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "review", "", "");
+		ReviewVO vo = reviewService.getReviewContent(rId);
+
+		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("vo", vo);
+
+		return "board/rUpdate";
+	}
+	
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value = "/rUpdate", method = RequestMethod.POST)
+	public String rUpdatePost(ReviewVO vo, Model model, HttpServletRequest request) {
+		vo.setrPwd(bCryptPasswordEncoder.encode(vo.getrPwd()));
+
+		// 이곳에 오기전에 content안의 그림을 만약에 대비하여 image폴더에 백업받아 두었다.
+		// 수정작업이 되었고(텍스트 or 그림포함), 이때 content안의 'src='태그속성이 있다면, image에 있는 그림파일을 src폴더로
+		// 복사작업한다.
+		if (!vo.getOriContent().equals(vo.getrContent()) && vo.getrContent().indexOf("src=\"/") != -1) {
+			vo.setrContent(vo.getrContent().replace("/resources/ckeditor/images/src/", "/resources/ckeditor/images/"));
+
+			// 기존에 src폴더에 존재하는 그림들을 모두 삭제처리한다.
+			String uploadPath = request.getRealPath("/resources/ckeditor/images/src/");
+			imageService.imgDelete(vo.getOriContent(), uploadPath, 46);
+
+			// src폴더의 원본 그림을 모두 삭제시킨후, 새롭게 업로드시킨 그림을 다시 src폴더에 복사한다.
+			uploadPath = request.getRealPath("/resources/ckeditor/images/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
+
+			// 이미지파일 시작위치(42) :
+			// src="/cj2103s10/resources/ckeditor/images/210622142615_1.png"
+			imageService.imgCheck(vo.getrContent(), uploadPath, 42); // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
+			// 위의 작업을 마치고 오면 이미지가 /src폴더로 복사완료되어 있다.
+
+			vo.setrContent(vo.getrContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/"));
+		}
+
+		reviewService.reviewUpdateOk(vo); // 잘 정비된 VO를 DB에 저장한다.
+		
+		int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
+		int pageSize = request.getParameter("pageSize") == null ? 1 : Integer.parseInt(request.getParameter("pageSize"));
+		msgFlag = "reviewUpdateOk$rId=" + vo.getrId() +"&pId=" +vo.getpId()+ "&pag=" + pag + "&pageSize=" + pageSize;
+
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	// 조건 검색 Search List처리
+	@RequestMapping(value = "/rSearch", method = RequestMethod.GET)
+	public String rSearchGet(String search, String searchString,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
+		}
+
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "review", search, searchString);
+
+		List<ReviewVO> vos = reviewService.getReviewSearchList(pageVO.getStartIndexNo(), pageSize, search, searchString);
+
+		String searchTitle = "";
+		if (search.equals("rTitle")) {
+			searchTitle = "제목";
+		} else {
+			searchTitle = "글쓴이";
+		}
+
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("search", search);
+		model.addAttribute("searchTitle", searchTitle);
+		model.addAttribute("searchString", searchString);
+		model.addAttribute("searchCount", pageVO.getTotRecCnt());
+
+		return "board/rSearch";
+	}
+	
+	@RequestMapping(value = "/qna", method = RequestMethod.GET)
+	public String qnaGet(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
+		if (pag < 1) {
+			pag = 1;
+		}
+
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "qna", "", "");
+
+		List<QnaVO> vos = qnaService.getQnaList(pageVO.getStartIndexNo(), pageSize);
+
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+
+		return "board/qna";
+	}
+	
+	@RequestMapping(value = "/qInput", method = RequestMethod.GET)
+	public String qInputGet(int pId) {
+		
+		return "board/qInput";
+	}
+	
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value = "/qInput", method = RequestMethod.POST)
+	public String qInputPost(QnaVO vo, HttpServletRequest request) {
+		vo.setqPwd(bCryptPasswordEncoder.encode(vo.getqPwd()));
+		String title = "(" + vo.getqCate() + ") " + vo.getqTitle();
+		vo.setqTitle(title);
+		
+		String uploadPath = request.getRealPath("/resources/ckeditor/images/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
+		
+		// 이미지파일 시작위치(42) :
+		// src="/cj2103s01/resources/ckeditor/images/210622142615_1.png"
+
+		imageService.imgCheck(vo.getqContent(), uploadPath, 42); // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
+
+		// DB에 저장되는 실제 파일 정보의 위치
+		vo.setqContent(vo.getqContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/"));
+
+		int res = qnaService.setQnaInput(vo);
+
+		if (res == 1)
+			msgFlag = "qInputOk";
+		else
+			msgFlag = "qInputNo";
+
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	@RequestMapping(value = "/qContent", method = RequestMethod.GET)
+	public String qContentGet(Model model, int qId, int pId, int pag, int pageSize) {
+		// 조회수 증가
+		qnaService.addReadNum(qId);
+
+		// 원본글 가져오기
+		QnaVO vo = qnaService.getQnaContent(qId);
+		model.addAttribute("vo", vo);
+		model.addAttribute("pag", pag);
+		model.addAttribute("pageSize", pageSize);
+
+		return "board/qContent";
 	}
 }

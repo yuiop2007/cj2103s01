@@ -29,8 +29,16 @@ public interface BoardDAO {
 
 	public void boardUpdateOk(@Param("vo") BoardVO vo);
 
-	public String maxLevelOrder(@Param("idx") int boardIdx);
+	public String maxLevelOrder(@Param("boardIdx") int boardIdx);
 
 	public void setReplyInsert(@Param("cVo") BoardReplyVO cVo);
+
+	public List<BoardReplyVO> getBoardReply(@Param("idx") int idx);
+
+	public void setReplyDelete(@Param("replyIdx") int replyIdx);
+
+	public void levelOrderPlusUpdate(@Param("cVo") BoardReplyVO cVo);
+
+	public void bReplyInsert2(@Param("cVo") BoardReplyVO cVo);
 
 }

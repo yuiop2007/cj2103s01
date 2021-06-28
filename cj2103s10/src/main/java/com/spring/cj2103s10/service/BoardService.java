@@ -31,4 +31,12 @@ public interface BoardService {
 
 	public void setReplyInsert(BoardReplyVO cVo);
 
+	public List<BoardReplyVO> getBoardReply(int idx);
+
+	public void setReplyDelete(int replyIdx);
+
+	public void levelOrderPlusUpdate(BoardReplyVO cVo);
+
+	public void bReplyInsert2(BoardReplyVO cVo);
+
 }

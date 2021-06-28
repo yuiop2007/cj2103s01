@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.spring.cj2103s01.dao.EventDAO;
 import com.spring.cj2103s01.dao.NoticeDAO;
 import com.spring.cj2103s01.dao.ProductDAO;
+import com.spring.cj2103s01.dao.QnaDAO;
+import com.spring.cj2103s01.dao.ReviewDAO;
 
 @Service
 public class Pagenation {
@@ -17,6 +19,12 @@ public class Pagenation {
 
 	@Autowired
 	EventDAO eventDAO;
+	
+	@Autowired
+	ReviewDAO reviewDAO;
+	
+	@Autowired
+	QnaDAO qnaDAO;
 
 	public PagenationVO pagenation(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 5;
@@ -48,6 +56,27 @@ public class Pagenation {
 			else {
 				totRecCnt = eventDAO.totSearchRecCnt(search, searchString);
 			}
+		}
+		else if (partName.equals("review")) {
+			if (searchString.equals("")) {
+				totRecCnt = reviewDAO.totRecCnt();
+			}
+			else {
+				totRecCnt = reviewDAO.totSearchRecCnt(search, searchString);
+			}
+		}
+		else if (partName.equals("qna")) {
+			if (searchString.equals("")) {
+				totRecCnt = qnaDAO.totRecCnt();
+			}
+			else {
+				System.out.println(search);
+				totRecCnt = qnaDAO.totSearchRecCnt(search, searchString);
+			}
+		}
+		else if(partName.equals("preview")) {
+			int pId = Integer.parseInt(search);
+			totRecCnt = reviewDAO.totpIdRecCnt(pId);
 		}
 
 		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt / pageSize : (int) (totRecCnt / pageSize) + 1;
