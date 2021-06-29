@@ -41,6 +41,10 @@
     	    <exclude-mapping path="/product/proShow"/>
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
+	  <interceptor>
+	    <mapping path="/board/qInput"/>
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
 	</interceptors>
 	
 	<!-- 파일 업로드를 위한 설정(용량제한) -->

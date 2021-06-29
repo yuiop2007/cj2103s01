@@ -30,7 +30,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	// 페이지사이즈 처리
 	function pageCheck() {
 		var pageSize = pageForm.pageSize.value;
-		location.href = "${ctp}/board/qna?pag=${pageVO.pag}&pageSize="+ pageSize;
+		location.href = "${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${pageVO.pag}&pageSize="+ pageSize;
 	}
 </script>
 </head>
@@ -44,7 +44,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		</br>
 		</br>
 		</br>
-		</br>
+		</br><font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.
 		<form name="pageForm">
 			<table class="table table-borderless">
 				<thead>
@@ -68,19 +68,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 					<tr>
 						<td class="td1" style="width: 5%;">${curScrStartNo}</td>
 						<td class="td2" style="width: 10%;">${vo.qCate}</td>
-						<td class="td3" style="width: 52%; text-align: left;">
-						<c:if test="${vo.qSecret eq 0}">
-							<a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.qTitle}</a>
-						</c:if>
-						<c:if test="${vo.qSecret eq 1}">
-							<c:choose>
-				                <c:when test="${smid eq vo.qWriter || slevel eq 0}">
-				                    <a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}"><img src="${ctp}/images/lock.gif"/>${vo.qTitle}</a>
-				                </c:when>
-				                <c:otherwise><img src="${ctp}/images/lock.gif"/>${vo.qTitle}</c:otherwise>
-				            </c:choose>
-						</c:if>
-						</td>
+						<td class="td3" style="width: 52%; text-align: left;"><a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.qTitle}</a></td>
 						<td class="td3" style="width: 10%;">${vo.qName}</td>
 						<td class="td4" style="width: 10%;">
 							<c:if test="${vo.diffTime <= 24}">${fn:substring(vo.qRdate,11,19)}</c:if>
@@ -97,22 +85,22 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		  <ul class="pagination justify-content-center">
 			  <c:set var="startPageNum" value="${pageVO.pag - (pageVO.pag-1)%pageVO.blockSize}" />  <!-- 해당블록의 시작페이지 구하기 -->
 			  <c:if test="${pag != 1}">
-			    <li class="page-item"><a href="${ctp}/board/qna?pag=1&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
-			    <li class="page-item"><a href="${ctp}/board/qna?pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
+			    <li class="page-item"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=1&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+			    <li class="page-item"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
 			  </c:if>
 			  <c:forEach var="i" begin="0" end="${pageVO.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
 			    <c:if test="${(startPageNum+i) <= pageVO.totPage}">
 				  	<c:if test="${pageVO.pag == (startPageNum+i)}">
-				  	  <li class="page-item active"><a href="${ctp}/board/qna?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+				  	  <li class="page-item active"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
 				  	</c:if>
 				  	<c:if test="${pageVO.pag != (startPageNum+i)}">
-				  	  <li class="page-item"><a href="${ctp}/board/qna?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+				  	  <li class="page-item"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
 				  	</c:if>
 			  	</c:if>
 			  </c:forEach>
 			  <c:if test="${pageVO.pag != pageVO.totPage}">
-			    <li class="page-item"><a href="${ctp}/board/qna?pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▶</a></li>
-			    <li class="page-item"><a href="${ctp}/board/qna?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
+			    <li class="page-item"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▶</a></li>
+			    <li class="page-item"><a href="${ctp}/board/qSearch?search=${search}&searchString=${searchString}&pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
 			  </c:if>
 		  </ul>
 		</div>

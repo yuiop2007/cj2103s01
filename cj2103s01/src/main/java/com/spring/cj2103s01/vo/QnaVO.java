@@ -12,6 +12,8 @@ public class QnaVO {
 	private int qSecret;
 	private String qRdate;
 	private int qHit;
+	private int originNo;
+	private int groupNo;
 
 	private int diffTime;
 	private String oriContent;
@@ -120,12 +122,31 @@ public class QnaVO {
 		this.oriContent = oriContent;
 	}
 
+	public int getOriginNo() {
+		return originNo;
+	}
+
+	public void setOriginNo(int originNo) {
+		this.originNo = originNo;
+	}
+
+	public int getGroupNo() {
+		return groupNo;
+	}
+
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+
 	@Override
 	public String toString() {
 		return "QnaVO [qId=" + qId + ", pId=" + pId + ", qCate=" + qCate + ", qWriter=" + qWriter + ", qTitle=" + qTitle
 				+ ", qName=" + qName + ", qPwd=" + qPwd + ", qContent=" + qContent + ", qSecret=" + qSecret
-				+ ", qRdate=" + qRdate + ", qHit=" + qHit + ", diffTime=" + diffTime + ", oriContent=" + oriContent
-				+ "]";
+				+ ", qRdate=" + qRdate + ", qHit=" + qHit + ", originNo=" + originNo + ", groupNo=" + groupNo
+				+ ", diffTime=" + diffTime + ", oriContent=" + oriContent + "]";
 	}
+
+	
+	
 
 }

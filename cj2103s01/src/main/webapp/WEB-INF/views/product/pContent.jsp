@@ -33,6 +33,7 @@
 .proReview, .proQnA{
 	padding: 0 30px 0 30px;
 }
+#totalPrice { display: none; }
 </style>
 <script>
 	//게시글 수정처리를 위한 비밀번호 체크
@@ -55,19 +56,82 @@
 			});
 		}
 	}
-	$(document).ready(function(){
-    	$("#pSize").prop("disabled", true)
-	    	$("#pColor").on("change", function(){
-					$("#pSize").removeAttr("disabled").on("change", function(){
-						var color = $("#pColor").val();
-						var size = $("#pSize").val();
-						var content = "<thead><tr><th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead><tbody class='option_products'><tr class='option_product '><td><p class='product'><span>"+color+"/"+size+"</span></p></td><td><span class='quantity' style='width: 65px;'><input type='number' min='1' max='10' style='padding: 1px; border: 0px; width: 30px;' type='text' name='orderitem[]' class='pbtn' value='1'></span><a href='#none' class='delete'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a></td><td class='right'><span id='option_box1_price'><input type='hidden' class='option_box_price' value='39000' product-no='153' ><span class='ec-front-product-item-price'>${vo.pPrice}원</span></span></td></tr></tbody><tbody class='add_products'></tbody><tfoot><tr><td colspan='3'><strong>TOTAL </strong><span class='total'><strong><em>39,000원</em></strong> (1개)</span></td></tr></tfoot>";
-						
-						$("#pOpt").append(content);
+	var colsiz = new Array();
+	var color = "";
+	var size = "";
+	var content = "";
+			
+	function appendChoiceDiv(colsiz){  
+        			
+				content += "<tr id='tr_"+colsiz.goodsId+"'>";
+				content += "<td>";
+				content += "<p class='product'><span>"+colsiz.goodsId+"</span></p>";
+				content += "</td>";
+				content += "<td>";
+				content += "<span class='quantity' style='width: 65px;'>";
+				content += "<input type='text' id='ordernum' style='padding: 1px; border: 0px; width: 30px;' name='' class='pbtn' value='1'>";
+				content += "<button type='button' class='add' onclick='goods.minus(\'"+colsiz.goodsId+"\')'>-</button>";
+				content += "<button type='button' class='add' onclick='goods.plus(\'"+colsiz.goodsId+"\')'>+</button>";
+				content += "<a href='#' class='delete' onclick='goods.deselect(\'"+colsiz.goodsId+"\')'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>";
+				content += "</td>";
+				content += "<td class='right'>";
+				content += "<span id='option_box1_price'>";
+				content += "<input type='hidden' class='option_box_price' value='"+colsiz.goodsPrice+"'>";
+				content += "<span class='ec-front-product-item-price'>"+colsiz.goodsPrice+"원</span>";
+				content += "</span>";
+				content += "</td>";
+				content += "</tr>";
+				$("#orderbody").append(content);
+				color = "";
+				size = "";
+				$("#pColor").val("*").prop("selected", true);
+				$("#pSize").val("*").prop("selected", true);
+				$("#pSize").prop("disabled", true);
+			
+		}
 
-					});
-				});
-		});
+
+			
+	$(document).ready(function(){
+	   	
+    	$("#pSize").prop("disabled", true)
+    	$("#pColor").on("change", function(){
+				$("#pSize").removeAttr("disabled")
+				color = $("#pColor").val();
+				
+			});
+
+			$("#pSize").on("change", function(){
+				size = $("#pSize").val();
+				
+				if(colsiz.length==0){
+					colsiz.push({goodsId:color + "/" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
+					appendChoiceDiv(colsiz[0]);
+				}
+				else if(colsiz.length!=0){
+					for(var i=0; i<colsiz.length; i++){
+						var sw = 0;
+						if(colsiz[i].goodsId==(color+"/"+size)){
+							sw = 1;
+							alert("이미 추가한 상품입니다.");
+							color = "";
+							size = "";
+							$("#pColor").val("*").prop("selected", true);
+							$("#pSize").val("*").prop("selected", true);
+							$("#pSize").prop("disabled", true);
+						}
+					}
+					if(sw==0){
+						colsiz.push({goodsId:color + "/" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
+						appendChoiceDiv(colsiz[colsiz.length-1]);
+					}
+				}
+			});
+
+	});
+
+	
+  
 
 		
 </script>
@@ -117,7 +181,7 @@
 									<th scope="row">COLOR</th>
 									<td>
 										<select name="pColor" id="pColor" class="ProductOption0" option_style="select" required="true">
-											<option value="" selected="">- [필수] 옵션을 선택해 주세요 -</option>
+											<option value="*" selected="">- [필수] 옵션을 선택해 주세요 -</option>
 											<option value="**" disabled="" link_image="">-------------------</option>
 												<c:if test="${fn:contains(vo.pColor,'블랙')}"><option value="블랙" link_image="">블랙</option></c:if>
 												<c:if test="${fn:contains(vo.pColor,'화이트')}"><option value="화이트" link_image="">화이트</option></c:if>
@@ -159,39 +223,40 @@
 									<col style="width: 80px;">
 									<col style="width: 110px;">
 								</colgroup>
-								<c:if test="">
 								<thead>
 									<tr>
-										<th scope="col"></th>
-										<th scope="col"></th>
-										<th scope="col"></th>
+										<th scope='col'></th>
+										<th scope='col'></th>
+										<th scope='col'></th>
 									</tr>
 								</thead>
-									<tbody class="option_products">
-										<tr class="option_product ">
-											<td>
-												<p class="product">
-													<span></span>
-												</p>
-											</td>
-											<td><span class="quantity" style="width: 65px;"><input style="padding: 1px; border: 0px; width: 20px;" type="text" name="quantity_opt[]" class="pbtn" value="1"></span><a href="#none" class="delete"><img src="//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif" alt="삭제" id="option_box1_del" class="option_box_del"></a></td>
-											<td class="right"><span id="option_box1_price"><input type="hidden" class="option_box_price" value="39000" product-no="153" item_code="P00000FX000B"><span class="ec-front-product-item-price" code="P00000FX000B" product-no="153">39,000원</span></span></td>
-										</tr>
-									</tbody>
-									<tbody class="add_products"></tbody>
-									<tfoot>
-										<tr>
-											<td colspan="3"><strong>TOTAL </strong><span class="total"><strong><em>39,000원</em></strong> (1개)</span></td>
-										</tr>
-									</tfoot>
-								</c:if>
+								<tbody id="orderbody">
+									<!-- <tr class='option_product'>
+										<td>
+											<p class='product'><span>컬러/사이즈</span></p>
+										</td>
+										<td>
+											<span class='quantity' style='width: 65px;'>
+												<input type='number' id='ordernum' min='1' max='10' style='padding: 1px; border: 0px; width: 30px;' name='orderitem[]' class='pbtn' value='1'>
+												</span><a href='#none' class='delete'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>
+										</td>
+										<td class='right'>
+											<span id='option_box1_price'>
+												<input type='hidden' class='option_box_price' value='"+price+"'>
+												<span class='ec-front-product-item-price'>가격원</span>
+											</span>
+										</td>
+									</tr> -->
+
+								</tbody>
+								<tfoot id="totalPrice"><tr><td colspan='3'><strong>TOTAL </strong><span class='total'><strong><em>${vo.pPrice}원</em></strong> (1개)</span></td></tr></tfoot>
 							</table>
 						</div>
 						<div class="productAct">
 							<div class="btnArea">
-			                    <a href="#" class="first " onclick="#">buy now</a>
-			                    <a href="#" onclick="#">add  to cart</a>
-			                    <a href="#" onclick="#">wishlist</a>
+			                    <a href="#" class="first " onclick="">buy now</a>
+			                    <a href="#" onclick="">add  to cart</a>
+			                    <a href="#" onclick="">wishlist</a>
 			                </div>
 			                
 						</div>
@@ -291,7 +356,19 @@
 									<tr>
 										<td class="td1" style="width: 5%;">${curScrStartNo}</td>
 										<td class="td2" style="width: 10%;">${vo.qCate }</td>
-										<td class="td3" style="width: 52%; text-align: left;"><a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${param.pId}&pag=${pag}&pageSize=${pageSize}">${vo.qTitle}</a></td>
+										<td class="td3" style="width: 52%; text-align: left;">
+										<c:if test="${vo.qSecret eq 0}">
+											<a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.qTitle}</a>
+										</c:if>
+										<c:if test="${vo.qSecret eq 1}">
+											<c:choose>
+								                <c:when test="${smid eq vo.qWriter || slevel eq 0}">
+								                    <a href="${ctp}/board/qContent?qId=${vo.qId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}"><img src="${ctp}/images/lock.gif"/>${vo.qTitle}</a>
+								                </c:when>
+								                <c:otherwise><img src="${ctp}/images/lock.gif"/>${vo.qTitle}</c:otherwise>
+								            </c:choose>
+										</c:if>
+										</td>
 										<td class="td3" style="width: 10%;">${vo.qName}</td>
 										<td class="td4" style="width: 10%;">
 											<c:if test="${vo.diffTime <= 24}">${fn:substring(vo.qRdate,11,19)}</c:if>

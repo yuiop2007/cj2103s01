@@ -176,11 +176,31 @@ public class MessageController {
 		}
 		else if(msgFlag.substring(0,14).equals("reviewDeleteOk")) {
 			model.addAttribute("msg", "삭제되었습니다.");
-			model.addAttribute("url", "board/pContent?"+msgFlag.substring(15));
+			model.addAttribute("url", "product/pContent?"+msgFlag.substring(15));
 		}
 		else if(msgFlag.substring(0,14).equals("reviewUpdateOk")) {
 			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
 			model.addAttribute("url", "board/rContent?"+msgFlag.substring(15));
+		}
+		else if(msgFlag.substring(0,13).equals("qnaPasswordNo")) {
+			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
+			model.addAttribute("url", "board/qContent?"+msgFlag.substring(14));
+		}
+		else if(msgFlag.substring(0,13).equals("qnaPasswordOk")) {
+			model.addAttribute("msg", "수정창으로 이동합니다.");
+			model.addAttribute("url", "board/qUpdate?"+msgFlag.substring(14));
+		}
+		else if(msgFlag.substring(0,11).equals("qnaDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "product/pContent?"+msgFlag.substring(12));
+		}
+		else if(msgFlag.substring(0,11).equals("qnaUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/qContent?"+msgFlag.substring(12));
+		}
+		else if(msgFlag.substring(0,10).equals("qnaReplyOk")) {
+			model.addAttribute("msg", "게시글을 등록하였습니다.");
+			model.addAttribute("url", "board/qContent?"+msgFlag.substring(11));
 		}
 		return "include/message";
 	}

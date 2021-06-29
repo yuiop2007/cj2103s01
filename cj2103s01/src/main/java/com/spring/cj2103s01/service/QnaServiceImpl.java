@@ -41,5 +41,40 @@ public class QnaServiceImpl implements QnaService {
 	public QnaVO getQnaContent(int qId) {
 		return qnaDAO.getQnaContent(qId);
 	}
+
+	@Override
+	public QnaVO getIdCheck(int qId) {
+		return qnaDAO.getIdCheck(qId);
+	}
+
+	@Override
+	public void qDelete(int qId) {
+		qnaDAO.qDelete(qId);
+	}
+
+	@Override
+	public void qnaUpdateOk(QnaVO vo) {
+		qnaDAO.qnaUpdateOk(vo);
+	}
+
+	@Override
+	public List<QnaVO> getQnaSearchList(int startIndexNo, int pageSize, String search, String searchString) {
+		return qnaDAO.getQnaSearchList(startIndexNo, pageSize, search, searchString);
+	}
+
+	@Override
+	public void setQnaUpdate(QnaVO vo) {
+		qnaDAO.setQnaUpdate(vo);
+	}
+
+	@Override
+	public QnaVO getQnaLastVo() {
+		return qnaDAO.getQnaLastVo();
+	}
+
+	@Override
+	public void qnaReplyOk(QnaVO vo) {
+		qnaDAO.qnaReplyOk(vo);
+	}
 	
 }

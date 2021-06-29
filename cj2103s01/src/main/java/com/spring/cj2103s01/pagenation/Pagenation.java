@@ -78,6 +78,10 @@ public class Pagenation {
 			int pId = Integer.parseInt(search);
 			totRecCnt = reviewDAO.totpIdRecCnt(pId);
 		}
+		else if(partName.equals("pqna")) {
+			int pId = Integer.parseInt(search);
+			totRecCnt = qnaDAO.totpIdRecCnt(pId);
+		}
 
 		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt / pageSize : (int) (totRecCnt / pageSize) + 1;
 		int startIndexNo = (pag - 1) * pageSize;

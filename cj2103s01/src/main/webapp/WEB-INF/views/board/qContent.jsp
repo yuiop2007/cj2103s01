@@ -99,7 +99,7 @@
 				<div class=boardbtn>
 					<a href="${ctp}/product/pContent?pId=${param.pId}&pag=${pag}&pageSize=${pageSize}">목록</a>
 					<c:if test="${slevel==0 }">
-					<a href="${ctp}/product/pInput?qId=${vo.qId}&pId=${param.pId}&pag=${pag}&pageSize=${pageSize}">답변</a>
+					<a href="${ctp}/board/qReply?qId=${vo.qId}&pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}">답변</a>
 					</c:if>
 					<c:if test="${smid == vo.qWriter}">
 					<a href="#" onclick="updCheck()">수정</a>

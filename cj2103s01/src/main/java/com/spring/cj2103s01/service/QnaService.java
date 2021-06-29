@@ -16,4 +16,19 @@ public interface QnaService {
 
 	QnaVO getQnaContent(int qId);
 
+	QnaVO getIdCheck(int qId);
+
+	void qDelete(int qId);
+
+	void qnaUpdateOk(QnaVO vo);
+
+	List<QnaVO> getQnaSearchList(int startIndexNo, int pageSize, String search, String searchString);
+
+	void setQnaUpdate(QnaVO vo);
+
+	QnaVO getQnaLastVo();
+
+	void qnaReplyOk(QnaVO vo);
+
 }
+ 

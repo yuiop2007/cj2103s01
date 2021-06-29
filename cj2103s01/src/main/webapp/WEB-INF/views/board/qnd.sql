@@ -1,5 +1,5 @@
 create table qna(
-	qId int not null auto_increment,
+	qId int not null auto_increment, 
 	pId int not null,
 	qCate varchar(100) not null,
 	qWriter varchar(40) null,
@@ -10,10 +10,16 @@ create table qna(
 	qSecret int null default 0, /* 공개0, 비공개1 */ 
 	qRdate datetime default now(),
 	qHit int default 0,
+	originNo int not null default 0,  
+	groupNo int not null default 0,		
 	primary key(qId),
 	foreign key(pId) references product(pId)
 );
 
+insert into qna values (default, 6, '기타', '작성자' ,'제목', '이름', 1234, '내용', 1, default, default, qId, default, default);
+
+insert into qna values (default, 5, '상품관련', 'yuiop2007' ,'(상품관련) 문의합니다.', '미님', '$2a$10$06S0J7ZDI3.cBWncOb/Hre9z2tpux7cXt8x1wRYPYzKxnFUKCVPKG', '<p>qweqwe</p>
+', 1, default, default, 7, 0+1, default);
 
 show tables;
 
@@ -21,7 +27,7 @@ drop table qna;
 
 select *from qna;
 
-select * from qna order by nId;
+select * from qna order by qId desc limit 1;
 
 select count(*) from qna;
 

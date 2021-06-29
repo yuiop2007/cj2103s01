@@ -22,5 +22,21 @@ public interface QnaDAO {
 
 	QnaVO getQnaContent(@Param("qId") int qId);
 
+	QnaVO getIdCheck(@Param("qId") int qId);
+
+	void qDelete(@Param("qId") int qId);
+
+	void qnaUpdateOk(@Param("vo") QnaVO vo);
+
+	List<QnaVO> getQnaSearchList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("search") String search, @Param("searchString") String searchString);
+
+	int totpIdRecCnt(@Param("pId") int pId);
+
+	void setQnaUpdate(@Param("vo") QnaVO vo);
+
+	QnaVO getQnaLastVo();
+
+	void qnaReplyOk(@Param("vo") QnaVO vo);
+
 
 }
