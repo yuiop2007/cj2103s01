@@ -23,10 +23,13 @@ drop table member;
 
 desc member;
 
-select *from member;
+select *from member where mLevel > 0;
 
 show tables;
 
 show databases;
 
-select * from member where mId = ;
+select count(*) from member where mLevel > 0;
+select count(*) from member where mDrop = 'YES';
+
+select count(*) from member where mId like concat('%', 'y' ,'%') and NOT mLevel IN ('0');

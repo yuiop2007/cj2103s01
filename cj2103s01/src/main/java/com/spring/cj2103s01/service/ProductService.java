@@ -24,4 +24,6 @@ public interface ProductService {
 
 	public void pDelete(int pId);
 
+	public int totProductCnt();
+
 }

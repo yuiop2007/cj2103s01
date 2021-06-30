@@ -1,5 +1,7 @@
 package com.spring.cj2103s01.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO getNameSearch(String mName, String mEmail) {
 		return memberDAO.getNameSearch(mName, mEmail);
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() {
+		return memberDAO.getMemberList();
+	}
+
+	@Override
+	public int totMemberCnt() {
+		return memberDAO.totMemberCnt();
+	}
+
+	@Override
+	public int dropMemberCnt() {
+		return memberDAO.dropMemberCnt();
 	}
 	
 	

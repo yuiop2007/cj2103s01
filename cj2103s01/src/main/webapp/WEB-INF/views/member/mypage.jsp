@@ -128,7 +128,7 @@
 	  	</div>
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/wish/myWish">
 		    		<strong>wish list</strong>
 		    		관심상품으로 등록하신 상품의 목록을 보여드립니다.
 		    		<br/>

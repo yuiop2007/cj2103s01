@@ -29,4 +29,6 @@ public interface ProductDAO {
 
 	public void pDelete(@Param("pId") int pId);
 
+	public int totProductCnt();
+
 }

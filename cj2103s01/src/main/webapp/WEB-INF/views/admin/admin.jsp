@@ -33,15 +33,15 @@
 		    	<div class="col state">
 		    		<ul class = "order">
 						<li>
-							<strong>입금전</strong>
+							<strong>회원수</strong>
+							<a href="#" class="count"><span>${totMember}</span></a>
+						</li>
+						<li>
+							<strong>탈퇴회원</strong>
 							<a href="#" class="count"><span>0</span></a>
 						</li>
 						<li>
-							<strong>배송준비중</strong>
-							<a href="#" class="count"><span>0</span></a>
-						</li>
-						<li>
-							<strong>배송중</strong>
+							<strong>상품수</strong>
 							<a href="#" class="count"><span>0</span></a>
 						</li>
 						<li>
@@ -74,24 +74,23 @@
 		    <div class="col">
 				<ul>
 					<li class=" ">
-						<span class="title">가용 적립금</span>
-						<span class="data use">0원</span>
-						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
+						<span class="title">총 회원수</span>
+						<span class="data use">${totMember}명</span>
 					</li>
-					<li class>
-						<span class="title">총 적립금</span>
-						<span class="data">0원</span>
+					<li>
+						<span class="title">탈퇴 회원수</span>
+						<span class="data">${dropMember}명</span>
 					</li>
-					<li class>
-						<span class="title">사용 적립금</span>
-						<span class="data">0원</span>
-					</li>
-					<li class="etc">
-						<span class="title">총 주문</span>
-						<span class="data">0 (0 회)</span>
+					<li>
+						<span class="title">총 상품수</span>
+						<span class="data">${totProduct}개</span>
 					</li>
 					<li class="etc">
-						<span class="title">쿠폰</span>
+						<span class="title">총 판매량</span>
+						<span class="data">0 회</span>
+					</li>
+					<li class="etc">
+						<span class="title">총 매출액</span>
 						<span class="data">0<span>개</span></span>
 						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
@@ -116,7 +115,7 @@
 	  	</div>
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/admin/mList">
 		    		<strong>회원 관리</strong>
 		    		전체 회원을 관리 할 수 있습니다.
 		    		<br/>

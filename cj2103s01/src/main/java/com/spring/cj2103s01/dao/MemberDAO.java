@@ -1,5 +1,7 @@
 package com.spring.cj2103s01.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.cj2103s01.vo.MemberVO;
@@ -19,5 +21,14 @@ public interface MemberDAO {
 	public void setPwdChange(@Param("mId") String mId, @Param("encode") String encode);
 
 	public MemberVO getNameSearch(@Param("mName") String mName, @Param("mEmail") String mEmail);
+
+	public List<MemberVO> getMemberList();
+
+	public int totMemberCnt();
+
+	public int dropMemberCnt();
+
+	public int totSearchRecCnt(String search, String searchString);
+
 
 }

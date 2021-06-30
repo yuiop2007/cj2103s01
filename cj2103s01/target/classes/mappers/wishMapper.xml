@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.WishDAO">
+  
+  
+	<insert id="addWish">
+		insert into wishlist values (default, #{mId}, #{pId});
+	</insert>
+	
+	<select id="getWishList" resultType="com.spring.cj2103s01.vo.WishVO">
+		select *from wishlist where mId = #{mId};
+	</select>
+		
+	<select id="totWishRecCnt" resultType="int">
+	    select count(*) from wishlist where mId = #{search};
+	</select>
+	
+	<delete id="wishDelete">
+		delete from wishlist where wId = #{wId};
+	</delete>
+	
+<!-- 	<select id="getReviewList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb order by rId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+	    select count(*) from review;
+	</select>
+	
+	<select id="totpIdRecCnt" resultType="int">
+	    select count(*) from review where pId = #{pId};
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+		select count(rId) from review where ${search} like concat('%', #{searchString} ,'%');
+	</select>
+	
+	<select id="getReviewContentList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where pId = ${pId} order by rId desc limit #{startIndexNo},#{rpageSize};
+	</select>
+	
+	<insert id="setReviewInput">
+	    insert into review values (default, #{vo.pId}, #{vo.rRating}, #{vo.rWriter} ,#{vo.rTitle}, #{vo.rName}, #{vo.rPwd}, #{vo.rContent}, default, default);
+	</insert>
+	
+	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.ReviewVO">
+	    select * from review where rId = #{rId};
+	</select>
+	
+
+	
+	<update id="addReadNum">
+	    update review set rHit = rHit + 1 where rId = #{rId};
+	</update>
+	
+	<select id="getReviewContent" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select * from review where rId = #{rId};
+	</select>
+	
+	<update id="reviewUpdateOk">
+	    update review set rTitle=#{vo.rTitle}, rRating=#{vo.rRating}, rPwd=#{vo.rPwd}, rContent=#{vo.rContent} where rId=#{vo.rId};
+	</update>
+	
+	<select id="getReviewSearchList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where ${search} like concat('%',#{searchString},'%')  order by rId desc limit #{startIndexNo},#{pageSize};
+	</select> -->
+	
+</mapper>

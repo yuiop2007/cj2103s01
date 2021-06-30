@@ -33,9 +33,31 @@
 .proReview, .proQnA{
 	padding: 0 30px 0 30px;
 }
-#totalPrice { display: none; }
 </style>
 <script>
+	
+	function levelCheck() {
+		alert("회원만 이용할 수 있습니다.");
+	}
+	
+	function buyCheck() {
+		var orderName = document.getElementsByName("orderName[]");
+		var orderNum = document.getElementsByName("orderNum[]");
+		var orderPrice = document.getElementsByName("orderPrice[]");
+		
+		
+		if(orderName.length == 0 || orderNum.length == 0 || orderPrice == 0){
+			alert("제품 옵션을 선택하시오.");
+			return false;
+		}
+		else{
+			console.log(orderName[0].value);
+			console.log(orderNum[0].value);
+			console.log(orderPrice[0].value);
+		}
+		
+	}
+
 	//게시글 수정처리를 위한 비밀번호 체크
 	function updCheck() {
 		contentform.submit();
@@ -56,10 +78,76 @@
 			});
 		}
 	}
+	
 	var colsiz = new Array();
 	var color = "";
 	var size = "";
 	var content = "";
+
+	function minus(Id){
+		for(var i=0; i<colsiz.length; i++){
+
+			if(colsiz[i].goodsId==Id){
+				if(colsiz[i].cnt==1){
+					break;
+				}
+				colsiz[i].cnt--;
+				$("#ordernum"+Id+"").val(colsiz[i].cnt);
+				$("#orderprice"+Id+"").val(colsiz[i].cnt*colsiz[i].goodsPrice);
+				break;
+			}
+		}
+		afterProc(colsiz);
+	}
+
+	function plus(Id){
+		for(var i=0; i<colsiz.length; i++){
+
+			if(colsiz[i].goodsId==Id){
+				if(colsiz[i].cnt==5){
+					
+					break;
+				}
+				colsiz[i].cnt++;
+				$("#ordernum"+Id+"").val(colsiz[i].cnt);
+				$("#orderprice"+Id+"").val(colsiz[i].cnt*colsiz[i].goodsPrice);
+				break;
+			}
+		}
+		afterProc(colsiz);
+	}
+
+	//계산후처리
+	function afterProc(colsiz){
+		var totalCnt = 0;
+		for(var i=0; i<colsiz.length; i++){
+			totalCnt += colsiz[i].cnt;
+		}
+		if(colsiz.length!=0){
+			$("#totaltd").remove();
+			content += "<td colspan='3' id='totaltd'>";
+			content += "<strong>TOTAL</strong>&nbsp;&nbsp;";
+			content += "<span id='total'><strong><em>"+(colsiz[0].goodsPrice*totalCnt)+"원</em></strong>&nbsp;&nbsp;("+totalCnt+"개)</span>&nbsp;&nbsp;";
+			content += "<a href='#' class='delete' onclick='deselect()'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>";
+			content += "</td>";
+			$("#totaltr").append(content);
+		}
+		content = "";
+	}
+
+	function deselect(goodsId){
+		$("#orderbody").remove();
+		$("#totalPrice").remove();
+		content += "<tbody id='orderbody'>";
+		content += "</tbody>";
+		content += "<tfoot id='totalPrice'>";
+		content += "</tfoot>";
+		$("#pOpt").append(content);
+		content = "";
+		colsiz.length = 0;
+		afterProc(colsiz);
+	}
+
 			
 	function appendChoiceDiv(colsiz){  
         			
@@ -69,34 +157,48 @@
 				content += "</td>";
 				content += "<td>";
 				content += "<span class='quantity' style='width: 65px;'>";
-				content += "<input type='text' id='ordernum' style='padding: 1px; border: 0px; width: 30px;' name='' class='pbtn' value='1'>";
-				content += "<button type='button' class='add' onclick='goods.minus(\'"+colsiz.goodsId+"\')'>-</button>";
-				content += "<button type='button' class='add' onclick='goods.plus(\'"+colsiz.goodsId+"\')'>+</button>";
-				content += "<a href='#' class='delete' onclick='goods.deselect(\'"+colsiz.goodsId+"\')'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>";
-				content += "</td>";
+				content += "<input type='hidden' name='orderName[]' value='"+colsiz.goodsId+"' />";
+				content += "<input type='text' name='orderNum[]' id='ordernum"+colsiz.goodsId+"' style='padding: 1px; border: 0px; width: 10px;' name='' class='pbtn' value='1'/>";
+				content += "<a href='#' onclick='minus(\""+colsiz.goodsId+"\")'><img src='${ctp}/images/btn_count_down.gif'/></a>";
+				content += "<a href='#' onclick='plus(\""+colsiz.goodsId+"\")'><img src='${ctp}/images/btn_count_up.gif'/></a>";
+				content += "</span></td>";
 				content += "<td class='right'>";
 				content += "<span id='option_box1_price'>";
-				content += "<input type='hidden' class='option_box_price' value='"+colsiz.goodsPrice+"'>";
-				content += "<span class='ec-front-product-item-price'>"+colsiz.goodsPrice+"원</span>";
+				content += "<span class='ec-front-product-item-price'>";
+				content += "<input type='text' name='orderPrice[]' id='orderprice"+colsiz.goodsId+"' style='padding: 1px; border: 0px; width: 50px;' class='option_box_price' value='"+colsiz.goodsPrice+"'>원";
+				content += "</span>";
 				content += "</span>";
 				content += "</td>";
 				content += "</tr>";
 				$("#orderbody").append(content);
+				content = "";
 				color = "";
 				size = "";
 				$("#pColor").val("*").prop("selected", true);
 				$("#pSize").val("*").prop("selected", true);
 				$("#pSize").prop("disabled", true);
-			
 		}
 
+	function appendfoot(colsiz){
+		
+		content += "<tr id='totaltr'>";
+		content += "<td colspan='3' id='totaltd'>";
+		content += "<strong>TOTAL</strong>&nbsp;&nbsp;";
+		content += "<span id='total'><strong><em>"+colsiz.goodsPrice+"원</em></strong>&nbsp;&nbsp;("+colsiz.cnt+"개)</span>&nbsp;&nbsp;";
+		content += "<a href='#' class='delete' onclick='deselect()'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>";
+		content += "</td>";
+		content += "</tr>";
+		
+		$("#totalPrice").append(content);
+		content = "";
+	}
 
 			
 	$(document).ready(function(){
 	   	
-    	$("#pSize").prop("disabled", true)
+    	$("#pSize").prop("disabled", true);
     	$("#pColor").on("change", function(){
-				$("#pSize").removeAttr("disabled")
+				$("#pSize").removeAttr("disabled");
 				color = $("#pColor").val();
 				
 			});
@@ -105,13 +207,14 @@
 				size = $("#pSize").val();
 				
 				if(colsiz.length==0){
-					colsiz.push({goodsId:color + "/" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
+					colsiz.push({goodsId:color + "_" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
 					appendChoiceDiv(colsiz[0]);
+					appendfoot(colsiz[0]);
 				}
 				else if(colsiz.length!=0){
 					for(var i=0; i<colsiz.length; i++){
 						var sw = 0;
-						if(colsiz[i].goodsId==(color+"/"+size)){
+						if(colsiz[i].goodsId==(color+"_"+size)){
 							sw = 1;
 							alert("이미 추가한 상품입니다.");
 							color = "";
@@ -119,10 +222,11 @@
 							$("#pColor").val("*").prop("selected", true);
 							$("#pSize").val("*").prop("selected", true);
 							$("#pSize").prop("disabled", true);
+							break;
 						}
 					}
 					if(sw==0){
-						colsiz.push({goodsId:color + "/" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
+						colsiz.push({goodsId:color + "_" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
 						appendChoiceDiv(colsiz[colsiz.length-1]);
 					}
 				}
@@ -182,20 +286,20 @@
 									<td>
 										<select name="pColor" id="pColor" class="ProductOption0" option_style="select" required="true">
 											<option value="*" selected="">- [필수] 옵션을 선택해 주세요 -</option>
-											<option value="**" disabled="" link_image="">-------------------</option>
-												<c:if test="${fn:contains(vo.pColor,'블랙')}"><option value="블랙" link_image="">블랙</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'화이트')}"><option value="화이트" link_image="">화이트</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'차콜')}"><option value="차콜" link_image="">차콜</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'그레이')}"><option value="그레이" link_image="">그레이</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'아이보리')}"><option value="아이보리" link_image="">아이보리</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'베이지')}"><option value="베이지" link_image="">베이지</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'블루')}"><option value="블루" link_image="">블루</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><option value="스카이블루" link_image="">스카이블루</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'핑크')}"><option value="핑크" link_image="">핑크</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'그린')}"><option value="그린" link_image="">그린</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'레드')}"><option value="레드" link_image="">레드</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'옐로우')}"><option value="옐로우" link_image="">옐로우</option></c:if>
-												<c:if test="${fn:contains(vo.pColor,'오렌지')}"><option value="오렌지" link_image="">오렌지</option></c:if>
+											<option value="**" disabled="">-------------------</option>
+												<c:if test="${fn:contains(vo.pColor,'블랙')}"><option value="Black">블랙</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'화이트')}"><option value="White" >화이트</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'차콜')}"><option value="Charcoal">차콜</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그레이')}"><option value="Gray">그레이</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'아이보리')}"><option value="Ivory">아이보리</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'베이지')}"><option value="Beige">베이지</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'블루')}"><option value="Blue">블루</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><option value="SkyBlue">스카이블루</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'핑크')}"><option value="Pink">핑크</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그린')}"><option value="Green">그린</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'레드')}"><option value="Red">레드</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'옐로우')}"><option value="Yellow">옐로우</option></c:if>
+												<c:if test="${fn:contains(vo.pColor,'오렌지')}"><option value="Orange">오렌지</option></c:if>
 										</select>
 									</td>
 								</tr>
@@ -203,13 +307,13 @@
 									<th scope="row">SIZE</th>
 									<td>
 										<select name="pSize" id="pSize" class="ProductOption0" option_style="select" required="true">
-											<option value="*" selected="" link_image="">- [필수] 옵션을 선택해 주세요 -</option>
-											<option value="**" disabled="" link_image="">-------------------</option>
-												<c:if test="${fn:contains(vo.pSize,'XS')}"><option value="XS" link_image="">XS</option></c:if>
-												<c:if test="${fn:contains(vo.pSize,'S')}"><option value="S" link_image="">S</option></c:if>
-												<c:if test="${fn:contains(vo.pSize,'M')}"><option value="M" link_image="">M</option></c:if>
-												<c:if test="${fn:contains(vo.pSize,'L')}"><option value="L" link_image="">L</option></c:if>
-												<c:if test="${fn:contains(vo.pSize,'XL')}"><option value="XL" link_image="">XL</option></c:if>
+											<option value="*" selected="">- [필수] 옵션을 선택해 주세요 -</option>
+											<option value="**" disabled="">-------------------</option>
+												<c:if test="${fn:contains(vo.pSize,'XS')}"><option value="XS">XS</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'S')}"><option value="S">S</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'M')}"><option value="M">M</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'L')}"><option value="L">L</option></c:if>
+												<c:if test="${fn:contains(vo.pSize,'XL')}"><option value="XL">XL</option></c:if>
 										</select>
 									</td>
 								</tr>
@@ -231,32 +335,26 @@
 									</tr>
 								</thead>
 								<tbody id="orderbody">
-									<!-- <tr class='option_product'>
-										<td>
-											<p class='product'><span>컬러/사이즈</span></p>
-										</td>
-										<td>
-											<span class='quantity' style='width: 65px;'>
-												<input type='number' id='ordernum' min='1' max='10' style='padding: 1px; border: 0px; width: 30px;' name='orderitem[]' class='pbtn' value='1'>
-												</span><a href='#none' class='delete'><img src='//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif' alt='삭제' id='option_box1_del' class='option_box_del'></a>
-										</td>
-										<td class='right'>
-											<span id='option_box1_price'>
-												<input type='hidden' class='option_box_price' value='"+price+"'>
-												<span class='ec-front-product-item-price'>가격원</span>
-											</span>
-										</td>
-									</tr> -->
+									
 
 								</tbody>
-								<tfoot id="totalPrice"><tr><td colspan='3'><strong>TOTAL </strong><span class='total'><strong><em>${vo.pPrice}원</em></strong> (1개)</span></td></tr></tfoot>
+								<tfoot id="totalPrice">
+									
+								</tfoot>
 							</table>
 						</div>
 						<div class="productAct">
 							<div class="btnArea">
-			                    <a href="#" class="first " onclick="">buy now</a>
+			                    <a href="#" class="first " onclick="buyCheck();">buy now</a>
 			                    <a href="#" onclick="">add  to cart</a>
-			                    <a href="#" onclick="">wishlist</a>
+			                    <c:choose>
+					                <c:when test="${slevel < 5}">
+					                	<a href="${ctp}/wish/addWish?pId=${vo.pId}">wishlist</a>
+					                </c:when>
+					                <c:otherwise>
+					                	<a href="#" onclick="levelCheck();">wishlist</a>
+					                </c:otherwise>
+				         	    </c:choose>
 			                </div>
 			                
 						</div>

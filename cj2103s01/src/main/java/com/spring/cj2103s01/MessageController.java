@@ -114,6 +114,15 @@ public class MessageController {
 			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
 			model.addAttribute("url", "/member/mypage");
 		}
+		else if(msgFlag.equals("wishAddNo")) {
+			model.addAttribute("msg", "이미 Wish에 등록된 제품입니다.");
+			model.addAttribute("url", "wish/myWish");
+		}
+		else if(msgFlag.equals("wishDeleteOk")) {
+			model.addAttribute("msg", "삭제되었습니다.");
+			model.addAttribute("url", "wish/myWish");
+		}
+		
 	
 		
 		
@@ -201,6 +210,10 @@ public class MessageController {
 		else if(msgFlag.substring(0,10).equals("qnaReplyOk")) {
 			model.addAttribute("msg", "게시글을 등록하였습니다.");
 			model.addAttribute("url", "board/qContent?"+msgFlag.substring(11));
+		}
+		else if(msgFlag.substring(0,9).equals("wishAddOk")) {
+			model.addAttribute("msg", "추가하였습니다.");
+			model.addAttribute("url", "product/pContent?"+msgFlag.substring(10));
 		}
 		return "include/message";
 	}

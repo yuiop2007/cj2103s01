@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.cj2103s01.dao.EventDAO;
+import com.spring.cj2103s01.dao.MemberDAO;
 import com.spring.cj2103s01.dao.NoticeDAO;
 import com.spring.cj2103s01.dao.ProductDAO;
 import com.spring.cj2103s01.dao.QnaDAO;
 import com.spring.cj2103s01.dao.ReviewDAO;
+import com.spring.cj2103s01.dao.WishDAO;
 
 @Service
 public class Pagenation {
@@ -25,6 +27,12 @@ public class Pagenation {
 	
 	@Autowired
 	QnaDAO qnaDAO;
+	
+	@Autowired
+	WishDAO wishDAO;
+	
+	@Autowired
+	MemberDAO memberDAO;
 
 	public PagenationVO pagenation(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 5;
@@ -81,6 +89,18 @@ public class Pagenation {
 		else if(partName.equals("pqna")) {
 			int pId = Integer.parseInt(search);
 			totRecCnt = qnaDAO.totpIdRecCnt(pId);
+		}
+		else if(partName.equals("mywish")){
+			totRecCnt = wishDAO.totWishRecCnt(search);
+		}
+		else if (partName.equals("mList")) {
+			if (searchString.equals("")) {
+				totRecCnt = memberDAO.totMemberCnt();
+			}
+			else {
+				System.out.println(search);
+				totRecCnt = memberDAO.totSearchRecCnt(search, searchString);
+			}
 		}
 
 		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt / pageSize : (int) (totRecCnt / pageSize) + 1;

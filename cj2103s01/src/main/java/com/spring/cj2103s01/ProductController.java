@@ -3,7 +3,6 @@ package com.spring.cj2103s01;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.service.QnaService;
 import com.spring.cj2103s01.service.ReviewService;
-import com.spring.cj2103s01.vo.NoticeVO;
 import com.spring.cj2103s01.vo.ProductVO;
 import com.spring.cj2103s01.vo.QnaVO;
 import com.spring.cj2103s01.vo.ReviewVO;
@@ -121,7 +119,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/pContent", method = RequestMethod.GET)
-	public String pContentGet(Model model, int pId, int pag, int pageSize, 
+	public String pContentGet(Model model, int pId,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "24", required = false) int pageSize, 
 			@RequestParam(name = "rpag", defaultValue = "1", required = false) int rpag,
 			@RequestParam(name = "rpageSize", defaultValue = "5", required = false) int rpageSize,
 			@RequestParam(name = "qpag", defaultValue = "1", required = false) int qpag,
@@ -233,7 +233,7 @@ public class ProductController {
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
 		ProductVO vo = productService.getIdCheck(pId);
 
-		productService.pDelete(pId);
+		productService.pDelete(vo.getpId());
 
 		msgFlag = "productDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
 		return "redirect:/msg/" + msgFlag;

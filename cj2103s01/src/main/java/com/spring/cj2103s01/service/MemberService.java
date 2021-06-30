@@ -1,5 +1,7 @@
 package com.spring.cj2103s01.service;
 
+import java.util.List;
+
 import com.spring.cj2103s01.vo.MemberVO;
 
 
@@ -18,5 +20,11 @@ public interface MemberService {
 	public void setPwdChange(String mId, String encode);
 
 	public MemberVO getNameSearch(String mName, String mEmail);
+
+	public List<MemberVO> getMemberList();
+
+	public int totMemberCnt();
+
+	public int dropMemberCnt();
 	
 }
