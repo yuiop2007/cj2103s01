@@ -63,6 +63,36 @@ public class MemberServiceImpl implements MemberService {
 	public int dropMemberCnt() {
 		return memberDAO.dropMemberCnt();
 	}
+
+	@Override
+	public List<MemberVO> getMemberListLevel(int startIndexNo, int pageSize, String mLevel) {
+		return memberDAO.getMemberListLevel(startIndexNo, pageSize, mLevel);
+	}
+
+	@Override
+	public List<MemberVO> getMemberListMid(int startIndexNo, int pageSize, String mId) {
+		return memberDAO.getMemberListMid(startIndexNo, pageSize, mId);
+	}
+
+	@Override
+	public void mLevelCheck(String mId, String mLevel) {
+		memberDAO.mLevelCheck(mId, mLevel);
+	}
+
+	@Override
+	public void memberDelete(String idx) {
+		memberDAO.memberDelete(idx);
+	}
+
+	@Override
+	public void mPointInput(String idx, int point) {
+		memberDAO.mPointInput(idx, point);
+	}
+
+	@Override
+	public List<MemberVO> getCouponMember(int cmCate) {
+		return memberDAO.getCouponMember(cmCate);
+	}
 	
 	
 }

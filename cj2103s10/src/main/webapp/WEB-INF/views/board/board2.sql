@@ -112,6 +112,7 @@ SELECT LAST_DAY(NOW());
 SELECT DATE_FORMAT(NOW(), "%Y %m %d");
 SELECT DATE_FORMAT(NOW(), "%Y-%m-%d");
 SELECT DATE_FORMAT(NOW(), "%Y년 %m월 %d일");
+SELECT DATE_FORMAT(NOW(), "%Y-%m");
 
 SELECT NAME, DATE_FORMAT(birthday, "%Y년 %m월 %d일") FROM MEMBER;
 

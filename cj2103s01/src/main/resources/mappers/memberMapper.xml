@@ -45,4 +45,36 @@
 	<select id="totSearchRecCnt" resultType="int">
 		select count(*) from member where ${search} like concat('%', #{searchString} ,'%') and NOT mLevel IN ('0');
 	</select>
+	
+	<select id="getMemberListLevel" resultType="com.spring.cj2103s01.vo.MemberVO">
+		select * from member where mLevel = #{mLevel} limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<select id="getMemberListMid" resultType="com.spring.cj2103s01.vo.MemberVO">
+		select * from member where mId = #{mId} limit #{startIndexNo}, #{pageSize} and mLevel > 0;
+	</select>
+	
+	<select id="totRecCntLevel" resultType="int">
+		select count(*) from member where mLevel = #{searchString};
+	</select>
+	
+	<select id="totRecCntMid" resultType="int">
+		select count(*) from member where mId = #{search} and mLevel > 0;
+	</select>
+	
+	<update id="mLevelCheck">
+		update member set mLevel = #{mLevel} where mId = #{mId};
+	</update>
+	
+	<delete id="memberDelete">
+		delete from member where mId = #{idx}; 
+	</delete>
+	
+	<update id="mPointInput">
+		update member set mPoint = mPoint + #{point} where mId = #{idx};
+	</update>
+	
+	<select id="getCouponMember" resultType="com.spring.cj2103s01.vo.MemberVO">
+		select * from member where mLevel = #{cmCate} and mLevel > 0;
+	</select>
 </mapper>

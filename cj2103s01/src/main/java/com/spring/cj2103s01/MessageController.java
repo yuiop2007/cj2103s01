@@ -114,6 +114,22 @@ public class MessageController {
 			model.addAttribute("msg", "게시물 등록에 실패하였습니다.");
 			model.addAttribute("url", "/member/mypage");
 		}
+		else if(msgFlag.equals("cInputOk")) {
+			model.addAttribute("msg", "쿠폰이 등록되었습니다.");
+			model.addAttribute("url", "/admin/coupon");
+		}
+		else if(msgFlag.equals("cInputNo")) {
+			model.addAttribute("msg", "쿠폰 등록에 실패하였습니다.");
+			model.addAttribute("url", "/admin/cInput");
+		}
+		else if(msgFlag.equals("cDeleteOk")) {
+			model.addAttribute("msg", "쿠폰이 삭제되었습니다.");
+			model.addAttribute("url", "/admin/coupon");
+		}
+		else if(msgFlag.equals("cDeleteNo")) {
+			model.addAttribute("msg", "쿠폰 삭제에 실패하였습니다.");
+			model.addAttribute("url", "/admin/coupon");
+		}
 		else if(msgFlag.equals("wishAddNo")) {
 			model.addAttribute("msg", "이미 Wish에 등록된 제품입니다.");
 			model.addAttribute("url", "wish/myWish");
@@ -122,7 +138,10 @@ public class MessageController {
 			model.addAttribute("msg", "삭제되었습니다.");
 			model.addAttribute("url", "wish/myWish");
 		}
-		
+		else if(msgFlag.equals("adminMemberDeleteOk")) {
+			model.addAttribute("msg", "선택한 회원(들)을 삭제처리 하였습니다.");
+			model.addAttribute("url", "admin/mList");
+		}
 	
 		
 		

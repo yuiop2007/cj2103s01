@@ -10,4 +10,8 @@ public interface Study {
 
 	public List<AreaVO> getAddress2(String address1);
 
+	public AreaVO getAddressSearch(String address1, String address2);
+
+	public void getCalendar();
+
 }

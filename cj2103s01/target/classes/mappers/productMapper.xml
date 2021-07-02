@@ -45,4 +45,8 @@
 	<select id="totProductCnt" resultType="int">
   		select count(*) from product;
  	</select>
+ 	
+	<delete id="productDelete">
+		delete from product where pId = #{idx}; 
+	</delete>
 </mapper>

@@ -2,6 +2,9 @@ package com.spring.cj2103s10;
 
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +32,23 @@ public class MemberController {
 
 	// 로그인폼 호출
 	@RequestMapping(value = "/mLogin", method = RequestMethod.GET)
-	public String mLoginGet() {
+	public String mLoginGet(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();  // 기존에 저장되어 있는 현재 사이트의 쿠키를 불러와서 배열로 저장한다.
+		String mid = "";
+		for(int i=0; i<cookies.length; i++) {
+			if(cookies[i].getName().equals("cmid")) {
+				mid = cookies[i].getValue();
+				request.setAttribute("mid", mid);
+				break;
+			}
+		}
+		
 		return "member/mLogin";
 	}
 	
 	// 로그인 인증하기
 	@RequestMapping(value = "/mLogin", method = RequestMethod.POST)
-	public String mLoginPost(String mid, String pwd, HttpSession session) {
+	public String mLoginPost(String mid, String pwd, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		MemberVO vo = memberService.getIdCheck(mid);
 		
 		//pwd = bCryptPasswordEncoder.encode(pwd);
@@ -52,6 +65,25 @@ public class MemberController {
 			session.setAttribute("snickname", vo.getNickName());
 			session.setAttribute("slevel", vo.getLevel());
 			session.setAttribute("sStrLevel", strLevel);
+			
+			// 아이디에 대한 정보를 쿠키로 저장 유무 처리?
+			String idCheck = request.getParameter("idCheck")==null ? "" : request.getParameter("idCheck");
+			
+			if(idCheck.equals("on")) {  // 쿠키 저장
+				Cookie cookie = new Cookie("cmid", mid);
+				cookie.setMaxAge(60*60*24*4);	// 쿠키의 만료시간을 4일로 정했다.(단위 '초')
+				response.addCookie(cookie);
+			}
+			else {  // 저장된 cmid 쿠키명을 삭제처리
+				Cookie[] cookies = request.getCookies();  // 기존에 저장되어 있는 현재 사이트의 쿠키를 불러와서 배열로 저장한다.
+				for(int i=0; i<cookies.length; i++) {
+					if(cookies[i].getName().equals("cmid")) {
+						cookies[i].setMaxAge(0);	// 저장된 cmid 쿠키를 삭제한다.
+						response.addCookie(cookies[i]);
+						break;
+					}
+				}
+			}
 			
 			msgFlag = "mLoginOk";
 		}

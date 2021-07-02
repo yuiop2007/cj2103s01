@@ -32,4 +32,16 @@
   <select id="getIdSearch" resultType="com.spring.cj2103s10.vo.MemberVO">
     select * from member2 where replace(tel,'-','')=#{tel} and email=#{toMail};
   </select>
+  
+  <select id="totRecCnt" resultType="int">
+    select count(*) from member2;
+  </select>
+  
+  <select id="totRecCntLevel" resultType="int">
+    select count(*) from member2 where level = #{searchString};
+  </select>
+  
+  <select id="totRecCntMid" resultType="int">
+    select count(*) from member2 where mid = #{partValue};
+  </select>
 </mapper>

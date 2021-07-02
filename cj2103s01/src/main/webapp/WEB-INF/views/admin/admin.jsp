@@ -34,7 +34,7 @@
 		    		<ul class = "order">
 						<li>
 							<strong>회원수</strong>
-							<a href="#" class="count"><span>${totMember}</span></a>
+							<a href="${ctp}/admin/mList" class="count"><span>${totMember}</span></a>
 						</li>
 						<li>
 							<strong>탈퇴회원</strong>
@@ -109,7 +109,7 @@
 		    <div class="col shopMain">
 		   		<a href="${ctp}/product/pList">
 		    		<strong>상품 목록</strong>
-		    		총 상품 목록 : 0
+		    		총 상품 목록 : ${totProduct}
 		    	</a>
 		    </div>
 	  	</div>
@@ -122,16 +122,16 @@
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
-		    	<a href="#">
-		    		<strong>point</strong>
-		    		적립금은 상품 구매 시 사용하실 수 있습니다.
+		    	<a href="${ctp}/admin/coupon">
+		    		<strong>쿠폰 관리</strong>
+		    		쿠폰을 등록하고 관리 할 수 있습니다.
 		    		<br/>
-		    		적립된 금액은 현금으로 환불되지 않습니다.
+		    		
 		    	</a>
 		    </div>
 	  	</div>
 		<div class="row myshopMain">
-		    <div class="col shopMain">
+		<!--     <div class="col shopMain">
 		    	<a href="#">
 		    		<strong>coupon</strong>
 		    		고객님이 보유하고 계신 쿠폰내역을 보여드립니다.
@@ -161,7 +161,7 @@
 		    		회원 탈퇴
 		    		
 		    	</a>
-		    </div>
+		    </div> -->
 	  	</div>
 	</div>
 	<div class="jumbotron">

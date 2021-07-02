@@ -9,7 +9,7 @@
   <%@ include file="/WEB-INF/views/include/bs.jsp" %>
   <script>
     function logoutCheck() {
-    	parent.location.href="${ctp}/aOut.ad";
+    	parent.location.href="${ctp}/admin/aOut.ad";
     }
   </script>
   <style>
@@ -21,15 +21,15 @@
   <p><br/></p>
   <h4>관리자메뉴</h4>
   <hr/>
-  <p><a href="${ctp}/aContent.ad" target="content">관리자메뉴</a></p>
+  <p><a href="${ctp}/admin/aContent.ad" target="content">관리자메뉴</a></p>
   <hr/>
-  <p><a href="${ctp}/.ad" target="content">방명록</a></p>
+  <p><a href="${ctp}/admin/aGuest.ad" target="content">방명록</a></p>
   <hr/>
-  <p><a href="${ctp}/aMList.ad" target="content">회원관리</a></p>
+  <p><a href="${ctp}/admin/aMList.ad" target="content">회원관리</a></p>
   <hr/>
-  <p><a href="${ctp}/.ad" target="content">게시판</a></p>
+  <p><a href="${ctp}/admin/aBoard.ad" target="content">게시판</a></p>
   <hr/>
-  <p><a href="javascript:logoutCheck()">로그아웃</a></p>
+  <p><a href="javascript:logoutCheck()">홈으로</a></p>
   <p><br/></p>
 </div>
 </body>

@@ -30,6 +30,39 @@
 		var pageSize = pageForm.pageSize.value;
 		location.href = "${ctp}/product/pList?pag=${pageVO.pag}&pageSize="+ pageSize;
 	}
+	// 전체선택
+	$(function() {
+		$("#checkAll").click(function() {
+			if ($("#checkAll").prop("checked")) {
+				$(".chk").prop("checked", true);
+			} else {
+				$(".chk").prop("checked", false);
+			}
+		});
+	});
+
+	// 선택항목 반전
+	$(function() {
+		$("#reverseAll").click(function() {
+			$(".chk").prop("checked", function() {
+				return !$(this).prop("checked");
+			});
+		});
+	});
+
+	// 선택항목 삭제하기
+	function SelectDelCheck() {
+		var ans = confirm("선택된 모든 상품들을 삭제 하시겠습니까?");
+		if (ans) {
+			var delItems = "";
+			for (var i = 0; i < myform.chk.length; i++) {
+				if (myform.chk[i].checked == true)
+					delItems += myform.chk[i].value + "/";
+			}
+			myform.delItems.value = delItems;
+			myform.submit();
+		}
+	}
 </script>
 </head>
 <body>
@@ -40,20 +73,33 @@
 	<div class="container">
 		<h6>상품 목록</h6>
 		</br></br></br></br>
-		<form name="pageForm">
-			<select name="pageSize" onchange="pageCheck()" style="width:130px; float:right; text-align: left; padding: 5px 0px; margin: 0;">
-					<option value="10" ${pageVO.pageSize==10 ? 'selected' : ''}>10건</option>
-					<option value="15" ${pageVO.pageSize==15 ? 'selected' : ''}>15건</option>
-					<option value="20" ${pageVO.pageSize==20 ? 'selected' : ''}>20건</option>
-			</select>
-			<c:if test="${slevel==0}">
-				<div>
-				<a href="${ctp}/product/pInput">작성하기</a>
-				</div>
-			</c:if>
+		<div style="padding: 10px 0px;">
+			<form name="pForm">
+				<table class="table table-borderless" style="width: 100%; margin: 0px; padding: 0px;">
+					<tr>
+						<td style="text-align: left;"><input type="checkbox" id="checkAll" />전체선택/해제 &nbsp; 
+						<input type="checkbox" id="reverseAll" />선택반전 &nbsp; 
+						<input type="button" value="선택항목 삭제" onclick="SelectDelCheck()" class="btn btn-outline-secondary btn-sm" />
+						</td>
+						<td style="text-align:right">
+						<form name="pageForm">
+							<select name="pageSize" onchange="pageCheck()" style="width:130px; float:right; text-align: left; padding: 5px 0px; margin: 0;">
+									<option value="10" ${pageVO.pageSize==10 ? 'selected' : ''}>10건</option>
+									<option value="15" ${pageVO.pageSize==15 ? 'selected' : ''}>15건</option>
+									<option value="20" ${pageVO.pageSize==20 ? 'selected' : ''}>20건</option>
+							</select>
+						</form>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<form name="myform" method="post">
+		<input type="hidden" name="delItems" />
 		<table class="table table-borderless">
 			<thead>
-				<tr>
+				<tr class="table-dark text-dark">
+					<th scope="col">선택</th>
 					<th scope="col">NO</th>
 					<th scope="col">상품이름</th>
 					<th scope="col">카테고리</th>
@@ -63,9 +109,11 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:set var="curScrStartNo" value="${pageVO.curScrStartNo}" />
 			<c:forEach var="vo" items="${vos}">
 				<tr>
-					<td class="ptd1">${vo.pId}</td>
+					<td><input type="checkbox" name="chk" value="${vo.pId}" class="chk" /></td>
+					<td class="ptd1">${curScrStartNo}</td>
 					<td class="ptd2"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.pName}</a></td>
 					<td class="ptd3">${vo.pCate}</td>
 					<td class="ptd4">${vo.pPrice}</td>
@@ -75,6 +123,7 @@
 		        		<c:if test="${vo.diffTime > 24}">${fn:substring(vo.pRdate,0,10)}</c:if>
 					</td>
 				</tr>
+				<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
 			</c:forEach>
 			</tbody>
 		</table>

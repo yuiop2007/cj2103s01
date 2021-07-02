@@ -47,6 +47,7 @@ public class ProductController {
 		return "product/pInput";
 	}
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/pInput", method = RequestMethod.POST)
 	public String pInputPost(MultipartFile file, ProductVO vo, HttpServletRequest request) {
 
@@ -231,12 +232,21 @@ public class ProductController {
 	public String pDeleteGet(int pId, HttpServletRequest request,
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
-		ProductVO vo = productService.getIdCheck(pId);
+		
+		
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
 
+		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
+
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+		
+		
+		ProductVO vo = productService.getIdCheck(pId);
 		productService.pDelete(vo.getpId());
 
 		msgFlag = "productDeleteOk$pag=" + pag + "&pageSize=" + pageSize;
-		return "redirect:/msg/" + msgFlag;
+		return "/product/pList";
 	}
 	
 	@RequestMapping(value = "/proShow", method = RequestMethod.GET)
@@ -255,6 +265,17 @@ public class ProductController {
 		model.addAttribute("cate", cate);
 		
 		return "product/proShow";
+	}
+	
+	// 선택한 상품들 삭제처리하기
+	@RequestMapping(value = "/pList", method = RequestMethod.POST)
+	public String pListPost(String delItems) {
+		String[] idxs = delItems.split("/");
+		for (String idx : idxs) {
+			productService.productDelete(Integer.parseInt(idx));
+		}
+
+		return "redirect:/msg/adminProductDeleteOk";
 	}
 	
 }

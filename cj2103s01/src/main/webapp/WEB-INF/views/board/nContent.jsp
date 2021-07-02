@@ -39,6 +39,10 @@
 				$.ajax({
 					type : "post",
 					url  : "${ctp}/board/nDelete?idx=${vo.nId}&nPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+					success: function(data) {
+						alert("삭제처리 되었습니다.");
+						location.href="${ctp}/board/notice";
+					}
 				});
 			}
 		}

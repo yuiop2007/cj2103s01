@@ -31,4 +31,6 @@ public interface ProductDAO {
 
 	public int totProductCnt();
 
+	public void productDelete(@Param("idx") int idx);
+
 }

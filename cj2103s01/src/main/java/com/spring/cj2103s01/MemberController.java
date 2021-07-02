@@ -1,5 +1,6 @@
 package com.spring.cj2103s01;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.cj2103s01.service.CouponService;
 import com.spring.cj2103s01.service.MemberService;
 import com.spring.cj2103s01.vo.MemberVO;
 
@@ -23,6 +25,9 @@ public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	CouponService couponService;
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -48,6 +53,7 @@ public class MemberController {
 			session.setAttribute("sStrLevel", strLevel);
 			
 			msgFlag = "mLoginOk";
+			
 		}
 		else if(vo != null && bCryptPasswordEncoder.matches(mPwd, vo.getmPwd()) && vo.getmDrop().equals("YES")){
 			msgFlag = "mLoginDel";
@@ -66,11 +72,12 @@ public class MemberController {
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String joinGet() {
+		
 		return "member/join";
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPost(MemberVO vo, HttpServletRequest request) {
+	public String joinPost(MemberVO vo, HttpServletRequest request, Model model) {
 		// 아이디 중복체크
 		if(memberService.getIdCheck(vo.getmId()) != null) {
 			msgFlag = "mJoinNo";
@@ -98,6 +105,12 @@ public class MemberController {
 		String mBirth = "";
 		mBirth = year + "-" + month + "-" + day;
 		vo.setmBirth(mBirth);
+		
+		List<MemberVO> vos = memberService.getMemberList();
+		for(MemberVO mvo : vos) {
+			if(mvo.getmId().equals(vo.getmCmid()))
+			vo.setmPoint(4000);
+		}
 
 		memberService.setMemberInput(vo);
 		

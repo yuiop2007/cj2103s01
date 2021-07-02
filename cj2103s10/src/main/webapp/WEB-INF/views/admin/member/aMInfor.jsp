@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
+<c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,55 +36,49 @@
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <label for="name">성명 :</label>${vo.name}
+		      <label for="name">성명 :</label> ${vo.name}
 		    </div>
 	    </td>
 	  </tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <label for="email">Email address:</label>${vo.email}
+		      <label for="email">Email address:</label> ${vo.email}
 			  </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <div class="form-check-inline">
-		        <span class="input-group-text">성별 :</span> &nbsp; &nbsp;${vo.gender}
-					</div>
+		      성별 : &nbsp; &nbsp;${vo.gender}
 		    </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <label for="birthday">생일 :</label>${vo.birthday}
+		      <label for="birthday">생일 :</label> ${vo.birthday}
 		    </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <div class="input-group mb-3">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text">전화번호 :</span> &nbsp;&nbsp;${vo.tel}
-			      </div>
-			    </div> 
+		      전화번호 : &nbsp;&nbsp;${vo.tel}
 		    </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <label for="address">주소 :</label>${vo.address}
+		      <label for="address">주소 :</label> ${vo.address}
 		    </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-			    <label for="homepage">Homepage address:</label>${vo.homePage}
+			    <label for="homepage">Homepage address:</label> ${vo.homepage}
 			  </div>
 			</td>
 		</tr>
@@ -94,24 +92,27 @@
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <div class="form-check-inline">
-		        <span class="input-group-text">취미 :</span> &nbsp; &nbsp;${vo.hobby}
-					</div>
+		      취미 : &nbsp; &nbsp;${vo.hobby}
 		    </div>
 			</td>
 		</tr>
 		<tr>
 		  <td>
 		    <div class="form-group">
-		      <div class="form-check-inline">
-		        <span class="input-group-text">정보공개 :</span>  &nbsp; &nbsp;${vo.userInfor} 
-					</div>
+		      정보공개 : &nbsp; &nbsp;${vo.userInfor} 
 		    </div>
 		  </td>
 		</tr>
 		<tr>
 		  <td>
-    		<button type="button" class="btn btn-secondary" onclick="history.back()">돌아가기</button>
+		    <div class="form-group">
+		      <img src="${ctp}/resources/member/${vo.photo}" width="300px"/> 
+		    </div>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+    		<button type="button" class="btn btn-secondary btn-sm" onclick="window.close()">창닫기</button>
       </td>
     </tr>
   </table>

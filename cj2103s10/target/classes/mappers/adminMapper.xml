@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cj2103s10.dao.AdminDAO">
+  <select id="getMemberList" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 order by idx desc limit #{startIndexNo}, #{pageSize};
+  </select>
   
+  <select id="getMemberListLevel" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 where level = #{level} order by idx desc limit #{startIndexNo}, #{pageSize};
+  </select>
+  
+  <select id="getMemberListMid" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 where mid = #{mid} order by idx desc limit #{startIndexNo}, #{pageSize};
+  </select>
+  
+  <update id="aMLevelCheck">
+    update member2 set level = #{level} where mid = #{mid};
+  </update>
+  
+  <select id="getAMInfor" resultType="com.spring.cj2103s10.vo.MemberVO">
+    select * from member2 where mid = #{mid};
+  </select>
+  
+  <delete id="memberDelete">
+    delete from member2 where idx = #{idx}; 
+  </delete>
 </mapper>

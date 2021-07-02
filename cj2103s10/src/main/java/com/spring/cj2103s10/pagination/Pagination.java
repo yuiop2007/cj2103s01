@@ -5,11 +5,15 @@ import org.springframework.stereotype.Service;
 
 import com.spring.cj2103s10.dao.BoardDAO;
 import com.spring.cj2103s10.dao.GuestDAO;
+import com.spring.cj2103s10.dao.MemberDAO;
 
 @Service
 public class Pagination {
   @Autowired
   GuestDAO guestDAO;
+  
+  @Autowired
+  MemberDAO memberDAO;
   
   @Autowired
   BoardDAO boardDAO;
@@ -23,6 +27,17 @@ public class Pagination {
 		if(partName.equals("guest")) {
 		  totRecCnt = guestDAO.totRecCnt();
 		}
+		else if(partName.equals("member")) {
+			if(!partValue.equals("")) {
+				totRecCnt = memberDAO.totRecCntMid(partValue);
+			}
+			else if(searchString.equals("")) {
+				totRecCnt = memberDAO.totRecCnt();
+			}
+			else {
+				totRecCnt = memberDAO.totRecCntLevel(searchString);
+			}
+		}
 		else if(partName.equals("board")) {
 			if(searchString.equals("")) {
 			  totRecCnt = boardDAO.totRecCnt();
@@ -30,7 +45,6 @@ public class Pagination {
 			else {
 				String search = partValue;
 				totRecCnt = boardDAO.totSearchRecCnt(search, searchString);
-				System.out.println("board 조건 : " + totRecCnt);
 			}
 		}
 		

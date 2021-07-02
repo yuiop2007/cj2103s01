@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s10.dao.ScheduleDAO">
+  <select id="getScheduleList" resultType="com.spring.cj2103s10.vo.ScheduleVO">
+    <!-- select scDate,substring(title,1,4) as title from schedule2 where mid=#{mid} and date_format(scDate, '%Y-%m')=#{ym} order by scDate, memory; -->
+    <!-- select scDate,memory from schedule2 where mid=#{mid} and date_format(scDate, '%Y-%m')=#{ym} order by scDate, memory; -->
+    select scDate,memory from schedule2 where mid=#{mid} and date_format(scDate, '%Y-%m')=#{ym} order by scDate, memory;
+  </select>
+  
+  <select id="getScMenu" resultType="com.spring.cj2103s10.vo.ScheduleVO">
+    select * from schedule2 where mid=#{mid} and date_format(scDate, '%Y-%m-%d')=#{ymd};
+  </select>
+  
+  <insert id="scheduleInputOk">
+    insert into schedule2 values (default,#{vo.mid},#{vo.ymd},#{vo.memory},#{vo.title},#{vo.content});
+  </insert>
+  
+  <delete id="scheduleDeleteOk">
+    delete from schedule2 where idx = #{idx};
+  </delete>
+</mapper>

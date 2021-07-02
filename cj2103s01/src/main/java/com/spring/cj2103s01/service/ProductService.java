@@ -26,4 +26,6 @@ public interface ProductService {
 
 	public int totProductCnt();
 
+	public void productDelete(int idx);
+
 }

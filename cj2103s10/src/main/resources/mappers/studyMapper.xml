@@ -7,5 +7,9 @@
    
   <select id="getAddress2" resultType="com.spring.cj2103s10.vo.AreaVO">
     select * from area where address1 = #{address1} order by address2;
+  </select>
+   
+  <select id="getAddressSearch" resultType="com.spring.cj2103s10.vo.AreaVO">
+    select distinct address1, address2, latitude, longitude from area where address1 = #{address1} and address2 = #{address2};
   </select> 
 </mapper>

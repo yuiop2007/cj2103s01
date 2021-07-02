@@ -26,5 +26,17 @@ public interface MemberService {
 	public int totMemberCnt();
 
 	public int dropMemberCnt();
+
+	public List<MemberVO> getMemberListLevel(int startIndexNo, int pageSize, String mLevel);
+
+	public List<MemberVO> getMemberListMid(int startIndexNo, int pageSize, String mId);
+
+	public void mLevelCheck(String mId, String mLevel);
+
+	public void memberDelete(String idx);
+
+	public void mPointInput(String idx, int point);
+
+	public List<MemberVO> getCouponMember(int cmCate);
 	
 }

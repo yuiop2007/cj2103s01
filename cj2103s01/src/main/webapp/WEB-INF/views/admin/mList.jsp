@@ -12,25 +12,114 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 <title>MINIM</title>
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
+<style>
+.table td, .table th {
+	padding: .75rem;
+	vertical-align: middle;
+	border-top: 1px solid #dee2e6;
+}
+</style>
 <script>
-	function sChange() {
-		searchForm.searchString.focus();
+	function levelCheck() {
+		alert("회원정보를 변경하시려면, '정보변경'버튼을 클릭하세요...");
 	}
 
-	function sCheck() {
-		var searchString = searchForm.searchString.value;
-		if (searchString == "") {
-			alert("검색어를 입력하세요");
-			searchForm.searchString.focus();
+	// 레벨별 검색처리
+	function levelSearch() {
+		var level = adminForm.level.value;
+		location.href = "${ctp}/admin/mListLevel.ad?mLevel=" + level
+				+ "&pag=${pageVO.pag}";
+	}
+
+	// 개별 아이디 검색
+	function midSearch() {
+		var mid = idForm.searchMid.value;
+		if (mid == "") {
+			alert("아이디를 입력하세요.");
+			idForm.searchMid.focus();
 		} else {
-			searchForm.submit();
+			location.href = "${ctp}/admin/mSearch.mem?mId=" + mid;
 		}
 	}
 
-	// 페이지사이즈 처리
-	function pageCheck() {
-		var pageSize = pageForm.pageSize.value;
-		location.href = "${ctp}/admin/review?pag=${pageVO.pag}&pageSize="+ pageSize;
+	// 레벨 변경하기
+	function mLevelCheck(mid) {
+		var level = $("#level" + mid).val();
+		$.ajax({
+			type : "get",
+			url : "${ctp}/admin/mLevelCheck",
+			data : {
+				mId : mid,
+				mLevel : level
+			},
+			success : function(data) {
+				alert("정보변경 완료!");
+			}
+		});
+	}
+
+	// 개인 정보보기
+	function newWin(mid) {
+		var url = "${ctp}/admin/mInfor.ad?mId=" + mid;
+		window.open(url, "mInfor", "width=600px, height=600px");
+	}
+
+	// 전체선택
+	$(function() {
+		$("#checkAll").click(function() {
+			if ($("#checkAll").prop("checked")) {
+				$(".chk").prop("checked", true);
+			} else {
+				$(".chk").prop("checked", false);
+			}
+		});
+	});
+
+	// 선택항목 반전
+	$(function() {
+		$("#reverseAll").click(function() {
+			$(".chk").prop("checked", function() {
+				return !$(this).prop("checked");
+			});
+		});
+	});
+
+	// 선택항목 삭제하기
+	function mSelectDelCheck() {
+		var ans = confirm("선택된 모든 회원들을 삭제 하시겠습니까?");
+		if (ans) {
+			var delItems = "";
+			for (var i = 0; i < myform.chk.length; i++) {
+				if (myform.chk[i].checked == true)
+					delItems += myform.chk[i].value + "/";
+			}
+			myform.delItems.value = delItems;
+			myform.submit();
+		}
+	}
+	
+	function pointCheck() {
+		var ans = confirm("선택된 모든 회원에게 포인트를 추가하시겠습니까?");
+		if (ans) {
+			var delItems = "";
+			var point = adminForm.pnum.value;
+			for (var i = 0; i < myform.chk.length; i++) {
+				if (myform.chk[i].checked == true)
+					delItems += myform.chk[i].value + "/";
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/admin/mPointCheck",
+				data : {
+					delItems : delItems,
+					point : point
+				},
+				success : function(data) {
+					alert("포인트추가 완료!");
+				}
+			});
+		}
 	}
 </script>
 </head>
@@ -40,92 +129,103 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	</div>
 	<div class="container">
-		<h6>리뷰</h6>
-		</br>
-		</br>
-		</br>
-		</br>
-		<form name="pageForm">
-			<table class="table table-borderless">
-				<thead>
+		<h6>회원 목록</h6>
+		</br> </br> </br> </br>
+		<div style="padding: 10px 0px;">
+			<form name="adminForm">
+				<table class="table table-borderless" style="width: 100%; margin: 0px; padding: 0px;">
 					<tr>
-					<th scope="col" style="width: 5%;">NO</th>
-						<th scope="col" style="width: 10%; text-align: left;">아이디</th>
-						<th scope="col" style="width: 50%; text-align: left;">이름</th>
-						<th scope="col" style="width: 10%;">탈퇴여부</th>
-						<th scope="col" style="padding-bottom: 5px;">
-						<select name="pageSize" onchange="pageCheck()" style="text-align: left; padding: 5px 0px; margin: 0;">
-								<option value="10" ${pageVO.pageSize==10 ? 'selected' : ''}>10건</option>
-								<option value="15" ${pageVO.pageSize==15 ? 'selected' : ''}>15건</option>
-								<option value="20" ${pageVO.pageSize==20 ? 'selected' : ''}>20건</option>
-						</select>
-						</th>
+						<td style="text-align: left;"><input type="checkbox" id="checkAll" />전체선택/해제 &nbsp; 
+						<input type="checkbox" id="reverseAll" />선택반전 &nbsp; 
+						<input type="button" value="삭제" onclick="mSelectDelCheck()" class="btn btn-outline-secondary btn-sm" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+						<input type="number" min="0" id="pnum" value="0" class="btn btn-outline-secondary btn-sm" style="width: 80px; padding: 3px; border: 1px solid #ccc;"/>
+						<input type="button" value="포인트 추가" onclick="pointCheck()" class="btn btn-outline-secondary btn-sm" /></td>
+						<td style="text-align: right"><c:if test="${slevel == 0}">
+				      회원등급
+				      <select name="level" onchange="levelSearch()" style="width: 100px;">
+									<option value="" <c:if test="${empty stringLevel}">selected</c:if>>전체회원</option>
+									<option value="1" <c:if test="${stringLevel=='1'}">selected</c:if>>특별회원</option>
+									<option value="2" <c:if test="${stringLevel=='2'}">selected</c:if>>우수회원</option>
+									<option value="3" <c:if test="${stringLevel=='3'}">selected</c:if>>정회회원</option>
+									<option value="4" <c:if test="${stringLevel=='4'}">selected</c:if>>준회원</option>
+								</select>
+							</c:if></td>
 					</tr>
-				</thead>
-				<tbody>
+				</table>
+			</form>
+		</div>
+		<form name="myform" method="post">
+			<input type="hidden" name="delItems" />
+			<input type="hidden" name="point" />
+			<table class="table table-hover">
+				<tr class="table-dark text-dark">
+					<th>선택</th>
+					<th>번호</th>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>성별</th>
+					<c:if test="${slevel == 0}">
+						<th style="width: 20%;">등급</th>
+						<th>탈퇴유무</th>
+					</c:if>
+				</tr>
 				<c:set var="curScrStartNo" value="${pageVO.curScrStartNo}" />
 				<c:forEach var="vo" items="${vos}">
 					<tr>
-						<td class="td1" style="width: 5%;">${curScrStartNo}</td>
-						<td class="td2" style="width: 10%;">
-						<c:if test="${vo.rRating eq 1}">⭐</c:if>
-						<c:if test="${vo.rRating eq 2}">⭐⭐</c:if>
-						<c:if test="${vo.rRating eq 3}">⭐⭐⭐</c:if>
-						<c:if test="${vo.rRating eq 4}">⭐⭐⭐⭐</c:if>
-						<c:if test="${vo.rRating eq 5}">⭐⭐⭐⭐⭐</c:if>
-						</td>
-						<td class="td3" style="width: 50%; text-align: left;"><a href="${ctp}/board/rContent?rId=${vo.rId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.rTitle}</a></td>
-						<td class="td3" style="width: 10%;">${vo.rName}</td>
-						<td class="td4" style="width: 10%;">
-							<c:if test="${vo.diffTime <= 24}">${fn:substring(vo.rRdate,11,19)}</c:if>
-		        			<c:if test="${vo.diffTime > 24}">${fn:substring(vo.rRdate,0,10)}</c:if>
-						</td>
+						<td><input type="checkbox" name="chk" value="${vo.mId}" class="chk" /></td>
+						<td>${curScrStartNo}</td>
+						<td><a href="javascript:newWin('${vo.mId}');">${vo.mId}</a></td>
+						<td><c:if test="${slevel == 0}">
+								<a href="javascript:newWin('${vo.mId}');">${vo.mName}</a>
+							</c:if> <c:if test="${slevel != 0}">${vo.mName}</c:if></td>
+						<td>${vo.mGender}</td>
+						<c:if test="${slevel == 0}">
+							<td>
+								<form name="levelForm">
+									<select name="mLevel" id="level${vo.mId}" onchange="levelCheck()" style="width: 80px; padding: 3px; border: 1px solid #ccc;">
+										<option value="1" <c:if test="${vo.mLevel==1}">selected</c:if>>특별회원</option>
+										<option value="2" <c:if test="${vo.mLevel==2}">selected</c:if>>우수회원</option>
+										<option value="3" <c:if test="${vo.mLevel==3}">selected</c:if>>정회원</option>
+										<option value="4" <c:if test="${vo.mLevel==4}">selected</c:if>>준회원</option>
+									</select> <input type="button" value="정보변경" onclick="mLevelCheck('${vo.mId}')" /> 
+									<input type="hidden" name="mId" value="${vo.mId}" /> 
+									<input type="hidden" name="pag" value="${pageVO.pag}" />
+								</form>
+							</td>
+							<td><c:if test="${vo.mDrop == 'YES'}">
+									<font color="red">${vo.mDrop}</font>
+								</c:if> <c:if test="${vo.mDrop != 'YES'}">${vo.mDrop}</c:if></td>
+						</c:if>
 					</tr>
 					<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
 				</c:forEach>
-				</tbody>
 			</table>
+			
 		</form>
-		<!-- 블록페이징처리 시작 -->
-		<div class="container" style="text-align:center;">
-		  <ul class="pagination justify-content-center">
-			  <c:set var="startPageNum" value="${pageVO.pag - (pageVO.pag-1)%pageVO.blockSize}" />  <!-- 해당블록의 시작페이지 구하기 -->
-			  <c:if test="${pag != 1}">
-			    <li class="page-item"><a href="${ctp}/board/review?pag=1&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
-			    <li class="page-item"><a href="${ctp}/board/review?pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
-			  </c:if>
-			  <c:forEach var="i" begin="0" end="${pageVO.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
-			    <c:if test="${(startPageNum+i) <= pageVO.totPage}">
-				  	<c:if test="${pageVO.pag == (startPageNum+i)}">
-				  	  <li class="page-item active"><a href="${ctp}/board/review?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
-				  	</c:if>
-				  	<c:if test="${pageVO.pag != (startPageNum+i)}">
-				  	  <li class="page-item"><a href="${ctp}/board/review?pag=${startPageNum+i}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
-				  	</c:if>
-			  	</c:if>
-			  </c:forEach>
-			  <c:if test="${pageVO.pag != pageVO.totPage}">
-			    <li class="page-item"><a href="${ctp}/board/review?pag=${pageVO.pag+1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▶</a></li>
-			    <li class="page-item"><a href="${ctp}/board/review?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
-			  </c:if>
-		  </ul>
-		</div>
-		<!-- 블록페이징처리 끝 -->
-		<!-- 검색기 처리 시작 -->
-		<br/>
-		<div class="container" style="text-align:center">
-		  <form name="searchForm" method="get" action="${ctp}/board/rSearch">
-		    <select name="search" onchange="sChange()" style="width: 100px; height: 40px;">
-		    	<option value="rTitle" selected>제목</option>
-		    	<option value="rName">글쓴이</option>
-		    </select>
-		    <input type="text" name="searchString" style="width: 250px; height: 40px;"/>
-		    <a href="#" onclick="sCheck()">SEARCH</a>
-		    <input type="hidden" name="pag" value="${pageVO.pag}"/>
-		    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>
-		  </form>
-		</div>
-		<!-- 검색기 처리 끝 -->
+		<!-- 페이징처리 시작 -->
+		<c:if test="${pageVO.totPage != 0}">
+
+			<div style="text-align: center">
+				<c:if test="${pageVO.pag != 1}">[<a href="${ctp}/admin/aMList.ad?pag=1">1페이지</a>]....</c:if>
+				<c:if test="${pageVO.pag > 1}">[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.pag-1}">이전페이지</a>]</c:if>
+				${pageVO.pag}Page / ${pageVO.totPage}Pages
+				<c:if test="${pageVO.pag < pageVO.totPage}">[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.pag+1}">다음페이지</a>]</c:if>
+				<c:if test="${pageVO.pag != pageVO.totPage}">....[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.totPage}">마지막페이지</a>]</c:if>
+			</div>
+
+		</c:if>
+		<!-- 페이징처리 끝 -->
+		<p>
+			<br />
+		</p>
+		<form name="idForm">
+			<div style="text-align: center;">
+				<%-- <input type="text" name="mid" <c:if test="${mid != ''}">value="${mid}"</c:if> placeholder="검색할아이디입력"/> --%>
+				<input type="text" name="searchMid" value="${vo.mId}" placeholder="검색할아이디입력" style="width: 150px;" /> 
+				<input type="button" value="개별검색" onclick="midSearch()" /> 
+				<input type="button" value="전체검색" onclick="location.href='${ctp}/admin/mList.ad';" />
+			</div>
+		</form>
 	</div>
 	<div class="jumbotron">
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />

@@ -3,6 +3,7 @@ package com.spring.cj2103s01.pagenation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.cj2103s01.dao.CouponDAO;
 import com.spring.cj2103s01.dao.EventDAO;
 import com.spring.cj2103s01.dao.MemberDAO;
 import com.spring.cj2103s01.dao.NoticeDAO;
@@ -33,6 +34,9 @@ public class Pagenation {
 	
 	@Autowired
 	MemberDAO memberDAO;
+	
+	@Autowired
+	CouponDAO couponDAO;
 
 	public PagenationVO pagenation(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 5;
@@ -93,12 +97,20 @@ public class Pagenation {
 		else if(partName.equals("mywish")){
 			totRecCnt = wishDAO.totWishRecCnt(search);
 		}
+		else if(partName.equals("coupon")){
+			totRecCnt = couponDAO.totRecCnt();
+		}
 		else if (partName.equals("mList")) {
 			if (searchString.equals("")) {
 				totRecCnt = memberDAO.totMemberCnt();
 			}
-			else {
-				System.out.println(search);
+			else if(!search.equals("") && searchString.equals("")) {
+				totRecCnt = memberDAO.totRecCntMid(search);
+			}
+			else if(search.equals("") && !searchString.equals("")){
+				totRecCnt = memberDAO.totRecCntLevel(searchString);
+			}
+			else{
 				totRecCnt = memberDAO.totSearchRecCnt(search, searchString);
 			}
 		}

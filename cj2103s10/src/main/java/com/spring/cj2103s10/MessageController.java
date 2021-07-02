@@ -106,6 +106,10 @@ public class MessageController {
 			model.addAttribute("msg", "게시글이 등록되었습니다.");
 			model.addAttribute("url", "board/bList");
 		}
+		else if(msgFlag.equals("adminMemberDeleteOk")) {
+			model.addAttribute("msg", "선택한 회원(들)을 삭제처리 하였습니다.");
+			model.addAttribute("url", "admin/aMList");
+		}
 		
 		
 		

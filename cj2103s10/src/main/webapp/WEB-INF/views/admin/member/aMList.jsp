@@ -15,18 +15,74 @@
     // 레벨별 검색처리
     function levelSearch() {
     	var level = adminForm.level.value;
-    	location.href = "${ctp}/aMList.ad?level="+level;
+    	location.href = "${ctp}/admin/aMListLevel.ad?level="+level+"&pag=${pageVO.pag}";
     }
     
     // 개별 아이디 검색
     function midSearch() {
-    	var mid = adminForm.mid.value;
+    	var mid = idForm.searchMid.value;
     	if(mid == "") {
     		alert("아이디를 입력하세요.");
-    		adminForm.mid.focus();
+    		idForm.searchMid.focus();
     	}
     	else {
-    		location.href="${ctp}/mUpdate.mem?sw=s&mid="+mid;
+    		location.href="${ctp}/admin/aSearch.mem?mid="+mid;
+    	}
+    }
+    
+    // 레벨 변경하기
+    function aMLevelCheck(mid) {
+    	var level = $("#level"+mid).val();
+    	$.ajax({
+    		type : "get",
+    		url  : "${ctp}/admin/aMLevelCheck",
+    		data : {
+    			mid : mid,
+    			level : level
+    		},
+    		success : function(data) {
+    			alert("정보변경 완료!");
+    		}
+    	});
+    }
+    
+    // 개인 정보보기
+    function newWin(mid) {
+    	var url = "${ctp}/admin/aMInfor.ad?mid="+mid;
+    	window.open(url, "mInfor", "width=600px, height=600px");
+    }
+    
+    // 전체선택
+    $(function() {
+    	$("#checkAll").click(function() {
+    		if($("#checkAll").prop("checked")) {
+    			$(".chk").prop("checked",true);
+    		}
+    		else {
+    			$(".chk").prop("checked",false);
+    		}
+    	});
+    });
+    
+    // 선택항목 반전
+    $(function() {
+    	$("#reverseAll").click(function() {
+    		$(".chk").prop("checked", function() {
+    			return !$(this).prop("checked");
+    		});
+    	});
+    });
+    
+    // 선택항목 삭제하기
+    function mSelectDelCheck() {
+    	var ans = confirm("선택된 모든 회원들을 삭제 하시겠습니까?");
+    	if(ans) {
+    		var delItems = "";
+    		for(var i=0; i<myform.chk.length; i++) {
+    			if(myform.chk[i].checked == true) delItems += myform.chk[i].value + "/";
+    		}
+	    	myform.delItems.value = delItems;
+	    	myform.submit();
     	}
     }
   </script>
@@ -35,9 +91,6 @@
   </style>
 </head>
 <body>
-<%-- <% if(mlevel != 0) { %><%@ include file="/include/nav.jsp" %><% } %> --%>
-<c:if test="${slevel != 0}"><jsp:include page="/WEB-INF/views/include/nav.jsp"/></c:if>
-
 <div class="container">
   <p><br/></p>
   <div style="padding:10px 0px;">
@@ -47,19 +100,20 @@
           <td colspan="2"><h2>회 원 리 스 트</h2></td>
         </tr>
         <tr>
-          <td style="text-align:left">
-            <input type="text" name="mid" placeholder="검색할아이디입력"/>
-            <input type="button" value="개별검색" onclick="midSearch()"/>
-            <input type="button" value="전체검색" onclick="location.href='${ctp}/aMList.ad';"/>
+          <td style="text-align:left;">
+            <input type="checkbox" id="checkAll"/>전체선택/해제 &nbsp;
+            <input type="checkbox" id="reverseAll"/>선택반전 &nbsp;
+            <input type="button" value="선택항목 삭제" onclick="mSelectDelCheck()" class="btn btn-outline-secondary btn-sm"/>
           </td>
           <td style="text-align:right">
             <c:if test="${slevel == 0}">
 				      회원등급
 				      <select name="level" onchange="levelSearch()">
 				      	<option value="" <c:if test="${empty stringLevel}">selected</c:if>>전체회원</option>
-				      	<option value="1" <c:if test="${stringLevel=='1'}">selected</c:if>>준회원</option>
-				      	<option value="2" <c:if test="${stringLevel=='2'}">selected</c:if>>정회원</option>
-				      	<option value="3" <c:if test="${stringLevel=='3'}">selected</c:if>>우수회원</option>
+				      	<option value="1" <c:if test="${stringLevel=='1'}">selected</c:if>>특별회원</option>
+				      	<option value="2" <c:if test="${stringLevel=='2'}">selected</c:if>>우수회원</option>
+				      	<option value="3" <c:if test="${stringLevel=='3'}">selected</c:if>>정회회원</option>
+				      	<option value="4" <c:if test="${stringLevel=='4'}">selected</c:if>>준회원</option>
 				      </select>
 			      </c:if>
 			    </td>
@@ -67,74 +121,86 @@
       </table>
     </form>
   </div>
-  <table class="table table-hover">
-    <tr class="table-dark text-dark">
-      <th>번호</th>
-      <th>아이디</th>
-      <th>별명</th>
-      <th>성명</th>
-      <th>성별</th>
-      <th>방문횟수</th>
-      <th>최종접속일</th>
-			<c:if test="${slevel == 0}">
-	      <th>정보공개</th>
-	      <th>등급</th>
-	      <th>탈퇴유무</th>
-			</c:if>
-    </tr>
-    <c:forEach var="vo" items="${vos}">
-      <c:choose>
-        <c:when test="${vo.level == 0}"><c:set var="strLevel" value="관리자"/></c:when>
-        <c:when test="${vo.level == 1}"><c:set var="strLevel" value="준회원"/></c:when>
-        <c:when test="${vo.level == 2}"><c:set var="strLevel" value="정회원"/></c:when>
-        <c:when test="${vo.level == 3}"><c:set var="strLevel" value="우수회원"/></c:when>
-      </c:choose>
-	    <tr>
-	      <td>${curScrStartNo}</td>
-	      <td>
-	        <c:if test="${vo.userInfor == '공개'}">${vo.mid}</c:if>
-	        <c:if test="${vo.userInfor != '공개'}">비공개</c:if>
-	      </td>
-	      <td>
-	        <c:if test="${slevel == 0}"><a href="${ctp}/aMInfor.ad?mid=${vo.mid}">${vo.nickName}</a></c:if>
-	        <c:if test="${slevel != 0}">${vo.nickName}</c:if>
-	      </td>
-	      <td>${vo.userInfor=='공개' ? vo.name : '비공개'}</td>
-	      <td>${vo.userInfor=='공개' ? vo.gender : '비공개'}</td>
-	      <td>${vo.userInfor=='공개' ? vo.visitCnt : '비공개'}</td>
-	      <td>${vo.userInfor=='공개' ? vo.lastDate : '비공개'}</td>
-        <c:if test="${slevel == 0}">
-		      <td>${vo.userInfor}</td>
-		      <td>
-		        <form name="myform" method="post" action="${ctp}/aMLevel.ad">
-		        	<select name="level" onchange="levelCheck()">
-		        	  <option value="1" <c:if test="${vo.level==1}">selected</c:if>>준회원</option>
-		        	  <option value="2" <c:if test="${vo.level==2}">selected</c:if>>정회원</option>
-		        	  <option value="3" <c:if test="${vo.level==3}">selected</c:if>>우수회원</option>
-		        	  <option value="0" <c:if test="${vo.level==0}">selected</c:if>>관리자</option>
-		        	</select>
-		        	<input type="submit" value="정보변경"/>
-		        	<input type="hidden" name="idx" value="${vo.idx}"/>
-		        	<input type="hidden" name="pag" value="${pag}"/>
-		        </form>
-		      </td>
-		      <td>${vo.userDel}</td>
+  <form name="myform" method="post">
+	  <table class="table table-hover">
+	    <tr class="table-dark text-dark">
+	      <th>선택</th>
+	      <th>번호</th>
+	      <th>아이디</th>
+	      <th>별명</th>
+	      <th>성명</th>
+	      <th>성별</th>
+				<c:if test="${slevel == 0}">
+		      <th>정보공개</th>
+		      <th>등급</th>
+		      <th>탈퇴유무</th>
 				</c:if>
 	    </tr>
-	    <c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
-    </c:forEach>
-  </table>
+	    <c:set var="curScrStartNo" value="${pageVO.curScrStartNo}"/>
+	    <c:forEach var="vo" items="${vos}">
+		    <tr>
+		      <td><input type="checkbox" name="chk" value="${vo.idx}" class="chk"/></td>
+		      <td>${curScrStartNo}</td>
+		      <td>${vo.userInfor == 'OK' || slevel == 0 ? vo.mid : '비공개'}</td>
+		      <td>
+		        <c:if test="${slevel == 0}"><a href="javascript:newWin('${vo.mid}');">${vo.nickName}</a></c:if>
+		        <c:if test="${slevel != 0}">${vo.nickName}</c:if>
+		      </td>
+		      <td>${vo.userInfor=='OK' || slevel == 0 ? vo.name : '비공개'}</td>
+		      <td>${vo.userInfor=='OK' || slevel == 0 ? vo.gender : '비공개'}</td>
+	        <c:if test="${slevel == 0}">
+			      <td>
+			        <c:if test="${vo.userInfor == 'NO'}"><font color="red">${vo.userInfor}</font></c:if>
+			        <c:if test="${vo.userInfor != 'NO'}">${vo.userInfor}</c:if>
+			      </td>
+			      <td>
+			        <form name="levelForm">
+			        	<select name="level" id="level${vo.mid}" onchange="levelCheck()">
+			        	  <option value="1" <c:if test="${vo.level==1}">selected</c:if>>특별회원</option>
+			        	  <option value="2" <c:if test="${vo.level==2}">selected</c:if>>우수회원</option>
+			        	  <option value="3" <c:if test="${vo.level==3}">selected</c:if>>정회원</option>
+			        	  <option value="4" <c:if test="${vo.level==4}">selected</c:if>>준회원</option>
+			        	  <option value="0" <c:if test="${vo.level==0}">selected</c:if>>관리자</option>
+			        	</select>
+			        	<input type="button" value="정보변경" onclick="aMLevelCheck('${vo.mid}')"/>
+			        	<input type="hidden" name="mid" value="${vo.mid}"/>
+			        	<input type="hidden" name="pag" value="${pageVO.pag}"/>
+			        </form>
+			      </td>
+			      <td>
+			        <c:if test="${vo.userDel == 'OK'}"><font color="red">${vo.userDel}</font></c:if>
+			        <c:if test="${vo.userDel != 'OK'}">${vo.userDel}</c:if>
+			      </td>
+					</c:if>
+		    </tr>
+		    <c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
+	    </c:forEach>
+	  </table>
+	  <input type="hidden" name="delItems"/>
+  </form>
   <!-- 페이징처리 시작 -->
-	<div style="text-align:center">
-	 <c:if test="${pag != 1}">[<a href="${ctp}/aMList.ad?pag=1&level=${stringLevel}">1페이지</a>]....</c:if>
-	 <c:if test="${pag > 1}">[<a href="${ctp}/aMList.ad?pag=${pag-1}&level=${stringLevel}">이전페이지</a>]</c:if>
-	 ${pag}Page / ${totPage}Pages
-	 <c:if test="${pag < totPage}">[<a href="${ctp}/aMList.ad?pag=${pag+1}&level=${stringLevel}">다음페이지</a>]</c:if>
-	 <c:if test="${pag != totPage}">....[<a href="${ctp}/aMList.ad?pag=${totPage}&level=${stringLevel}">마지막페이지</a>]</c:if>
-	</div>
+  <c:if test="${pageVO.totPage != 0}">
+  
+		<div style="text-align:center">
+		 <c:if test="${pageVO.pag != 1}">[<a href="${ctp}/admin/aMList.ad?pag=1">1페이지</a>]....</c:if>
+		 <c:if test="${pageVO.pag > 1}">[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.pag-1}">이전페이지</a>]</c:if>
+		 ${pageVO.pag}Page / ${pageVO.totPage}Pages
+		 <c:if test="${pageVO.pag < pageVO.totPage}">[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.pag+1}">다음페이지</a>]</c:if>
+		 <c:if test="${pageVO.pag != pageVO.totPage}">....[<a href="${ctp}/admin/aMList.ad?pag=${pageVO.totPage}">마지막페이지</a>]</c:if>
+		</div>
+	
+	</c:if>
 	<!-- 페이징처리 끝 -->
+	<p><br/></p>
+	<form name="idForm">
+	  <div style="text-align:center;">
+	    <%-- <input type="text" name="mid" <c:if test="${mid != ''}">value="${mid}"</c:if> placeholder="검색할아이디입력"/> --%>
+	    <input type="text" name="searchMid" value="${mid}" placeholder="검색할아이디입력"/>
+	    <input type="button" value="개별검색" onclick="midSearch()"/>
+	    <input type="button" value="전체검색" onclick="location.href='${ctp}/admin/aMList.ad';"/>
+	  </div>
+	 </form>
 </div>
 <p><br/></p>
-<c:if test="${slevel != 0}"><jsp:include page="/WEB-INF/views/include/footer.jsp"/></c:if>
 </body>
 </html>

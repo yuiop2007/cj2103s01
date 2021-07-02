@@ -66,14 +66,13 @@
 	// 게시글 삭제처리
 	function delCheck() {
 		var ans = confirm("게시글을 삭제하시겠습니까?");
-		
 		if(ans) {
 			$.ajax({
 				type : "post",
-				url  : "${ctp}/product/pDelete?pag=${pag}&pageSize=${pageSize}",
+				url  : "${ctp}/product/pDelete?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}",
 				success: function(data) {
 					alert("삭제처리 되었습니다.");
-					location.href="${ctp}/product/pList?pag=${pag}&pageSize=${pageSize}";
+					location.href="${ctp}/product/pList";
 				}
 			});
 		}

@@ -145,7 +145,7 @@
 	  	</div>
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/admin/coupon">
 		    		<strong>coupon</strong>
 		    		고객님이 보유하고 계신 쿠폰내역을 보여드립니다.
 		    		<br/>

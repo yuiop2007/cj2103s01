@@ -14,7 +14,6 @@
 	  $(function() {
 		  $("#address1").change(function() {
 			  var address1 = $(this).val();
-			  alert("address1 : " + address1);
 			  
 			  $.ajax({
 				  type : "post",
@@ -32,10 +31,30 @@
 			  });
 		  })
 	  });
+	  
+	  function addressSearch() {
+		  var address1 = document.getElementById("address1").value;
+		  var address2 = document.getElementById("address2").value;
+		  myform.submit();
+		  /* 
+		  $.ajax({
+			  type : "get",
+			  url  : "{ctp}/study/kakaoEx4Search",
+			  data : {
+				  address1 : '{$address1}',
+				  address2 : '{$address2}'
+			  },
+			  //contentType : "application/json; charset-UTF-8",
+			  success : function(data) {
+				  alert('검색성공');
+			  }
+		  });
+		   */
+	  }
 	</script>
 	<style>
 		.map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-		.map_wrap {position:relative;width:100%;height:350px;}
+		.map_wrap {position:relative;width:100%;height:450px;}
 		#category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
 		#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
 		#category li.on {background: #eee;}
@@ -64,36 +83,24 @@
 </head>
 <body>
 <p><br/></p>
+<form name="myform" method="post" action="kakaoEx4Search">
 <div class="container">
   <h3>카테고리별 장소 검색하기</h3>
   <hr/>
   <p>도시선택 :
-  <!-- 
-    <select name="address" id="address" onchange="addressSearch()">
-      <option value="청주">청주</option>
-      <option value="서울">서울</option>
-      <option value="인천">인천</option>
-      <option value="강원">강원</option>
-      <option value="충북">충북</option>
-      <option value="충남">충남</option>
-      <option value="경북">경북</option>
-      <option value="경남">경남</option>
-      <option value="전북">전북</option>
-      <option value="전남">전남</option>
-      <option value="제주">제주</option>
-    </select>
-   -->
-    <select name="address1" id="address1">
-      <option value="">도시선택</option>
-      <c:forEach var="address1" items="${address1s}">
-      	<option value="${address1}" <c:if test="${address1 == address}">selected</c:if>>${address1}</option>
-      </c:forEach>
-    </select>
-    &nbsp; 지역선택
-    <select name="address2" id="address2">
-      <option value="">지역선택</option>
-    </select>
+  <select name="address1" id="address1">
+    <option value="">도시선택</option>
+    <c:forEach var="address1" items="${address1s}">
+    	<option value="${address1}" <c:if test="${address1 == address}">selected</c:if>>${address1}</option>
+    </c:forEach>
+  </select>
+  &nbsp; 지역선택
+  <select name="address2" id="address2">
+    <option value="">지역선택</option>
+  </select> &nbsp;
+  <input type="button" value="검색" onclick="addressSearch()"/>
   </p>
+  
   <hr/>
 
 	<div class="map_wrap">
@@ -324,6 +331,7 @@
 	<hr/>
 	<%@ include file="/WEB-INF/views/study/kakaomap/kakaoMenu.jsp" %>
 </div>
+</form>
 <p><br/></p>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>

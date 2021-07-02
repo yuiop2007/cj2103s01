@@ -36,7 +36,7 @@ label{
 				<label>상품 이름</label>
 					<input type="text" id="pName" name="pName" maxlength="20" required><br/>
 				<label>카테고리</label>
-					<select name="pCate">
+					<select name="pCate" required>
 				    	<option value="OUTER">OUTER</option>
 						<option value="TOP">TOP</option>
 						<option value="BOTTOM">BOTTOM</option>

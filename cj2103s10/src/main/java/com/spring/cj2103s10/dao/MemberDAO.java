@@ -22,4 +22,10 @@ public interface MemberDAO {
 
 	public MemberVO getIdSearch(@Param("tel") String tel, @Param("toMail") String toMail);
 
+	public int totRecCnt();
+
+	public int totRecCntLevel(@Param("searchString") String searchString);
+
+	public int totRecCntMid(@Param("partValue") String partValue);
+
 }

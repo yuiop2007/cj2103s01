@@ -34,6 +34,9 @@
 	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mIdSearch';">아이디찾기</button>&nbsp;
 	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/member/mPwdSearch';">비밀번호찾기</button>
 	  </div>
+	  <div class="form-group">
+	    <input type="checkbox" name="idCheck" checked/> 아이디 저장
+	  </div>
   </form>
 </div>
 <p><br/></p>

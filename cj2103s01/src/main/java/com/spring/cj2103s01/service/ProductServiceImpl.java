@@ -113,5 +113,10 @@ public class ProductServiceImpl implements ProductService {
 	public int totProductCnt() {
 		return productDAO.totProductCnt();
 	}
+
+	@Override
+	public void productDelete(int idx) {
+		productDAO.productDelete(idx);
+	}
 	
 }

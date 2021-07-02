@@ -30,5 +30,21 @@ public interface MemberDAO {
 
 	public int totSearchRecCnt(String search, String searchString);
 
+	public List<MemberVO> getMemberListLevel(@Param("startIndexNo") int startIndexNo,@Param("pageSize") int pageSize,@Param("mLevel") String mLevel);
+
+	public int totRecCntMid(@Param("search") String search);
+
+	public int totRecCntLevel(@Param("searchString") String searchString);
+
+	public List<MemberVO> getMemberListMid(@Param("startIndexNo") int startIndexNo,@Param("pageSize") int pageSize,@Param("mId") String mId);
+
+	public void mLevelCheck(@Param("mId") String mId,@Param("mLevel") String mLevel);
+
+	public void memberDelete(@Param("idx") String idx);
+
+	public void mPointInput(@Param("idx") String idx,@Param("point") int point);
+
+	public List<MemberVO> getCouponMember(@Param("cmCate") int cmCate);
+
 
 }

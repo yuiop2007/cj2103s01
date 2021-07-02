@@ -12,4 +12,6 @@ public interface StudyDAO {
 
 	public List<AreaVO> getAddress2(@Param("address1") String address1);
 
+	public AreaVO getAddressSearch(@Param("address1") String address1, @Param("address2") String address2);
+
 }

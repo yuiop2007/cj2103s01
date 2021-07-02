@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cj2103s10.service.Study;
@@ -67,75 +68,32 @@ public class StudyController {
 	public List<AreaVO> kakaoEx4Post(@RequestBody String address1) {
 		List<AreaVO> vos = study.getAddress2(address1);
 		
-		//if(address2 == null) address = "";
-		
-		//double latitude = 36.63508797975421;
-		//double longitude = 127.45959376343134;
-		
-		//model.addAttribute("address", address);
-		//model.addAttribute("address1s", address1s);
-		
-		//model.addAttribute("latitude", latitude);
-		//model.addAttribute("longitude", longitude);
 		return vos;
 	}
 	
-	/*
-	@RequestMapping("/kakaoEx4")
-	public String kakaoEx4Get(Model model, String address) {
-		if(address == null) address = "충북";
-		double latitude = 0.0;
-		double longitude = 0.0;
+	//@ResponseBody
+	@RequestMapping(value="/kakaoEx4Search", method=RequestMethod.POST)
+	public String kakaoEx4SearchPost(Model model, 
+			@RequestParam(name="address1", defaultValue="충북", required=false) String address1,
+			@RequestParam(name="address2", defaultValue="청주시", required=false) String address2) {
 		
-		if(address.equals("서울")) {
-			latitude = 37.56682420267543;
-			longitude = 126.978652258823;
-		}
-		else if(address.equals("인천")) {
-			latitude = 37.45602200632166;
-			longitude = 126.70506586217154;
-		}
-		else if(address.equals("강원")) {
-			latitude = 37.59016781354798;
-			longitude = 128.41113164659401;
-		}
-		else if(address.equals("충북")) {
-			latitude = 36.635400453513675;
-			longitude = 127.49082473882677;
-		}
-		else if(address.equals("충남")) {
-			latitude = 36.486733289649955;
-			longitude = 127.06063183885762;
-		}
-		else if(address.equals("경북")) {
-			latitude = 36.43769791344115;
-			longitude = 128.61943659685062;
-		}
-		else if(address.equals("경남")) {
-			latitude = 35.45637271308668;
-			longitude = 128.5107087340775;
-		}
-		else if(address.equals("전북")) {
-			latitude = 35.822254829570674;
-			longitude = 127.10899059168042;
-		}
-		else if(address.equals("전남")) {
-			latitude = 34.99567623833813;
-			longitude = 126.95821146112398;
-		}
-		else if(address.equals("제주")) {
-			latitude = 33.361697752542355;
-			longitude = 126.52939954030747;
-		}
-		else {
-			latitude = 36.63508797975421;
-			longitude = 127.45959376343134;
-		}
-  	  
-		model.addAttribute("latitude", latitude);
-		model.addAttribute("longitude", longitude);
-		return "study/kakaomap/kakaoEx4";
+		AreaVO vo = study.getAddressSearch(address1, address2);
+		
+		model.addAttribute("address1", vo.getAddress1());
+		model.addAttribute("address2", vo.getAddress2());
+		model.addAttribute("latitude", vo.getLatitude());
+		model.addAttribute("longitude", vo.getLongitude());
+		
+		return "study/kakaomap/kakaoEx4Search";
 	}
-	*/
+	
+	// 달력내역 가져오기
+	@RequestMapping(value="/calendar", method=RequestMethod.GET)
+	public String calendarGet() {
+		study.getCalendar();
+		return "study/calendar/calendar";
+	}
+	
+	
 	
 }
