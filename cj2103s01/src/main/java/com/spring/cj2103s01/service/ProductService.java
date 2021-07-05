@@ -28,4 +28,6 @@ public interface ProductService {
 
 	public void productDelete(int idx);
 
+	public List<ProductVO> getProductAllList();
+
 }

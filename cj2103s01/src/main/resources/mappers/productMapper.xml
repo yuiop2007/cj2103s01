@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cj2103s01.dao.ProductDAO">
   
+	<select id="getProductAllList" resultType="com.spring.cj2103s01.vo.ProductVO">
+		select * from product;
+	</select>
+	
 	<select id="getProductList" resultType="com.spring.cj2103s01.vo.ProductVO">
-		select bb.*, cast(timestampdiff(minute, bb.pRdate, now())/60 as signed integer) as diffTime from Product bb order by pId desc limit #{startIndexNo},#{pageSize};
+		select bb.*, cast(timestampdiff(minute, bb.pRdate, now())/60 as signed integer) as diffTime from product bb order by pId desc limit #{startIndexNo},#{pageSize};
 	</select>
 	
 	<select id="totRecCnt" resultType="int">

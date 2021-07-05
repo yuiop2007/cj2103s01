@@ -67,7 +67,7 @@ $(document).ready(function () {
 				<a class="nav-link" href="${ctp}/member/mypage">Mypage </a>
 			</li>
 			<li class="nav-item2">
-				<a class="nav-link" href="${ctp}/product/cart">Cart 0 </a>
+				<a class="nav-link" href="${ctp}/order/cartList">Cart 0 </a>
 			</li>
 			<li class="nav-item2">
 				<a class="nav-link" href="${ctp}/board/notice">Notice</a>

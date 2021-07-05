@@ -26,6 +26,7 @@
 	
 	<!-- 인터셉터 설정 -->
 	<beans:bean id="memberInterceptor" class="com.spring.cj2103s01.interceptor.MemberInterceptor"/>
+	<beans:bean id="AdminInterceptor" class="com.spring.cj2103s01.interceptor.AdminInterceptor"/>
 	<interceptors>
 	  <interceptor>
 	    <mapping path="/member/**"/>
@@ -42,7 +43,21 @@
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
 	  <interceptor>
-	    <mapping path="/board/qInput"/>
+	    <mapping path="/board/**"/>
+	    	<exclude-mapping path="/board/proShow"/>
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/order/**"/>
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/admin/**"/>
+	    	<exclude-mapping path="/admin/coupon"/>
+	    <beans:ref bean="AdminInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/wishList/**"/>
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
 	</interceptors>

@@ -33,4 +33,6 @@ public interface ProductDAO {
 
 	public void productDelete(@Param("idx") int idx);
 
+	public List<ProductVO> getProductAllList();
+
 }

@@ -4,6 +4,7 @@ create table orders_detail(
 	pId int null,
 	odName varchar(20) null,
 	odNum int null,
+	odPrice int null,
 	primary key(odId),
 	foreign key(oId) references orders(oId),
 	foreign key(pId) references product(pId)
@@ -26,3 +27,6 @@ create table orders(
 	foreign key(mId) references member(mId),
 	foreign key(cId) references coupon(cId)
 );
+
+drop table orders_detail;
+drop table orders;

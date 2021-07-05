@@ -118,5 +118,10 @@ public class ProductServiceImpl implements ProductService {
 	public void productDelete(int idx) {
 		productDAO.productDelete(idx);
 	}
+
+	@Override
+	public List<ProductVO> getProductAllList() {
+		return productDAO.getProductAllList();
+	}
 	
 }

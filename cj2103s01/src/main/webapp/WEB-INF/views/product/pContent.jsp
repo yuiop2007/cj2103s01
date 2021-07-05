@@ -41,21 +41,84 @@
 	}
 	
 	function buyCheck() {
-		var orderName = document.getElementsByName("orderName[]");
-		var orderNum = document.getElementsByName("orderNum[]");
-		var orderPrice = document.getElementsByName("orderPrice[]");
+		var oName = document.getElementsByName("orderName[]");
+		var oNum = document.getElementsByName("orderNum[]");
+		var oPrice = document.getElementsByName("orderPrice[]");
+		var pId = $("#pId").val();
 		
-		
-		if(orderName.length == 0 || orderNum.length == 0 || orderPrice == 0){
+		var orderName = [];
+		var orderNum = [];
+		var orderPrice = [];
+
+		if(oName.length == 0 || oNum.length == 0 || oPrice == 0){
 			alert("제품 옵션을 선택하시오.");
 			return false;
 		}
 		else{
-			console.log(orderName[0].value);
-			console.log(orderNum[0].value);
-			console.log(orderPrice[0].value);
+			
+			for(var i=0; i<oName.length; i++){
+				orderName.push(oName[i].value);
+				orderNum.push(oNum[i].value);
+				orderPrice.push(oPrice[i].value);
+			}
+			
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/orderInfo",
+				traditional : true,
+				datatype : "json",
+				data : {
+					pId : pId,
+					orderName : orderName,
+					orderNum : orderNum, 
+					orderPrice : orderPrice
+				},
+				success : function(data) {
+					/* location.href="${ctp}/order/orderInfo"; */
+				}
+			});
 		}
+	}
+	
+	function cartCheck() {
+		var oName = document.getElementsByName("orderName[]");
+		var oNum = document.getElementsByName("orderNum[]");
+		var oPrice = document.getElementsByName("orderPrice[]");
+		var pId = $("#pId").val();
 		
+		var orderName = [];
+		var orderNum = [];
+		var orderPrice = [];
+
+		if(oName.length == 0 || oNum.length == 0 || oPrice == 0){
+			alert("제품 옵션을 선택하시오.");
+			return false;
+		}
+		else{
+			
+			for(var i=0; i<oName.length; i++){
+				orderName.push(oName[i].value);
+				orderNum.push(oNum[i].value);
+				orderPrice.push(oPrice[i].value);
+			}
+			
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/cartOk",
+				traditional : true,
+				datatype : "json",
+				data : {
+					pId : pId,
+					orderName : orderName,
+					orderNum : orderNum, 
+					orderPrice : orderPrice
+				},
+				success : function(data) {
+					alert("장바구니에 담았습니다!");
+					location.href="${ctp}/order/cartList";
+				}
+			});
+		}
 	}
 
 	//게시글 수정처리를 위한 비밀번호 체크
@@ -152,7 +215,7 @@
         			
 				content += "<tr id='tr_"+colsiz.goodsId+"'>";
 				content += "<td>";
-				content += "<p class='product'><span>"+colsiz.goodsId+"</span></p>";
+				content += "<p class='product'><span>"+colsiz.goodsId.replace('_', '/')+"</span></p>";
 				content += "</td>";
 				content += "<td>";
 				content += "<span class='quantity' style='width: 65px;'>";
@@ -245,9 +308,9 @@
 		<jsp:include page="/WEB-INF/views/include/nav.jsp"/>
 	</div>
 	<div class="container" style="padding: 0%;">
-	<form name="contentform" method="post">
 		<div class="sub">
 			<div class = "detail">
+				<form name="contentform" method="post">
 				<div class="detailArea">
 				<div class=boardbtn style="margin-left: 40px;">
 					<c:if test="${slevel==0}">
@@ -256,8 +319,9 @@
 					<a href="#" onclick="delCheck()">삭제</a>
 					  <input type="hidden" name="pag" value="${pag}"/>
 					  <input type="hidden" name="pageSize" value="${pageSize}"/>
-					  <input type="hidden" name="pId" value="${vo.pId}"/>
 					</c:if>
+				<input type="hidden" name="pId" Id="pId" value="${vo.pId}"/>
+				<input type="hidden" name="mId" value="${smid}"/>
 				</div>
 					<div class="imgArea">
 						<img src="${ctp}/resources/pMainImages/${vo.pImage}" style="width: 500px;"/>
@@ -345,7 +409,7 @@
 						<div class="productAct">
 							<div class="btnArea">
 			                    <a href="#" class="first " onclick="buyCheck();">buy now</a>
-			                    <a href="#" onclick="">add  to cart</a>
+			                    <a href="#" onclick="cartCheck();">add  to cart</a>
 			                    <c:choose>
 					                <c:when test="${slevel < 5}">
 					                	<a href="${ctp}/wish/addWish?pId=${vo.pId}">wishlist</a>
@@ -360,6 +424,7 @@
 						
 					</div>
 				</div>
+				</form>
 				<div class="additional">
 					<div class="proDetail">
 						${fn:replace(vo.pContent,newLine,"<br/>")}
@@ -434,7 +499,7 @@
 					</div>
 					<div class="proQnA">
 						<h3>Q &amp; A </h3>
-						<form name="pageForm">
+						<form name="pageForm2">
 							<table class="table table-borderless">
 								<thead>
 									<tr>
@@ -506,7 +571,6 @@
 				</div>
 			</div>
 		</div>
-		</form>
 	</div>
  	<div class="jumbotron">
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
