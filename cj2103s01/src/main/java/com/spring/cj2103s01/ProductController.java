@@ -60,7 +60,12 @@ public class ProductController {
 		imageService.imgCheck(vo.getpContent(), uploadPath, 42); // 이미지파일을 발췌해서 'src'폴더에 복사시킨다.
 
 		vo.setpContent(vo.getpContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/")); 
-
+		if(vo.getpPrice()>60000) {
+			vo.setpDelivery("무료");
+		}else {
+			vo.setpDelivery("일반");
+		}
+		
 		int res = productService.setProductInput(file, vo, root);
 
 		if (res == 1)

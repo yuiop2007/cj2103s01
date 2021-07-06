@@ -14,4 +14,8 @@ public interface CouponService {
 
 	public List<CouponVO> getaCouponList();
 
+	public List<CouponVO> getCouponListMid(String mId);
+
+	public int getCouponCnt(String mId);
+
 }

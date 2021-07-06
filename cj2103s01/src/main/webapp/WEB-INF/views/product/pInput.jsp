@@ -76,7 +76,11 @@ label{
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required><br/><br/><br/>
 				<label>제품 정보</label>
-					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;"></textarea>
+					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;">제품 정보
+상세사이즈
+색상
+소재
+모델정보</textarea>
 				<label>상세 내용</label>
 					<textarea rows="5" cols="50" name="pContent" id="CKEDITOR" required></textarea>
 					<script>

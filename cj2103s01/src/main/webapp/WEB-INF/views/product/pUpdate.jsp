@@ -85,6 +85,8 @@ label{
 				</div>	
 				<label>상품 가격</label>
 					<input type="number" id="pPrice" name="pPrice" value="${vo.pPrice}" required><br/>
+				<label>상품 할인율(원)</label>
+					<input type="number" id="pSale" name="pSale" value="${vo.pSale}" required min="0"><br/>
 				<label>재고</label>
 					<input type="number" id="pStock" name="pStock" value="${vo.pStock}"><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>

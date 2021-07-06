@@ -29,8 +29,23 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public void setCartCntUpdate(String mId, int pId, String pOption) {
-		cartDAO.setCartCntUpdate(mId, pId, pOption);
+	public void setCartCntUpdate(String mId, int pId, String pOption, int pCnt, int pPrice) {
+		cartDAO.setCartCntUpdate(mId, pId, pOption, pCnt, pPrice);
+	}
+
+	@Override
+	public int getCartCnt(String mId) {
+		return cartDAO.getCartCnt(mId);
+	}
+
+	@Override
+	public void cartDelete(int idx) {
+		cartDAO.cartDelete(idx);
+	}
+
+	@Override
+	public CartVO getIdxVo(int idx) {
+		return cartDAO.getIdxVo(idx);
 	}
 
 

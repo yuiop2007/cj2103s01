@@ -114,8 +114,11 @@
 					orderPrice : orderPrice
 				},
 				success : function(data) {
-					alert("장바구니에 담았습니다!");
-					location.href="${ctp}/order/cartList";
+					alert("장바구니에 등록되었습니다.");
+					var ans = confirm("장바구니로 이동하시겠습니까?");
+					if(ans){
+						location.href="${ctp}/order/cartList";
+					}
 				}
 			});
 		}
@@ -290,6 +293,7 @@
 					if(sw==0){
 						colsiz.push({goodsId:color + "_" + size, goodsPrice:'${vo.pPrice}' ,cnt:1});
 						appendChoiceDiv(colsiz[colsiz.length-1]);
+						afterProc(colsiz);
 					}
 				}
 			});
@@ -476,22 +480,22 @@
 						  <ul class="pagination justify-content-center">
 							  <c:set var="startPageNum" value="${rpageVO.pag - (rpageVO.pag-1)%rpageVO.blockSize}" />  <!-- 해당블록의 시작페이지 구하기 -->
 							  <c:if test="${rpageVO.pag != 1}">
-							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=1&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link" style="color:#666">◁◁</a></li>
-							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.pag-1}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link" style="color:#666">◀</a></li>
+							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=1&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
+							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.pag-1}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
 							  </c:if>
 							  <c:forEach var="i" begin="0" end="${rpageVO.blockSize-1}"> <!-- 블록의 크기만큼 돌려준다. -->
 							    <c:if test="${(startPageNum+i) <= rpageVO.totPage}">
 								  	<c:if test="${rpageVO.pag == (startPageNum+i)}">
-								  	  <li class="page-item active"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${startPageNum+i}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
+								  	  <li class="page-item active"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${startPageNum+i}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link btn btn-secondary active" style="color:#666"><font color="#fff">${startPageNum+i}</font></a></li>
 								  	</c:if>
 								  	<c:if test="${rpageVO.pag != (startPageNum+i)}">
-								  	  <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${startPageNum+i}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
+								  	  <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${startPageNum+i}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link" style="color:#666">${startPageNum+i}</a></li>
 								  	</c:if>
 							  	</c:if>
 							  </c:forEach>
 							  <c:if test="${rpageVO.pag != rpageVO.totPage}">
-							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.pag+1}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link" style="color:#666">▶</a></li>
-							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.totPage}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pag}" class="page-link" style="color:#666">▷▷</a></li>
+							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.pag+1}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link" style="color:#666">▶</a></li>
+							    <li class="page-item"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}&rpag=${rpageVO.totPage}&rpageSize=${rpageVO.pageSize}&qpag=${qpageVO.pag}&qpageSize=${qpageVO.pageSize}" class="page-link" style="color:#666">▷▷</a></li>
 							  </c:if>
 						  </ul>
 						</div>

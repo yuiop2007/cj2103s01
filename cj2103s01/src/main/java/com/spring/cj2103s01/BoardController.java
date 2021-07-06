@@ -647,7 +647,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/qContent", method = RequestMethod.GET)
-	public String qContentGet(Model model, int qId, int pId, int pag, int pageSize) {
+	public String qContentGet(Model model, int qId, int pId, @RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize) {
 		// 조회수 증가
 		qnaService.addReadNum(qId);
 

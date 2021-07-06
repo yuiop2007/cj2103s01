@@ -36,7 +36,16 @@
 							<p>
 							<ul class="listitem">
 								<li>
-									<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>
+									<c:choose>
+										<c:when test="${vo.pSale>0}">
+											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+											<span style="font-size:11px;color:#000000; text-decoration: line-through;">${vo.pPrice}원</span>
+											<span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span>
+										</c:when>
+										<c:otherwise>
+											<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>	
+										</c:otherwise>
+									</c:choose>
 								</li>
 								<li>
 									<div class="proColor">
@@ -70,7 +79,16 @@
 							<p>
 							<ul class="listitem">
 								<li>
-									<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>
+									<c:choose>
+										<c:when test="${vo.pSale>0}">
+											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+											<span style="font-size:11px;color:#000000; text-decoration: line-through;">${vo.pPrice}원</span>
+											<span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span>
+										</c:when>
+										<c:otherwise>
+											<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>	
+										</c:otherwise>
+									</c:choose>
 								</li>
 								<li>
 									<div class="proColor">
@@ -101,7 +119,7 @@
 		<div style="text-align:center;">
 		  <ul class="pagination justify-content-center">
 			  <c:set var="startPageNum" value="${pageVO.pag - (pageVO.pag-1)%pageVO.blockSize}" />  <!-- 해당블록의 시작페이지 구하기 -->
-			  <c:if test="${pag != 1}">
+			  <c:if test="${pageVO.pag != 1}">
 			    <li class="page-item"><a href="${ctp}/product/proShow?cate=${cate}&pag=1&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◁◁</a></li>
 			    <li class="page-item"><a href="${ctp}/product/proShow?cate=${cate}&pag=${pageVO.pag-1}&pageSize=${pageVO.pageSize}" class="page-link" style="color:#666">◀</a></li>
 			  </c:if>

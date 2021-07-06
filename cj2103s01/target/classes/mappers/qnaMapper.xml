@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="getQnaContentList" resultType="com.spring.cj2103s01.vo.QnaVO">
-		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb where pId = ${pId} order by qId desc limit #{startIndexNo},#{qpageSize};
+		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb where pId = ${pId} order by originNo desc, groupNo asc limit #{startIndexNo},#{qpageSize};
 	</select>
 	
 	<insert id="setQnaInput">

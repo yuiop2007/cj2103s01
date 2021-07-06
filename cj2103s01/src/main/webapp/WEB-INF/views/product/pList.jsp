@@ -27,7 +27,7 @@
 	
 	// 페이지사이즈 처리
 	function pageCheck() {
-		var pageSize = pageForm.pageSize.value;
+		var pageSize = pForm.pageSize.value;
 		location.href = "${ctp}/product/pList?pag=${pageVO.pag}&pageSize="+ pageSize;
 	}
 	// 전체선택
@@ -72,7 +72,7 @@
 	</div>
 	<div class="container">
 		<h6>상품 목록</h6>
-		</br></br></br></br>
+		<br/><br/><br/><br/>
 		<div style="padding: 10px 0px;">
 			<form name="pForm">
 				<table class="table table-borderless" style="width: 100%; margin: 0px; padding: 0px;">
@@ -82,13 +82,11 @@
 						<input type="button" value="선택항목 삭제" onclick="SelectDelCheck()" class="btn btn-outline-secondary btn-sm" />
 						</td>
 						<td style="text-align:right">
-						<form name="pageForm">
 							<select name="pageSize" onchange="pageCheck()" style="width:130px; float:right; text-align: left; padding: 5px 0px; margin: 0;">
 									<option value="10" ${pageVO.pageSize==10 ? 'selected' : ''}>10건</option>
 									<option value="15" ${pageVO.pageSize==15 ? 'selected' : ''}>15건</option>
 									<option value="20" ${pageVO.pageSize==20 ? 'selected' : ''}>20건</option>
 							</select>
-						</form>
 						</td>
 					</tr>
 				</table>

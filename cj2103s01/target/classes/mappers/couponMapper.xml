@@ -7,12 +7,20 @@
 	    select count(*) from coupon;
 	</select>
 	
+	<select id="getCouponCnt" resultType="int">
+	    select count(*) from coupon where mId = #{mId};
+	</select>
+	
 	<select id="getCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
 		select * from coupon;
 	</select>
 	
 	<select id="getaCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
 		select * from coupon group by cName;
+	</select>
+	
+	<select id="getCouponListMid" resultType="com.spring.cj2103s01.vo.CouponVO">
+		select * from coupon where mId = #{mId};
 	</select>
 	
 	<insert id="setCouponInput">

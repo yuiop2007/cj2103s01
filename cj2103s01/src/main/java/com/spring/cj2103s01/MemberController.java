@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cj2103s01.service.CouponService;
 import com.spring.cj2103s01.service.MemberService;
+import com.spring.cj2103s01.service.OrderService;
 import com.spring.cj2103s01.vo.MemberVO;
 
 @Controller
@@ -28,6 +29,9 @@ public class MemberController {
 	
 	@Autowired
 	CouponService couponService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,6 +51,9 @@ public class MemberController {
 			if(vo.getmLevel()==0) strLevel = "관리자";
 			else  strLevel = "회원";
 			
+			int cart = orderService.getCartCnt(mId);
+			
+			session.setAttribute("cart", cart);
 			session.setAttribute("smid", mId);
 			session.setAttribute("sname", vo.getmName());
 			session.setAttribute("slevel", vo.getmLevel());

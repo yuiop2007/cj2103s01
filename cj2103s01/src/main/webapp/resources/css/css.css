@@ -917,3 +917,47 @@ li.item .box {
     font-size: 0;
     line-height: 0;
 }
+
+
+
+.totalsummary {
+    border: 1px solid #777;
+    color: #353535;
+    line-height: 1.5;
+}
+.totalsummary th {
+    height: 39px;
+    border-left: 1px solid #e9e9e9;
+    line-height: 39px;
+    background: #fbfafa;
+    font-weight: normal;
+    color: #888 !important;
+}
+.totalsummary td {
+    height: 50px;
+    border-top: 1px solid #e9e9e9;
+    border-left: 1px solid #e9e9e9;
+    line-height: 50px;
+    text-align: center;
+    font-size: 15px;
+}
+
+
+.cart{
+	margin-top: 60px;
+}
+.cart h4 {
+    margin: 15px 10px -4px;
+    color: #666;
+    font-size: 11px;
+    font-weight: normal;
+}
+.cart ul {
+    margin: 7px 0 10px 0px;
+}
+.cart li {
+    padding: 0 0 0 5px;
+    color: #757575;
+    background: none;
+    opacity: 0.8;
+}

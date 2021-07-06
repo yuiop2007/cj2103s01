@@ -42,4 +42,14 @@ public class CouponServiceImpl implements CouponService{
 	public List<CouponVO> getaCouponList() {
 		return couponDAO.getaCouponList();
 	}
+
+	@Override
+	public List<CouponVO> getCouponListMid(String mId) {
+		return couponDAO.getCouponListMid(mId);
+	}
+
+	@Override
+	public int getCouponCnt(String mId) {
+		return couponDAO.getCouponCnt(mId);
+	}
 }

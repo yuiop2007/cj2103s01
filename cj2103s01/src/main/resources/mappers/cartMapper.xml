@@ -15,9 +15,21 @@
 		select * from cart where mId = #{mId};
 	</select>
 	
+	<select id="getIdxVo" resultType="com.spring.cj2103s01.vo.CartVO">
+		select * from cart where cartId = #{idx};
+	</select>
+	
 	<update id="setCartCntUpdate">
-	    update cart set pCnt = pCnt + 1, where mId = #{mId} and pOption = #{pOption};
+	    update cart set pCnt=#{pCnt}, pPrice=#{pPrice} where mId=#{mId} and pOption=#{pOption};
 	</update>
+	
+	<select id="getCartCnt" resultType="int">
+	    select count(*) from cart where mId = #{mId};
+	</select>
+	
+	<delete id="cartDelete">
+		delete from cart where cartId = #{idx}; 
+	</delete>
 <!-- 	
 	<select id="getCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
 		select * from coupon;

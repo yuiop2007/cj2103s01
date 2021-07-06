@@ -19,9 +19,9 @@ create table orders(
 	oPhone varchar(300) not null,
 	oPost varchar(10) null,
 	oAddress varchar(500) null,
+	oMassage varchar(500) null,
 	oPrice int null,
 	oPayment int null, /* 1:현금입금(무통장) 2:카드 */
-	oInvoice int null,
 	oDelivery varchar(50) null,
 	primary key(oId),
 	foreign key(mId) references member(mId),

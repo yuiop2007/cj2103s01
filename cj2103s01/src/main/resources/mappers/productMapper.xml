@@ -19,7 +19,7 @@
 	</select>
 	
 	<insert id="setProductInput">
-	    insert into product values (default, #{vo.pName}, #{vo.pCate}, #{vo.pColor}, #{vo.pSize}, #{vo.pPrice}, default, #{vo.pStock}, #{vo.pImage}, #{vo.pInfo}, #{vo.pContent}, default, default, default, default);
+	    insert into product values (default, #{vo.pName}, #{vo.pCate}, #{vo.pColor}, #{vo.pSize}, #{vo.pPrice}, default, #{vo.pStock}, #{vo.pImage}, #{vo.pInfo}, #{vo.pContent}, #{vo.pDelivery}, default, default, default);
 	</insert>
 	
 	<select id="getProductSearchList" resultType="com.spring.cj2103s01.vo.ProductVO">
@@ -39,7 +39,7 @@
 	</select>
 
 	<update id="productUpdateOk">
-	    update product set pName=#{vo.pName}, pCate=#{vo.pCate}, pColor=#{vo.pColor}, pSize=#{vo.pSize}, pPrice=#{vo.pPrice}, pStock=#{vo.pStock}, pImage=#{vo.pImage}, pInfo=#{vo.pInfo}, pContent=#{vo.pContent} where pId=#{vo.pId};
+	    update product set pName=#{vo.pName}, pCate=#{vo.pCate}, pColor=#{vo.pColor}, pSize=#{vo.pSize}, pPrice=#{vo.pPrice}, pSale=#{vo.pSale},pStock=#{vo.pStock}, pImage=#{vo.pImage}, pInfo=#{vo.pInfo}, pContent=#{vo.pContent} where pId=#{vo.pId};
 	</update>
 	
 	<delete id="pDelete">

@@ -10,6 +10,6 @@ create table cart(
 	foreign key(pId) references product(pId)
 );
 
-select *from cart;
+select *from cart where cartId = 60;
 
 drop table cart;

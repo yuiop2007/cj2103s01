@@ -10,7 +10,7 @@ create table product(
 	pImage varchar(1000) not null,
 	pInfo mediumtext not null,
 	pContent mediumtext not null,
-	pDelivery varchar(50) not null default '일반',
+	pDelivery varchar(50) not null default '일반', /* or 60000이상 무료*/
 	pRdate datetime default now(),
 	pHit int not null default 0,
 	pSell int not null default 0,

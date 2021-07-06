@@ -89,9 +89,9 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		var ans = confirm("선택된 모든 회원들을 삭제 하시겠습니까?");
 		if (ans) {
 			var delItems = "";
-			for (var i = 0; i < myform.chk.length; i++) {
-				if (myform.chk[i].checked == true)
-					delItems += myform.chk[i].value + "/";
+			for (var i = 0; i < $(".chk").length; i++) {
+				if ($(".chk")[i].checked == true)
+					delItems += $(".chk")[i].value + "/";
 			}
 			myform.delItems.value = delItems;
 			myform.submit();
@@ -103,9 +103,9 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		if (ans) {
 			var delItems = "";
 			var point = adminForm.pnum.value;
-			for (var i = 0; i < myform.chk.length; i++) {
-				if (myform.chk[i].checked == true)
-					delItems += myform.chk[i].value + "/";
+			for (var i = 0; i < $(".chk").length; i++) {
+				if ($(".chk")[i].checked == true)
+					delItems += $(".chk")[i].value + "/";
 			}
 			
 			$.ajax({
@@ -140,16 +140,17 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 						<input type="button" value="삭제" onclick="mSelectDelCheck()" class="btn btn-outline-secondary btn-sm" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 						<input type="number" min="0" id="pnum" value="0" class="btn btn-outline-secondary btn-sm" style="width: 80px; padding: 3px; border: 1px solid #ccc;"/>
 						<input type="button" value="포인트 추가" onclick="pointCheck()" class="btn btn-outline-secondary btn-sm" /></td>
-						<td style="text-align: right"><c:if test="${slevel == 0}">
-				      회원등급
-				      <select name="level" onchange="levelSearch()" style="width: 100px;">
-									<option value="" <c:if test="${empty stringLevel}">selected</c:if>>전체회원</option>
-									<option value="1" <c:if test="${stringLevel=='1'}">selected</c:if>>특별회원</option>
-									<option value="2" <c:if test="${stringLevel=='2'}">selected</c:if>>우수회원</option>
-									<option value="3" <c:if test="${stringLevel=='3'}">selected</c:if>>정회회원</option>
-									<option value="4" <c:if test="${stringLevel=='4'}">selected</c:if>>준회원</option>
-								</select>
-							</c:if></td>
+						<td style="text-align: right">
+						<c:if test="${slevel == 0}">
+						      회원등급
+						    <select name="level" onchange="levelSearch()" style="width: 100px;">
+								<option value="" <c:if test="${empty stringLevel}">selected</c:if>>전체회원</option>
+								<option value="1" <c:if test="${stringLevel=='1'}">selected</c:if>>특별회원</option>
+								<option value="2" <c:if test="${stringLevel=='2'}">selected</c:if>>우수회원</option>
+								<option value="3" <c:if test="${stringLevel=='3'}">selected</c:if>>정회회원</option>
+								<option value="4" <c:if test="${stringLevel=='4'}">selected</c:if>>준회원</option>
+							</select>
+						</c:if></td>
 					</tr>
 				</table>
 			</form>
@@ -181,7 +182,6 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 						<td>${vo.mGender}</td>
 						<c:if test="${slevel == 0}">
 							<td>
-								<form name="levelForm">
 									<select name="mLevel" id="level${vo.mId}" onchange="levelCheck()" style="width: 80px; padding: 3px; border: 1px solid #ccc;">
 										<option value="1" <c:if test="${vo.mLevel==1}">selected</c:if>>특별회원</option>
 										<option value="2" <c:if test="${vo.mLevel==2}">selected</c:if>>우수회원</option>
@@ -190,7 +190,6 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 									</select> <input type="button" value="정보변경" onclick="mLevelCheck('${vo.mId}')" /> 
 									<input type="hidden" name="mId" value="${vo.mId}" /> 
 									<input type="hidden" name="pag" value="${pageVO.pag}" />
-								</form>
 							</td>
 							<td><c:if test="${vo.mDrop == 'YES'}">
 									<font color="red">${vo.mDrop}</font>

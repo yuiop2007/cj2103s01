@@ -14,6 +14,12 @@ public interface CartDAO {
 
 	public List<CartVO> getCartList(@Param("mId") String mId);
 
-	public void setCartCntUpdate(@Param("mId")String mId,@Param("pId") int pId,@Param("pOption") String pOption);
+	public void setCartCntUpdate(@Param("mId")String mId,@Param("pId") int pId,@Param("pOption") String pOption,@Param("pCnt") int pCnt,@Param("pPrice") int pPrice);
+
+	public int getCartCnt(@Param("mId") String mId);
+
+	public void cartDelete(@Param("idx") int idx);
+
+	public CartVO getIdxVo(@Param("idx") int idx);
 
 }

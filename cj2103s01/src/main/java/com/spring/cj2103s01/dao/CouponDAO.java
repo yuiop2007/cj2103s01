@@ -18,4 +18,8 @@ public interface CouponDAO {
 
 	public List<CouponVO> getaCouponList();
 
+	public List<CouponVO> getCouponListMid(@Param("mId") String mId);
+
+	public int getCouponCnt(@Param("mId") String mId);
+
 }

@@ -12,7 +12,7 @@ public class ProductVO {
 	private String pImage;
 	private String pInfo;
 	private String pContent;
-	private String pDelivery;
+	private String pDelivery; //무료 일반
 	private String pRdate;
 	private int pHit;
 	private int pSell;

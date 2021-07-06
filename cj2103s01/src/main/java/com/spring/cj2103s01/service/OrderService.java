@@ -10,6 +10,12 @@ public interface OrderService {
 
 	public List<CartVO> getCartList(String mId);
 
-	public void setCartCntUpdate(String mId, int pId, String pOption);
+	public void setCartCntUpdate(String mId, int pId, String pOption, int pCnt, int pPrice);
+
+	public int getCartCnt(String mId);
+
+	public void cartDelete(int idx);
+
+	public CartVO getIdxVo(int idx);
 
 }
