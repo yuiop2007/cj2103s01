@@ -153,12 +153,6 @@ html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form
 
 
 
-html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre,
-	code, form, fieldset, legend, input, textarea, p, blockquote, th, td,
-	img {
-	margin: 0;
-	padding: 0;
-}
 .container {
 	width:100%;
 	padding: 0 5% 0 5%;
@@ -960,4 +954,112 @@ li.item .box {
     color: #757575;
     background: none;
     opacity: 0.8;
+}
+
+.ec-base-box {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #999;
+    color: #404040;
+}
+.ec-base-box.typeMember .information > .title {
+    vertical-align: middle;
+    margin: 40px 0 20px 5px;
+    text-align: left !important;
+}
+.ec-base-box.typeMember {
+    padding: 0;
+}
+.xans-order-dcinfo {
+    margin: 20px 0;
+    color: #353535;
+    line-height: 1.5;
+}
+.xans-order-dcinfo h3 {
+    font-size: 12px;
+    font-weight: bold;
+}
+.ec-base-box.typeMember .information {
+    display: table;
+    table-layout: fixed;
+    padding: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.ec-base-box.typeMember .information > .title, .ec-base-box.typeMember .information > .thumbnail {
+    display: table-cell;
+    padding: 0 29px;
+    width: 110px;
+    text-align: center;
+    vertical-align: middle;
+}
+.ec-base-box.typeMember .information .description {
+    display: table-cell;
+    padding: 0 10px;
+    width: auto;
+    line-height: 1.5em;
+    border-left: 1px solid #e8e8e8;
+    vertical-align: middle;
+}
+.xans-order-dcinfo .description .mileage {
+    margin: 6px 0 0;
+    padding: 10px 0 0;
+    border-top: 1px solid #e8e8e8;
+    *zoom: 1;
+}
+.xans-order-dcinfo .description .mileage li {
+    float: left;
+    margin: 0 40px 0 0;
+}
+
+.mileage li > a {
+	font-size: 11px;
+}
+.warn {
+	padding: 0 0 0 23px;
+	color: #f76560;
+}
+.txt14 {
+    font-size: 14px;
+}
+.txt14 > th {
+    padding: 11px 0 10px 18px;
+    border: 1px solid #dfdfdf;
+    border-bottom-width: 0;
+    color: #222;
+    text-align: left;
+    font-weight: normal;
+    background-color: #fff;
+}
+.txt14 > td {
+    padding: 11px 10px 10px 20px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    font-weight: bold;
+    background: #fbfafa;
+    text-align: left;
+}
+.txt15 {
+	display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.txt15 > th {
+    padding: 11px 0 10px 18px;
+    border: 1px solid #dfdfdf;
+    border-bottom-width: 0;
+    color: #222;
+    text-align: left;
+    font-weight: normal;
+    background-color: #fff;
+}
+
+.txt15 > td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    text-align: left;
 }

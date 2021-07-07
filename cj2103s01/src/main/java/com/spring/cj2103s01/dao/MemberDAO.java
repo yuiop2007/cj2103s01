@@ -46,5 +46,9 @@ public interface MemberDAO {
 
 	public List<MemberVO> getCouponMember(@Param("cmCate") int cmCate);
 
+	public void updateMemberBuy(@Param("mId") String mId);
+
+	public void setUpdatePoint(@Param("mId") String mId, @Param("mile") int mile);
+
 
 }

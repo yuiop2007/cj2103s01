@@ -41,3 +41,5 @@ select count(*) from qna where pId = 10;
 
 
 select count(*) from qna where pId;
+
+select qId from qna  where pId=12 order by qId desc limit 1;

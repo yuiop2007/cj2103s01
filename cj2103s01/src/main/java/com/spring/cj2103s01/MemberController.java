@@ -135,7 +135,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String mypageGet() {
+	public String mypageGet(HttpSession session, Model model) {
+		String mId = (String) session.getAttribute("smid");
+		MemberVO vo = memberService.getIdCheck(mId);
+		int couponCnt = couponService.getCouponCnt(mId);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("couponCnt", couponCnt);
 		return "member/mypage";
 	}
 	

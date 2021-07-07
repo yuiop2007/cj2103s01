@@ -38,5 +38,9 @@ public interface MemberService {
 	public void mPointInput(String idx, int point);
 
 	public List<MemberVO> getCouponMember(int cmCate);
+
+	public void updateMemberBuy(String mId);
+
+	public void setUpdatePoint(String mId, int mile);
 	
 }

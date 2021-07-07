@@ -83,25 +83,25 @@
 				<ul>
 					<li class=" ">
 						<span class="title">가용 적립금</span>
-						<span class="data use">0원</span>
+						<span class="data use">${vo.mPoint}원</span>
 						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
-					<li class>
+					<li>
 						<span class="title">총 적립금</span>
-						<span class="data">0원</span>
+						<span class="data">${vo.mPoint + vo.mUsepoint}원</span>
 					</li>
-					<li class>
+					<li>
 						<span class="title">사용 적립금</span>
-						<span class="data">0원</span>
+						<span class="data">${vo.mUsepoint}원</span>
 					</li>
 					<li class="etc">
 						<span class="title">총 주문</span>
-						<span class="data">0 (0 회)</span>
+						<span class="data">${vo.mBuy}회</span>
 					</li>
 					<li class="etc">
 						<span class="title">쿠폰</span>
-						<span class="data">0<span>개</span></span>
-						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
+						<span class="data">${couponCnt}<span>개</span></span>
+						<a href="${ctp}/admin/coupon"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
 				
 				</ul>

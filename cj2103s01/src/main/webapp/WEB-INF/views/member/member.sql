@@ -15,6 +15,7 @@ create table member(
 	mDrop varchar(10) default 'NO',
 	mCmid varchar(50) null,
 	mPoint int default 2000,
+	mUsepoint int default 0,
 	primary key(mId),
 	unique(mid)
 );

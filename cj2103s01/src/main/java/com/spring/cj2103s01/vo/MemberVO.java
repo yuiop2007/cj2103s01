@@ -17,6 +17,7 @@ public class MemberVO {
 	private String mDrop;
 	private String mCmid;
 	private int mPoint;
+	private int mUsepoint;
 	public String getmId() {
 		return mId;
 	}
@@ -113,15 +114,23 @@ public class MemberVO {
 	public void setmPoint(int mPoint) {
 		this.mPoint = mPoint;
 	}
+	
+	
+	public int getmUsepoint() {
+		return mUsepoint;
+	}
+	public void setmUsepoint(int mUsepoint) {
+		this.mUsepoint = mUsepoint;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [mId=" + mId + ", mPwd=" + mPwd + ", mName=" + mName + ", mPost=" + mPost + ", mAddress="
 				+ mAddress + ", mPhone=" + mPhone + ", mEmail=" + mEmail + ", mGender=" + mGender + ", mRdate=" + mRdate
 				+ ", mBirth=" + mBirth + ", mSolar=" + mSolar + ", mLevel=" + mLevel + ", mBuy=" + mBuy + ", mDrop="
-				+ mDrop + ", mCmid=" + mCmid + ", mPoint=" + mPoint + "]";
+				+ mDrop + ", mCmid=" + mCmid + ", mPoint=" + mPoint + ", mUsepoint=" + mUsepoint + "]";
 	}
 	
-
+	
 
 
 }

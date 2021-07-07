@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.cj2103s01.dao.CartDAO;
 import com.spring.cj2103s01.dao.OrderDAO;
 import com.spring.cj2103s01.vo.CartVO;
+import com.spring.cj2103s01.vo.OrderVO;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -46,6 +47,21 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public CartVO getIdxVo(int idx) {
 		return cartDAO.getIdxVo(idx);
+	}
+
+	@Override
+	public void setInputOrder(OrderVO vo) {
+		orderDAO.setInputOrder(vo);
+	}
+
+	@Override
+	public int getLastoId(String mId) {
+		return orderDAO.getLastoId(mId);
+	}
+
+	@Override
+	public void setOrderDetail(CartVO cartvo, int lastoId) {
+		orderDAO.setOrderDetail(cartvo, lastoId);
 	}
 
 

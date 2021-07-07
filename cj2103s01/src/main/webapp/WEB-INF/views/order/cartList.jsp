@@ -81,10 +81,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	</div>
 	<div class="container">
 		<h6>장바구니</h6>
-		</br>
-		</br>
-		</br>
-		</br>
+		<br/><br/><br/><br/>
 		<form name="orderForm" method="get" action="${ctp}/order/orderInfo">
 			<input type="hidden" name="delItems"/>
 			<table class="table table-borderless">

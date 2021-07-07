@@ -3,16 +3,17 @@ package com.spring.cj2103s01.vo;
 public class OrderVO {
 	private int oId;
 	private String mId;
-	private int cId;
 	private String oRdate;
 	private String oName;
 	private String oPhone;
 	private String oPost;
 	private String oAddress;
-	private String oMassage;
+	private String oEmail;
+	private String oMessage;
 	private int oPrice;
 	private int oPayment; /* 1:현금입금(무통장) 2:카드 */
-	private int oDelivery; // 무료배송 일반배송등
+	private String oDelivery; // 0원무료배송 3000원일반배송등
+	private String oStatus;
 
 	public int getoId() {
 		return oId;
@@ -28,14 +29,6 @@ public class OrderVO {
 
 	public void setmId(String mId) {
 		this.mId = mId;
-	}
-
-	public int getcId() {
-		return cId;
-	}
-
-	public void setcId(int cId) {
-		this.cId = cId;
 	}
 
 	public String getoRdate() {
@@ -78,12 +71,12 @@ public class OrderVO {
 		this.oAddress = oAddress;
 	}
 
-	public String getoMassage() {
-		return oMassage;
+	public String getoMessage() {
+		return oMessage;
 	}
 
-	public void setoMassage(String oMassage) {
-		this.oMassage = oMassage;
+	public void setoMessage(String oMessage) {
+		this.oMessage = oMessage;
 	}
 
 	public int getoPrice() {
@@ -102,19 +95,39 @@ public class OrderVO {
 		this.oPayment = oPayment;
 	}
 
-	public int getoDelivery() {
+	
+	public String getoEmail() {
+		return oEmail;
+	}
+
+	public void setoEmail(String oEmail) {
+		this.oEmail = oEmail;
+	}
+
+	public String getoDelivery() {
 		return oDelivery;
 	}
 
-	public void setoDelivery(int oDelivery) {
+	public void setoDelivery(String oDelivery) {
 		this.oDelivery = oDelivery;
+	}
+
+	public String getoStatus() {
+		return oStatus;
+	}
+
+	public void setoStatus(String oStatus) {
+		this.oStatus = oStatus;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderVO [oId=" + oId + ", mId=" + mId + ", cId=" + cId + ", oRdate=" + oRdate + ", oName=" + oName
-				+ ", oPhone=" + oPhone + ", oPost=" + oPost + ", oAddress=" + oAddress + ", oMassage=" + oMassage
-				+ ", oPrice=" + oPrice + ", oPayment=" + oPayment + ", oDelivery=" + oDelivery + "]";
+		return "OrderVO [oId=" + oId + ", mId=" + mId + ", oRdate=" + oRdate + ", oName=" + oName + ", oPhone=" + oPhone
+				+ ", oPost=" + oPost + ", oAddress=" + oAddress + ", oEmail=" + oEmail + ", oMessage=" + oMessage
+				+ ", oPrice=" + oPrice + ", oPayment=" + oPayment + ", oDelivery=" + oDelivery + ", oStatus=" + oStatus
+				+ "]";
 	}
+
+	
 
 }

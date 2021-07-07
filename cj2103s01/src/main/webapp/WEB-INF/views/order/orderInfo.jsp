@@ -13,6 +13,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 <title>MINIM</title>
 <jsp:include page="/WEB-INF/views/include/bs.jsp" />
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	function sample6_execDaumPostcode() {
 	    new daum.Postcode({
@@ -57,122 +58,131 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	        }
 	    }).open();
 	}
+	
+	function checkExistData(value, dataName){
+    	if(value == ''){
+    		alert(dataName + ' 입력해주세요.');
+    		return false;
+    	}
+    	return true;
+    }
+    
+    function checkAll(){
+    	if(!checkName(orderForm.oName.value)){
+    		return false;
+    	}
+    	else if(!checkPhone(orderForm.tel2.value, orderForm.tel3.value)){
+    		return false;
+    	}
+    	else if(!checkMail(orderForm.oEmail.value)){
+    		return false;
+    	}
+		return true;
+    }
+    
+	function checkName(name){
+    	if(!checkExistData(name, '이름을')){
+    		orderForm.oName.focus();
+    		return false;	
+    	}
+    	
+    	var nameRegExp = /^[가-힣]{2,4}$/;
+    	if(!nameRegExp.test(name)){
+    		alert('이름이 올바르지 않습니다.');
+    		orderForm.oName.value = '';
+    		orderForm.oName.focus();
+    		return false;
+    	}
+    	return true;
+    }
+	function checkMail(mail){
+    	if(!checkExistData(mail, '이메일을')){
+    		orderForm.oEmail.focus();    		
+    		return false;
+    	}
+    	
+    	var emailRegExp = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
+    	if(!emailRegExp.test(mail)){
+    		alert('이메일 형식이 올바르지 않습니다.');
+    		orderForm.oEmail.value = '';
+    		orderForm.oEmail.focus();
+    		return false;
+    	}
+    	return true
+    }
+	function checkPhone(tel2, tel3){
+    	if(!checkExistData(tel2, '휴대폰 번호를')){
+    		orderForm.tel2.focus();
+    		return false;
+    	}
+    	if(!checkExistData(tel3, '휴대폰 번호를')){
+    		orderForm.tel3.focus();
+    		return false;
+    	}
+    	
+    	var tel2RegExp = /^[0-9]{3,4}$/;
+    	var tel3RegExp = /^[0-9]{4}$/;
+    	
+    	if(!tel2RegExp.test(tel2)){
+    		alert('휴대폰 형식이 올바르지 않습니다.')
+    		orderForm.tel2.value = '';
+    		orderForm.tel2.focus();
+    		return false;
+    	}
+    	if(!tel3RegExp.test(tel3)){
+    		alert('휴대폰 형식이 올바르지 않습니다.')
+    		orderForm.tel3.value = '';
+    		orderForm.tel3.focus();
+    		return false;
+    	}
+    	return true;
+    }
 
-	// 전체선택
-	$(function() {
-		$("#checkAll").click(function() {
-			if ($("#checkAll").prop("checked")) {
-				$(".chk").prop("checked", true);
-			} else {
-				$(".chk").prop("checked", false);
+	function orderCheck() {
+		var ans = confirm("상품을 결제하시겠습니까?");
+		if (ans) {
+			var check = checkAll();
+			
+			if(check){
+				orderForm.submit();
+			}
+			
+		}
+	}
+	
+	$(document).ready(function(){
+		$("#mile").change(function () {
+			var oPrice = $("#oPricemilecheck").val();
+			var pSale = $("#salecheck").val();
+			var mPoint = $("#mPoint").val();
+			var mile = $("#mile").val();
+			var mileRegExp = /^[0-9]{0,9}$/;
+			
+			if(!mileRegExp.test(mile)){
+				alert("적립금을 올바로 입력하시오.");
+				orderForm.mile.value = '';
+				orderForm.mile.focus();
+			}
+			
+			oPrice = parseInt(oPrice);
+			mPoint = parseInt(mPoint);
+			mile = parseInt(mile);
+			pSale = parseInt(pSale);
+			
+			if(mile > mPoint){
+				alert("사용 가능한 적립금을 입력해주세요.");
+				orderForm.mile.value = '';
+				orderForm.mile.focus();
+			}
+			else{
+				oPrice = oPrice - mile;
+				pSale = pSale + mile;
+				orderForm.oPrice.value = oPrice;
+				orderForm.pSale.value = pSale;
 			}
 		});
 	});
-	
-	function cartDelete() {
-		var ans = confirm("삭제하시겠습니까?");
-		if (ans) {
-			var delItems = "";
-			for (var i = 0; i < $(".chk").length; i++) {
-				if ($(".chk")[i].checked == true)
-					delItems += $(".chk")[i].value + "/";
-			}
-			
-			$.ajax({
-				type : "post",
-				url : "${ctp}/order/cartDelete",
-				data : {
-					delItems : delItems,
-				},
-				success : function(data) {
-					alert("삭제되었습니다!");
-					location.href="${ctp}/order/orderInfo";
-				}
-			});
-		}
-	}
-	
-	function cartOrder() {
-		var ans = confirm("선택한 상품을 주문하시겠습니까?");
-		if (ans) {
-			var delItems = "";
-			for (var i = 0; i < $(".chk").length; i++) {
-				if ($(".chk")[i].checked == true)
-					delItems += $(".chk")[i].value + "/";
-			}
-			orderForm.delItems.value = delItems;
-			orderForm.submit();
-		}
-	}
-	
-	
 </script>
-<style>
-.ec-base-box {
-    padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #999;
-    color: #404040;
-}
-.ec-base-box.typeMember .information > .title {
-    vertical-align: middle;
-    margin: 40px 0 20px 5px;
-    text-align: left !important;
-}
-.ec-base-box.typeMember {
-    padding: 0;
-}
-.xans-order-dcinfo {
-    margin: 20px 0;
-    color: #353535;
-    line-height: 1.5;
-}
-.xans-order-dcinfo h3 {
-    font-size: 12px;
-    font-weight: bold;
-}
-.ec-base-box.typeMember .information {
-    display: table;
-    table-layout: fixed;
-    padding: 10px 0;
-    width: 100%;
-    box-sizing: border-box;
-}
-.ec-base-box.typeMember .information > .title, .ec-base-box.typeMember .information > .thumbnail {
-    display: table-cell;
-    padding: 0 29px;
-    width: 110px;
-    text-align: center;
-    vertical-align: middle;
-}
-.ec-base-box.typeMember .information .description {
-    display: table-cell;
-    padding: 0 10px;
-    width: auto;
-    line-height: 1.5em;
-    border-left: 1px solid #e8e8e8;
-    vertical-align: middle;
-}
-.xans-order-dcinfo .description .mileage {
-    margin: 6px 0 0;
-    padding: 10px 0 0;
-    border-top: 1px solid #e8e8e8;
-    *zoom: 1;
-}
-.xans-order-dcinfo .description .mileage li {
-    float: left;
-    margin: 0 40px 0 0;
-}
-
-.mileage li > a{
-	font-size: 11px;
-}
-.warn{
-	padding: 0 0 0 23px;
-	color: #f76560;
-}
-</style>
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -202,10 +212,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 			</div>
 		</div>
 		<form name="orderForm" method="post" action="${ctp}/order/orderInfo">
-			<input type="hidden" name="delItems"/>
-			<input type="hidden" name="oPrice" value="${orderPrice}"/>
-			<input type="hidden" name="point" value="${totPoint}"/>
-			<input type="hidden" name="mId" value="${smid}"/>
+
 			<table class="table table-borderless">
 				<thead>
 					<tr>
@@ -222,7 +229,6 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 				<c:set var="totPrice" value="0"/>
 				<c:set var="totPoint" value="0"/>
 				<c:set var="pSale" value="0"/>
-				<c:set var="pDelevery" value="0"/>
 				<c:set var="curScrStartNo" value="${csize}" />
 				<c:set var="Delivery" value="3000"/>
 				<c:forEach var="cvo" items="${cvos}">
@@ -238,8 +244,8 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 								</td>
 								<td class="td1" style="width: 5%; padding-top: 55px;">${cvo.pCnt}</td>
 								<td class="td1" style="width: 10%; padding-top: 55px;">
-									<fmt:parseNumber var ="point" value="${cvo.pPrice*0.01}" integerOnly="true"/>
-									<c:set var="totPoint" value="${totPoint + cvo.pPrice * point}"/>
+									<fmt:parseNumber var ="point" value="${(cvo.pPrice-pvo.pSale)*0.01}" integerOnly="true"/>
+									<c:set var="totPoint" value="${totPoint + point}"/>
 									<img src="${ctp}/resources/images/point.gif"/>${point}원
 								</td>
 								<td class="td1" style="width: 10%; padding-top: 55px;">${pvo.pSale}</td>
@@ -264,7 +270,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 				<c:set var="orderPrice" value="${totPrice + Delivery}"/>
 					<tr>
 						<td style="text-align: right;" colspan="7">
-							<span style="font-size: 12px;">상품구매금액 ${totPrice} + 배송비 ${Delivery} <c:if test="${Delivery eq 0}">(무료)</c:if> = 합계 :   </span><strong><font color="#f76560" size="4px">${orderPrice}</font><font color="#f76560">원</font></strong>
+							<span style="font-size: 12px;">상품구매금액 ${totPrice} + 배송비 ${Delivery} <c:if test="${Delivery eq 0}">(무료)</c:if> = 합계 : </span><strong><font color="#f76560" size="4px">${orderPrice}</font><font color="#f76560" size="4px">원</font></strong>
 						</td>
 					</tr>
 				</tbody>
@@ -288,13 +294,13 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 			<br/><br/><br/>
 			<table>
 				<tr>
-					<td class="ftd">받으시는 분</td>
+					<td class="ftd">받으시는 분<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="3"><input type="text" name="oName" id="oName" maxlength="30" required value="${mvo.mName}"></td>
 				</tr>
 				<tr>
-					<td class="ftd">주소</td>
+					<td class="ftd">주소<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="2">
-						<input type="text" id="sample6_postcode" name="oPost" placeholder="우편번호" readonly="readonly" maxlength="14" value="${mvo.mPost}">
+						<input type="text" id="sample6_postcode" name="oPost" placeholder="우편번호" readonly="readonly" required maxlength="14" value="${mvo.mPost}">
 					</td>
 					<td class="btninput">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -310,7 +316,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 					<td><input type="text" id="sample6_detailAddress" name="add3" placeholder="상세주소" value="${add3}"></td>
 				</tr>
 				<tr>
-					<td class="ftd">휴대전화</td>
+					<td class="ftd">휴대전화<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td class="tel1">
 						<select name="tel1">
 					    	<option value="010" <c:if test="${phone1 eq '010'}">selected</c:if>>010</option>
@@ -325,18 +331,21 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 					<td class="tel3"><input type="text" name="tel3" maxlength="4" required value="${phone3}"></td>
 				</tr>
 				<tr>
-					<td class="ftd">이메일</td>
-					<td colspan="3"><input type="email" name="oEmail" id="oEmail" value="${vo.mEmail}"></td>
+					<td class="ftd">이메일<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
+					<td colspan="3"><input type="email" name="oEmail" id="oEmail" value="${mvo.mEmail}" required></td>
 				</tr>
 				<tr class="">
-					<td>배송메시지<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
+					<td>배송메시지</td>
                     <td colspan="3">
-                   		<textarea id="omessage" name="omessage" maxlength="255" cols="70" style="margin: 0px; height: 60px;"></textarea>
+                   		<textarea id="oMessage" name="oMessage" maxlength="255" cols="70" style="margin: 0px; height: 60px;"></textarea>
       		        </td>
                 </tr>
 			</table>
+			<hr/>
+			<h6>결제정보</h6>
+			<br/><br/><br/><br/><br/>
 			<div class="totalsummary">
-				<table border="1" surmmary>
+				<table border="1" >
 					<colgroup>
 						<col style="width:23%;">
 						<col style="width:24%;">
@@ -356,15 +365,55 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<td class="price"><div class="box"><strong>${totPrice + pSale}</strong>원 <span class="tail displaynone"></span></div></td>
 							<td class="option"><div class="box"><strong>+</strong>
 							<strong>${Delivery}</strong>원 <span class="tail displaynone"></span></div></td>
-							<td class="discount displaynone"><strong>-</strong><strong>${pSale}</strong>원</td>
-							<td class="total"><div class="box"><strong>=</strong><strong>${orderPrice}</strong>원 <span class="tail displaynone"></span></div></td>
+							<td class="discount displaynone"><strong>-</strong><strong><input id="pSale" name="pSale" type="text" value="${pSale}" readonly style="border: 0px; margin: 0; padding: 0; width: 15%; font-weight: bold;"></strong>원</td>
+							<td class="total"><div class="box"><strong>=</strong><strong><input id="oPrice" name="oPrice" type="text" value="${orderPrice}" readonly style="border: 0px; margin: 0; padding: 0; width: 20%; font-weight: bold;"></strong>원 <span class="tail displaynone"></span></div></td>
 		                </tr>
 		               </tbody>
 				</table>
 			</div>
+			<table border="1" class="order">
+	            <colgroup>
+					<col style="width:139px">
+					<col style="width:auto">
+				</colgroup>
+				<tbody>
+				<tr class="sum txt14">
+					<th scope="row"><strong>총 할인결제금액</strong></th>
+	                <td><strong id="total_addpay_price_view">0</strong>원</td>
+	            </tr>
+	            </tbody>
+				<!-- 적립금 -->
+				<tbody class="">
+					<tr class="txt15">
+						<th scope="row">적립금</th>
+				        <td><p><input id="mile" name="mile" size="10" value="" type="text" style="width: 190px;"> 원 (총 사용가능 적립금 : <strong class="txtWarn" style="color: #f76560;">${mvo.mPoint}</strong>원)</p>
+						</td>
+		            </tr>
+					<tr class="txt15">
+						<th scope="row">결제수단</th>
+				        <td>
+				        	<input type=radio name="oPayment" value="1" checked="checked">무통장&nbsp;&nbsp;&nbsp; 
+							<input type=radio name="oPayment" value="2">카드
+						</td>
+						<td style="text-align: right;">
+							<div class=boardbtn>
+								<a href="#" onclick="orderCheck()" style="color: #fff; background-color: black;" >결제하기</a>
+							</div>
+						</td>
+		            </tr>
+		        </tbody>
+			</table>
+			<c:set var="milecheck" value="${orderPrice}"/>
+			<c:set var="salecheck" value="${pSale}"/>
+			<input type="hidden" id="salecheck" value="${salecheck}"/>
+			<input type="hidden" id="oPricemilecheck" value="${milecheck}"/>
+			<input type="hidden" id="delItems" name="delItems" value="${delItems}"/>
+			<input type="hidden" name="point" value="${totPoint}"/>
+			<input type="hidden" name="mId" value="${smid}"/>
+			<input type="hidden" name="oDelivery" value="${Delivery}"/>
 		</form>
 	</div>
-	
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	<div class="jumbotron">
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>

@@ -146,19 +146,19 @@
 								</li>
 								<li>
 									<div class="proColor">
-											<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000" color_no displaygroup="1"></span></c:if>
-										 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500" color_no displaygroup="1"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000" ></span></c:if>
+										 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00" ></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500" ></span></c:if>
 									</div>
 								</li>
 							</ul>

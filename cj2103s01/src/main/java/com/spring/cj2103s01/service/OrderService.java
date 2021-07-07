@@ -3,6 +3,7 @@ package com.spring.cj2103s01.service;
 import java.util.List;
 
 import com.spring.cj2103s01.vo.CartVO;
+import com.spring.cj2103s01.vo.OrderVO;
 
 public interface OrderService {
 
@@ -17,5 +18,11 @@ public interface OrderService {
 	public void cartDelete(int idx);
 
 	public CartVO getIdxVo(int idx);
+
+	public void setInputOrder(OrderVO vo);
+
+	public int getLastoId(String mId);
+
+	public void setOrderDetail(CartVO cartvo, int lastoId);
 
 }

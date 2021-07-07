@@ -3,7 +3,6 @@ package com.spring.cj2103s01.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.access.method.P;
 
 import com.spring.cj2103s01.vo.ProductVO;
 

@@ -60,6 +60,10 @@
 	    <mapping path="/wishList/**"/>
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
+	  <interceptor>
+	    <mapping path="/order/**"/>
+	    <beans:ref bean="memberInterceptor"/>
+	  </interceptor>
 	</interceptors>
 	
 	<!-- 파일 업로드를 위한 설정(용량제한) -->

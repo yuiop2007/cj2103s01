@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.OrderDAO">
+  
+	<insert id="setInputOrder">
+		insert into orders values (default, #{vo.mId}, default, #{vo.oName}, #{vo.oPhone}, #{vo.oPost}, #{vo.oAddress}, #{vo.oEmail}, #{vo.oMessage}, #{vo.oPrice}, #{vo.oPayment}, #{vo.oDelivery}, #{vo.oStatus});
+	</insert>
+	
+	<insert id="setOrderDetail">
+		insert into orders_detail values (default, #{lastoId}, #{cartvo.mId}, #{cartvo.pId}, #{cartvo.pOption}, #{cartvo.pCnt}, #{cartvo.pPrice});
+	</insert>
+	
+	<select id="getLastoId" resultType="int">
+	    select oId from orders where mId = #{mId} order by oId desc limit 1;
+	</select>
+
+<!-- 	
+	<select id="getCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
+		select * from coupon;
+	</select>
+	
+	<select id="getaCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
+		select * from coupon group by cName;
+	</select>
+	
+	<insert id="setCouponInput">
+		insert into coupon values (default, #{vo.mId}, #{vo.cmCate}, #{vo.cpCate}, #{vo.cName}, #{vo.cDiscount}, #{vo.cPrice}, #{vo.cRdate}, #{vo.cEnddate});
+	</insert>
+	
+	<delete id="cDeleteOk">
+		delete from coupon where cId = #{cId};
+	</delete> -->
+	
+<!-- 	<select id="getReviewList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb order by rId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+	    select count(*) from review;
+	</select>
+	
+	<select id="totpIdRecCnt" resultType="int">
+	    select count(*) from review where pId = #{pId};
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+		select count(rId) from review where ${search} like concat('%', #{searchString} ,'%');
+	</select>
+	
+	<select id="getReviewContentList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where pId = ${pId} order by rId desc limit #{startIndexNo},#{rpageSize};
+	</select>
+	
+	<insert id="setReviewInput">
+	    insert into review values (default, #{vo.pId}, #{vo.rRating}, #{vo.rWriter} ,#{vo.rTitle}, #{vo.rName}, #{vo.rPwd}, #{vo.rContent}, default, default);
+	</insert>
+	
+	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.ReviewVO">
+	    select * from review where rId = #{rId};
+	</select>
+	
+
+	
+	<update id="addReadNum">
+	    update review set rHit = rHit + 1 where rId = #{rId};
+	</update>
+	
+	<select id="getReviewContent" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select * from review where rId = #{rId};
+	</select>
+	
+	<update id="reviewUpdateOk">
+	    update review set rTitle=#{vo.rTitle}, rRating=#{vo.rRating}, rPwd=#{vo.rPwd}, rContent=#{vo.rContent} where rId=#{vo.rId};
+	</update>
+	
+	<select id="getReviewSearchList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where ${search} like concat('%',#{searchString},'%')  order by rId desc limit #{startIndexNo},#{pageSize};
+	</select> -->
+	
+</mapper>

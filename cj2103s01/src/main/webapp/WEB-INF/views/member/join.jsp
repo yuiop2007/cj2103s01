@@ -258,20 +258,20 @@
 			<hr />
 			<table>
 				<tr>
-					<td class="ftd">아이디</td>
+					<td class="ftd">아이디<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="2"><input type="text" name="mId" id="mId" maxlength="16" required placeholder="(영문소문자/숫자, 4~16자)"></td>
 					<td class="btninput"><input type="button" id="idCheck" value="중복체크"><br></td>
 				</tr>
 				<tr>
-					<td class="ftd">비밀번호</td>
+					<td class="ftd">비밀번호<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="3"><input type="password" name="mPwd" id="mPwd" autocomplete="off" maxlength="16" required placeholder="(영문 대소문자/숫자 중 2가지 이상 조합, 8자~16자)"></td>
 				</tr>
 				<tr>
-					<td class="ftd">비밀번호 확인</td>
+					<td class="ftd">비밀번호 확인<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="3"><input type="password" name="mPwdCheck" id="mPwdCheck" autocomplete="off" maxlength="16" required></td>
 				</tr>
 				<tr>
-					<td class="ftd">이름</td>
+					<td class="ftd">이름<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="3"><input type="text" name="mName" id="mName" maxlength="30" required></td>
 				</tr>
 				<tr>
@@ -293,7 +293,7 @@
 					<td><input type="text" id="sample6_detailAddress" name="add3" placeholder="상세주소"></td>
 				</tr>
 				<tr>
-					<td class="ftd">휴대전화</td>
+					<td class="ftd">휴대전화<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td class="tel1">
 						<select name="tel1">
 					    	<option value="010">010</option>
@@ -308,7 +308,7 @@
 					<td class="tel3"><input type="text" name="tel3" maxlength="4" required></td>
 				</tr>
 				<tr>
-					<td class="ftd">이메일</td>
+					<td class="ftd">이메일<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"></td>
 					<td colspan="3"><input type="email" name="mEmail" id="mEmail" required></td>
 				</tr>
 			</table>

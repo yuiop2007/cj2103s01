@@ -3,7 +3,7 @@
 <mapper namespace="com.spring.cj2103s01.dao.MemberDAO">
 
 	<insert id="setMemberInput">
-		insert into member values (#{vo.mId}, #{vo.mPwd}, #{vo.mName}, #{vo.mPost}, #{vo.mAddress}, #{vo.mPhone}, #{vo.mEmail}, #{vo.mGender}, default, #{vo.mBirth}, #{vo.mSolar}, default, default, default, #{vo.mCmid}, default);
+		insert into member values (#{vo.mId}, #{vo.mPwd}, #{vo.mName}, #{vo.mPost}, #{vo.mAddress}, #{vo.mPhone}, #{vo.mEmail}, #{vo.mGender}, default, #{vo.mBirth}, #{vo.mSolar}, default, default, default, #{vo.mCmid}, default, default);
 	</insert>
 
 	<select id="getIdCheck" resultType="com.spring.cj2103s01.vo.MemberVO">
@@ -64,6 +64,14 @@
 	
 	<update id="mLevelCheck">
 		update member set mLevel = #{mLevel} where mId = #{mId};
+	</update>
+	
+	<update id="updateMemberBuy">
+		update member set mBuy = mBuy + 1 where mId = #{mId};
+	</update>
+	
+	<update id="setUpdatePoint">
+		update member set mPoint = mPoint-#{mile}, mUsePoint = mUsePoint+#{mile} where mId = #{mId};
 	</update>
 	
 	<delete id="memberDelete">

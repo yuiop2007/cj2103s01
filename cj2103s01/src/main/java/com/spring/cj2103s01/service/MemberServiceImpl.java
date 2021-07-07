@@ -93,6 +93,16 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVO> getCouponMember(int cmCate) {
 		return memberDAO.getCouponMember(cmCate);
 	}
+
+	@Override
+	public void updateMemberBuy(String mId) {
+		memberDAO.updateMemberBuy(mId);
+	}
+
+	@Override
+	public void setUpdatePoint(String mId, int mile) {
+		memberDAO.setUpdatePoint(mId, mile);
+	}
 	
 	
 }
