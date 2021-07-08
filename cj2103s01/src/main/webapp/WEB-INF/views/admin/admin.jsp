@@ -26,44 +26,42 @@
 		<div class="row orderstatus">
 		    <div class="col">
 		    	<div class="mytitle">
-		    		<h3>ORDER STATUS
-			    		<span class="desc">recent 3 months</span>
-		    		</h3>
+		    		<h3>ORDER STATUS</h3>
 		    	</div>
 		    	<div class="col state">
 		    		<ul class = "order">
 						<li>
-							<strong>회원수</strong>
-							<a href="${ctp}/admin/mList" class="count"><span>${totMember}</span></a>
+							<strong>입금전</strong>
+							<a href="${ctp}/order/notPayList" class="count"><span>${notPayCnt}</span></a>
 						</li>
 						<li>
-							<strong>탈퇴회원</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<strong>배송준비중</strong>
+							<a href="${ctp}/order/readyList" class="count"><span>${delReadyCnt}</span></a>
 						</li>
 						<li>
-							<strong>상품수</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<strong>배송중</strong>
+							<a href="${ctp}/order/ingList" class="count"><span>${delingCnt}</span></a>
 						</li>
 						<li>
 							<strong>배송완료</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="${ctp}/order/endList" class="count"><span>${delEndCnt}</span></a>
 						</li>
 					</ul>
 					<ul class ="cs">
 						<li>
 							<span class="icoDot"></span>
 							<strong>취소</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="${ctp}/order/cancelList" class="count"><span>${cancelCnt}</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>교환</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="${ctp}/order/changeList" class="count"><span>${changeCnt}</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>반품</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="${ctp}/order/returnCnt" class="count"><span>${returnCnt}</span></a>
 						</li>
 					</ul>
 		    	</div>
@@ -126,7 +124,6 @@
 		    		<strong>쿠폰 관리</strong>
 		    		쿠폰을 등록하고 관리 할 수 있습니다.
 		    		<br/>
-		    		
 		    	</a>
 		    </div>
 	  	</div>

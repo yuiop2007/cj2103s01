@@ -365,7 +365,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<td class="price"><div class="box"><strong>${totPrice + pSale}</strong>원 <span class="tail displaynone"></span></div></td>
 							<td class="option"><div class="box"><strong>+</strong>
 							<strong>${Delivery}</strong>원 <span class="tail displaynone"></span></div></td>
-							<td class="discount displaynone"><strong>-</strong><strong><input id="pSale" name="pSale" type="text" value="${pSale}" readonly style="border: 0px; margin: 0; padding: 0; width: 15%; font-weight: bold;"></strong>원</td>
+							<td class="discount displaynone"><strong>-</strong><strong><input id="pSale" name="pSale" type="text" value="${pSale}" readonly style="border: 0px; margin: 0; padding: 0; width: 17%; font-weight: bold;"></strong>원</td>
 							<td class="total"><div class="box"><strong>=</strong><strong><input id="oPrice" name="oPrice" type="text" value="${orderPrice}" readonly style="border: 0px; margin: 0; padding: 0; width: 20%; font-weight: bold;"></strong>원 <span class="tail displaynone"></span></div></td>
 		                </tr>
 		               </tbody>
@@ -392,8 +392,8 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 					<tr class="txt15">
 						<th scope="row">결제수단</th>
 				        <td>
-				        	<input type=radio name="oPayment" value="1" checked="checked">무통장&nbsp;&nbsp;&nbsp; 
-							<input type=radio name="oPayment" value="2">카드
+				        	<input type=radio name="oPayment" value="무통장" checked="checked">무통장&nbsp;&nbsp;&nbsp; 
+							<input type=radio name="oPayment" value="카드">카드
 						</td>
 						<td style="text-align: right;">
 							<div class=boardbtn>

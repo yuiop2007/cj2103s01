@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cj2103s01.pagenation.Pagenation;
@@ -23,6 +24,7 @@ import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.vo.CartVO;
 import com.spring.cj2103s01.vo.CouponVO;
 import com.spring.cj2103s01.vo.MemberVO;
+import com.spring.cj2103s01.vo.OrderDetailVO;
 import com.spring.cj2103s01.vo.OrderVO;
 import com.spring.cj2103s01.vo.ProductVO;
 
@@ -47,29 +49,54 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/cartOk", method = RequestMethod.GET)
-	public String cartOkGet(int pId, String[] orderName, String[] orderNum, String[] orderPrice, HttpSession session, Model model) {
+	public String cartOkGet(int check, int pId, String[] orderName, String[] orderNum, String[] orderPrice, HttpSession session, Model model) {
 		int sw = 0;
 		String mId = (String) session.getAttribute("smid");
-		
+		String delItems = "";
 		List<CartVO> vos = orderService.getCartList(mId);
+		int cart = 0;
 		
-		for(int i=0; i<orderName.length; i++) {
-			if(!vos.isEmpty()) {
-				for(CartVO vo : vos) {
-					if(vo.getpId() == pId && vo.getpOption().equals(orderName[i])) {
-						orderService.setCartCntUpdate(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
-						sw = 1;
+		if(check==2) {
+			for(int i=0; i<orderName.length; i++) {
+				if(!vos.isEmpty()) {
+					for(CartVO vo : vos) {
+						if(vo.getpId() == pId && vo.getpOption().equals(orderName[i])) {
+							orderService.setCartCntUpdate(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
+							sw = 1;
+						}
 					}
 				}
+				if(sw==0) {
+					orderService.setCart(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
+				}
+				sw=0;
 			}
-			if(sw==0) {
-				orderService.setCart(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
-			}
-			sw=0;
+			cart = orderService.getCartCnt(mId);
+			session.setAttribute("cart", cart);
 		}
-		int cart = orderService.getCartCnt(mId);
+		else if(check==1) {
+			for(int i=0; i<orderName.length; i++) {
+				if(!vos.isEmpty()) {
+					for(CartVO vo : vos) {
+						if(vo.getpId() == pId && vo.getpOption().equals(orderName[i])) {
+							orderService.setCartCntUpdate(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
+							sw = 1;
+						}
+					}
+				}
+				if(sw==0) {
+					orderService.setCart(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
+					int idx = orderService.getLastCartIdx(mId);
+					delItems += Integer.toString(idx) + "/";
+				}
+				sw=0;
+			}
+			cart = orderService.getCartCnt(mId);
+			session.setAttribute("cart", cart);
+			return delItems;
+		}
 		
-		session.setAttribute("cart", cart);
+		
 		return "";
 	}
 	
@@ -153,7 +180,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/orderInfo", method = RequestMethod.POST)
-	public String orderInfoPost(OrderVO vo, HttpServletRequest request, String delItems) {
+	public String orderInfoPost(OrderVO vo, HttpServletRequest request, String delItems, HttpSession session) {
 		
 		String add1 = request.getParameter("add1") == null ? "" : request.getParameter("add1");
 		String add2 = request.getParameter("add2") == null ? "" : request.getParameter("add2");
@@ -171,11 +198,14 @@ public class OrderController {
 		String message = request.getParameter("oMessage") == null ? "" : request.getParameter("oMessage");
 		vo.setoMessage(message);
 		
-		String mile = request.getParameter("mile") == null ? "0" : request.getParameter("mile");
+		String mile = request.getParameter("mile");
+		if(mile==null || mile.trim().equals("")) {
+			mile = "0";
+		}
 		
 		String[] idxs = delItems.split("/");
-		System.out.println(delItems);
 		CartVO cartvo = new CartVO();
+		int cart = orderService.getCartCnt(vo.getmId());
 		
 		if(vo.getoDelivery().equals("0")) {
 			vo.setoDelivery("무료");
@@ -185,34 +215,68 @@ public class OrderController {
 		}
 		
 		//무통장일때
-		if(vo.getoPayment()==1) {
+		if(vo.getoPayment().equals("무통장")) {
 			vo.setoStatus("입금전");
 		}
 		//카드일때(입금된거)
-		else if(vo.getoPayment()==2) {
+		else if(vo.getoPayment().equals("카드")) {
 			vo.setoStatus("배송준비중");
 		}
 		
-//		//orderVO에 추가
-//		orderService.setInputOrder(vo);
-//		
-//		//회원 구매횟수 올리기(카드결제면올리고)
-//		if(vo.getoStatus().equals("배송준비중")) {
-//			memberService.updateMemberBuy(vo.getmId());
-//		}
-//		//포인트 사용시 깎고 사용포인트에 추가
-//		if(Integer.parseInt(mile)>0) {
-//			memberService.setUpdatePoint(vo.getmId(), Integer.parseInt(mile));
-//		}
+		//orderVO에 추가
+		orderService.setInputOrder(vo);
+		
+		//회원 구매횟수 올리기(카드결제면올리고) 적립은 배송시작시
+		if(vo.getoStatus().equals("배송준비중")) {
+			memberService.updateMemberBuy(vo.getmId());
+		}
+		//포인트 사용시 깎고 사용포인트에 추가
+		if(Integer.parseInt(mile)>0) {
+			memberService.setUpdatePoint(vo.getmId(), Integer.parseInt(mile));
+		}
 		//카트에 있던거 오더디테일로 옮기고 카트에서 삭제
 		int lastoId = orderService.getLastoId(vo.getmId());
 		for (String idx : idxs) {
 			cartvo = orderService.getIdxVo(Integer.parseInt(idx));
 			orderService.setOrderDetail(cartvo, lastoId);
 			orderService.cartDelete(Integer.parseInt(idx));
+			cart = cart - 1;
 		}
 		
-		
+		session.setAttribute("cart", cart);
 		return "redirect:/main";
 	}
+	
+	@RequestMapping(value = "/oList", method = RequestMethod.GET)
+	public String oListGet(HttpSession session, Model model,
+			@RequestParam(name = "time", defaultValue = "30", required = false) int time,
+			@RequestParam(name = "time", defaultValue = "All", required = false) String status) {
+		String mId = (String) session.getAttribute("smid");
+		List<OrderVO> ovos = null;
+		
+		if(status.equals("입금전")) {
+//			ovos = orderService.getOrderListStatus(mId, time, status);
+		}
+		else if(status.equals("배송준비중")) {
+			
+		}
+		else if(status.equals("배송중")) {
+			
+		}
+		else if(status.equals("배송완료")) {
+			
+		}
+		else {
+			ovos = orderService.getOrderListMid(mId, time);
+		}
+		List<OrderDetailVO> odvos = orderService.getOrderDetailListMid(mId);
+		List<ProductVO> pvos = productService.getProductAllList();
+		
+		model.addAttribute("ovos", ovos);
+		model.addAttribute("odvos", odvos);
+		model.addAttribute("pvos", pvos);
+
+		return "order/oList";
+	}
+	
 }

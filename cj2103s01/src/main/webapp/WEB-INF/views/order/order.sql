@@ -21,12 +21,28 @@ create table orders(
 	oEmail varchar(100) null,
 	oMessage varchar(500) null,
 	oPrice int null,
-	oPayment int null, /* 1:현금입금(무통장) 2:카드 */
+	oPayment varchar(100) null, /* 무통장, 카드 */
 	oDelivery varchar(50) null,
-	oStatus varchar(50) null default '입금전',
+	oStatus varchar(50) null default '입금전', /* 배송준비중 배송중 배송완료*/
+	oChange varchar(50) null default '주문', /* 취소 교환 반품 */
 	primary key(oId),
 	foreign key(mId) references member(mId)
 );
 
 drop table orders_detail;
 drop table orders;
+
+select *from orders;
+select now()-;
+select to_days(now()) - to_days('2021-07-01 09:57:19');
+select date_add(now(), interval -7 day);
+select datediff(now(), '2021-4-1');
+
+select *from orders where mid = 'yuiop2007' and oRdate > date_add(now(), interval -30 day);
+select * from orders where mId = 'yuiop2007';
+
+select count(*) from orders where oStatus = '입금전' and mId = 'yuiop2007';
+
+
+
+select * from orders_detail where mId = 'yuiop2007' group by oId;

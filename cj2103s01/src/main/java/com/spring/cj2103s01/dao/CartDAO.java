@@ -22,4 +22,6 @@ public interface CartDAO {
 
 	public CartVO getIdxVo(@Param("idx") int idx);
 
+	public int getLastCartIdx(@Param("mId") String mId);
+
 }

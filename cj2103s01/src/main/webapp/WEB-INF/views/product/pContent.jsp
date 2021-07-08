@@ -41,46 +41,7 @@
 	}
 	
 	function buyCheck() {
-		var oName = document.getElementsByName("orderName[]");
-		var oNum = document.getElementsByName("orderNum[]");
-		var oPrice = document.getElementsByName("orderPrice[]");
-		var pId = $("#pId").val();
-		
-		var orderName = [];
-		var orderNum = [];
-		var orderPrice = [];
-
-		if(oName.length == 0 || oNum.length == 0 || oPrice == 0){
-			alert("제품 옵션을 선택하시오.");
-			return false;
-		}
-		else{
-			
-			for(var i=0; i<oName.length; i++){
-				orderName.push(oName[i].value);
-				orderNum.push(oNum[i].value);
-				orderPrice.push(oPrice[i].value);
-			}
-			
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/orderInfo",
-				traditional : true,
-				datatype : "json",
-				data : {
-					pId : pId,
-					orderName : orderName,
-					orderNum : orderNum, 
-					orderPrice : orderPrice
-				},
-				success : function(data) {
-					/* location.href="${ctp}/order/orderInfo"; */
-				}
-			});
-		}
-	}
-	
-	function cartCheck() {
+		var check = 1;
 		var oName = document.getElementsByName("orderName[]");
 		var oNum = document.getElementsByName("orderNum[]");
 		var oPrice = document.getElementsByName("orderPrice[]");
@@ -108,6 +69,54 @@
 				traditional : true,
 				datatype : "json",
 				data : {
+					check : check,
+					pId : pId,
+					orderName : orderName,
+					orderNum : orderNum, 
+					orderPrice : orderPrice
+				},
+				success : function(data) {
+					alert("장바구니에 등록되었습니다.");
+					var ans = confirm("주문창으로 이동하시겠습니까?");
+					if(ans){
+						location.href="${ctp}/order/orderInfo?delItems=" + data;
+					}
+				}
+			});
+		}
+	}
+	
+	function cartCheck() {
+		
+		var check = 2;
+		var oName = document.getElementsByName("orderName[]");
+		var oNum = document.getElementsByName("orderNum[]");
+		var oPrice = document.getElementsByName("orderPrice[]");
+		var pId = $("#pId").val();
+		
+		var orderName = [];
+		var orderNum = [];
+		var orderPrice = [];
+
+		if(oName.length == 0 || oNum.length == 0 || oPrice == 0){
+			alert("제품 옵션을 선택하시오.");
+			return false;
+		}
+		else{
+			
+			for(var i=0; i<oName.length; i++){
+				orderName.push(oName[i].value);
+				orderNum.push(oNum[i].value);
+				orderPrice.push(oPrice[i].value);
+			}
+			
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/cartOk",
+				traditional : true,
+				datatype : "json",
+				data : {
+					check : check,
 					pId : pId,
 					orderName : orderName,
 					orderNum : orderNum, 

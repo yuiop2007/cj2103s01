@@ -35,43 +35,43 @@
 		    <div class="col">
 		    	<div class="mytitle">
 		    		<h3>ORDER STATUS
-			    		<span class="desc">recent 3 months</span>
+			    		<!-- <span class="desc">recent 3 months</span> -->
 		    		</h3>
 		    	</div>
 		    	<div class="col state">
 		    		<ul class = "order">
 						<li>
 							<strong>입금전</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="${ctp}/order/oList?status=notPay" class="count"><span>${notPayCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송준비중</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${delReadyCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송중</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${delingCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송완료</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${delEndCnt }</span></a>
 						</li>
 					</ul>
 					<ul class ="cs">
 						<li>
 							<span class="icoDot"></span>
 							<strong>취소</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${cancelCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>교환</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${changeCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>반품</strong>
-							<a href="#" class="count"><span>0</span></a>
+							<a href="#" class="count"><span>${returnCnt }</span></a>
 						</li>
 					</ul>
 		    	</div>
@@ -110,11 +110,10 @@
 	  	
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/order/oList">
 		    		<strong>order</strong>
 		    		고객님께서 주문하신 상품의 주문내역을 확인하실 수 있습니다.
 		    		<br/>
-		    		비회원의 경우, 주문서의 주문번호와 비밀번호로 주문조회가 가능합니다.
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
@@ -135,22 +134,14 @@
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
-		    	<a href="#">
-		    		<strong>point</strong>
-		    		적립금은 상품 구매 시 사용하실 수 있습니다.
-		    		<br/>
-		    		적립된 금액은 현금으로 환불되지 않습니다.
-		    	</a>
-		    </div>
-	  	</div>
-		<div class="row myshopMain">
-		    <div class="col shopMain">
 		    	<a href="${ctp}/admin/coupon">
 		    		<strong>coupon</strong>
 		    		고객님이 보유하고 계신 쿠폰내역을 보여드립니다.
 		    		<br/>
 		    	</a>
 		    </div>
+	  	</div>
+		<div class="row myshopMain">
 		    <div class="col shopMain">
 		    	<a href="#">
 		    		<strong>my board</strong>
@@ -159,9 +150,17 @@
 		    		고객님께서 작성하신 글을 한눈에 관리하실 수 있습니다.
 		    	</a>
 		    </div>
+		    <div class="col shopMain">
+		    	<% if(level<5){ %>
+		    	<a href="javascript:mDeleteCheck();">
+ 		    		<strong>Delete</strong>
+		    		회원 탈퇴를 하시게되면 동일한 아이디로 재가입 불가능합니다. 	
+		    	</a>
+		    	<%} %>
+		    </div>
 	  	</div>
 		<div class="row myshopMain">
-		    <div class="col shopMain">
+		    <%-- <div class="col shopMain">
 		    	<a href="#">
 		    		<strong>address</strong>
 		    		자주 사용하는 배송지를 등록하고 관리하실 수 있습니다.
@@ -176,7 +175,7 @@
 		    		
 		    	</a>
 		    	<%} %>
-		    </div>
+		    </div> --%>
 	  	</div>
 	</div>
 	<div class="jumbotron">

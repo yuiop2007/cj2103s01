@@ -140,6 +140,16 @@ public class MemberController {
 		MemberVO vo = memberService.getIdCheck(mId);
 		int couponCnt = couponService.getCouponCnt(mId);
 		
+		model.addAttribute("notPayCnt", orderService.notPayCntMid(mId)); // 입금전 주문 갯수
+		model.addAttribute("delReadyCnt", orderService.readyPayCntMid(mId)); // 배송준비중 갯수
+		model.addAttribute("delingCnt", orderService.ingPayCntMid(mId)); // 배송중 갯수
+		model.addAttribute("delEndCnt", orderService.endPayCntMid(mId)); // 배송완료 주문 갯수
+		model.addAttribute("cancelCnt", orderService.cancelCntMid(mId)); // 취소 갯수
+		model.addAttribute("changeCnt", orderService.changeCntMid(mId)); // 교환 갯수
+		model.addAttribute("returnCnt", orderService.returnCntMid(mId)); // 반품 갯수
+		
+		
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("couponCnt", couponCnt);
 		return "member/mypage";

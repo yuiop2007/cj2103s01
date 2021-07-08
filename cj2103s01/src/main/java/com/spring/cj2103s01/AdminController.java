@@ -16,6 +16,7 @@ import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.CouponService;
 import com.spring.cj2103s01.service.MemberService;
+import com.spring.cj2103s01.service.OrderService;
 import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.vo.CouponVO;
 import com.spring.cj2103s01.vo.MemberVO;
@@ -36,17 +37,24 @@ public class AdminController {
 	
 	@Autowired
 	CouponService couponService;
+	
+	@Autowired
+	OrderService orderService;
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminGet(Model model) {
 
-		int totMember = memberService.totMemberCnt();
-		int dropMember = memberService.dropMemberCnt();
-		int totProduct = productService.totProductCnt();
 
-		model.addAttribute("totMember", totMember);
-		model.addAttribute("dropMember", dropMember);
-		model.addAttribute("totProduct", totProduct);
+		model.addAttribute("totMember", memberService.totMemberCnt()); // 총회원수
+		model.addAttribute("dropMember", memberService.dropMemberCnt()); // 탈퇴회원수
+		model.addAttribute("totProduct", productService.totProductCnt()); // 총 상품수
+		model.addAttribute("notPayCnt", orderService.notPayCnt()); // 입금전 주문 갯수
+		model.addAttribute("delReadyCnt", orderService.readyPayCnt()); // 배송준비중 갯수
+		model.addAttribute("delingCnt", orderService.ingPayCnt()); // 배송중 갯수
+		model.addAttribute("delEndCnt", orderService.endPayCnt()); // 배송완료 주문 갯수
+		model.addAttribute("cancelCnt", orderService.cancelCnt()); // 취소 갯수
+		model.addAttribute("changeCnt", orderService.changeCnt()); // 교환 갯수
+		model.addAttribute("returnCnt", orderService.returnCnt()); // 반품 갯수
 
 		return "admin/admin";
 	}

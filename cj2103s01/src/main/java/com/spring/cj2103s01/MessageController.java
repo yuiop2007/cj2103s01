@@ -28,9 +28,10 @@ public class MessageController {
 			if(sStrLevel.equals("관리자")) {
 				model.addAttribute("msg", sStrLevel +"님 반갑습니다.");
 				model.addAttribute("url", "admin/admin");
+			}else {
+				model.addAttribute("msg", sStrLevel +"님 반갑습니다.");
+				model.addAttribute("url", "main");
 			}
-			model.addAttribute("msg", sStrLevel +"님 반갑습니다.");
-			model.addAttribute("url", "main");
 		}
 		else if(msgFlag.equals("mLoginNo")) {
 			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요.");

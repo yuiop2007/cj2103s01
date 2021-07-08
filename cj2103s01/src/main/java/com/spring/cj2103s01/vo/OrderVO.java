@@ -11,9 +11,20 @@ public class OrderVO {
 	private String oEmail;
 	private String oMessage;
 	private int oPrice;
-	private int oPayment; /* 1:현금입금(무통장) 2:카드 */
+	private String oPayment; /* 무통장 카드 */
 	private String oDelivery; // 0원무료배송 3000원일반배송등
 	private String oStatus;
+	private String oChange;
+
+	private int diffTime;
+	
+	public int getDiffTime() {
+		return diffTime;
+	}
+
+	public void setDiffTime(int diffTime) {
+		this.diffTime = diffTime;
+	}
 
 	public int getoId() {
 		return oId;
@@ -71,6 +82,14 @@ public class OrderVO {
 		this.oAddress = oAddress;
 	}
 
+	public String getoEmail() {
+		return oEmail;
+	}
+
+	public void setoEmail(String oEmail) {
+		this.oEmail = oEmail;
+	}
+
 	public String getoMessage() {
 		return oMessage;
 	}
@@ -87,21 +106,12 @@ public class OrderVO {
 		this.oPrice = oPrice;
 	}
 
-	public int getoPayment() {
+	public String getoPayment() {
 		return oPayment;
 	}
 
-	public void setoPayment(int oPayment) {
+	public void setoPayment(String oPayment) {
 		this.oPayment = oPayment;
-	}
-
-	
-	public String getoEmail() {
-		return oEmail;
-	}
-
-	public void setoEmail(String oEmail) {
-		this.oEmail = oEmail;
 	}
 
 	public String getoDelivery() {
@@ -119,13 +129,21 @@ public class OrderVO {
 	public void setoStatus(String oStatus) {
 		this.oStatus = oStatus;
 	}
+	
+	public String getoChange() {
+		return oChange;
+	}
+
+	public void setoChange(String oChange) {
+		this.oChange = oChange;
+	}
 
 	@Override
 	public String toString() {
 		return "OrderVO [oId=" + oId + ", mId=" + mId + ", oRdate=" + oRdate + ", oName=" + oName + ", oPhone=" + oPhone
 				+ ", oPost=" + oPost + ", oAddress=" + oAddress + ", oEmail=" + oEmail + ", oMessage=" + oMessage
 				+ ", oPrice=" + oPrice + ", oPayment=" + oPayment + ", oDelivery=" + oDelivery + ", oStatus=" + oStatus
-				+ "]";
+				+ ", oChange=" + oChange + "]";
 	}
 
 	
