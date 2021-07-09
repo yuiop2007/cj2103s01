@@ -38,6 +38,10 @@
 		select count(*) from member where mLevel > 0;
 	</select>
 
+	<select id="totSellCnt" resultType="int">
+		select sum(mBuy) from member where mLevel > 0;
+	</select>
+
 	<select id="dropMemberCnt" resultType="int">
 		select count(*) from member where mDrop = 'YES';
 	</select>
@@ -68,6 +72,10 @@
 	
 	<update id="updateMemberBuy">
 		update member set mBuy = mBuy + 1 where mId = #{mId};
+	</update>
+	
+	<update id="updateMemberPoint">
+		update member set mPoint = mPoint + #{point} where mId = #{mId};
 	</update>
 	
 	<update id="setUpdatePoint">

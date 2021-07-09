@@ -150,5 +150,61 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.getOrderDetailListMid(mId);
 	}
 
+	@Override
+	public List<OrderVO> getOrderListStatus(String mId, int time, String status) {
+		return orderDAO.getOrderListStatus(mId, time, status);
+	}
+
+	@Override
+	public List<OrderVO> getOrderListChange(String mId, int time, String change) {
+		return orderDAO.getOrderListChange(mId, time, change);
+	}
+
+	@Override
+	public List<OrderVO> getOrderAllList(int startIndexNo, int pageSize) {
+		return orderDAO.getOrderAllList(startIndexNo, pageSize);
+	}
+
+	@Override
+	public List<OrderVO> getAdminOlistStatus(String status,  int startIndexNo, int pageSize) {
+		return orderDAO.getAdminOlistStatus(status, startIndexNo, pageSize);
+	}
+
+	@Override
+	public List<OrderVO> getAdminOlistChange(String change,  int startIndexNo, int pageSize) {
+		return orderDAO.getAdminOlistChagne(change, startIndexNo, pageSize);
+	}
+
+	@Override
+	public List<OrderVO> getOrderSCList(String status, String change,  int startIndexNo, int pageSize) {
+		return orderDAO.getOrderSCList(status, change, startIndexNo, pageSize);
+	}
+
+	@Override
+	public List<OrderDetailVO> getOrderDetailList() {
+		return orderDAO.getOrderDetailList();
+	}
+
+	@Override
+	public void statusUpdate(String oId, String oStatus) {
+		orderDAO.statusUpdate(oId, oStatus);
+	}
+
+	@Override
+	public List<OrderVO> getMemberListMid(String mId, int startIndexNo, int pageSize) {
+		return orderDAO.getMemberListMid(mId, startIndexNo, pageSize);
+	}
+
+	@Override
+	public OrderVO getOrderContent(String mId, int oId) {
+		return orderDAO.getOrderContent(mId, oId);
+	}
+
+	@Override
+	public List<OrderDetailVO> getOrderDetailListOid(String mId, int oId) {
+		return orderDAO.getOrderDetailListOid(mId, oId);
+	}
+
+
 
 }

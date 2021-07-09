@@ -32,5 +32,7 @@ show databases;
 
 select count(*) from member where mLevel > 0;
 select count(*) from member where mDrop = 'YES';
+select sum(mBuy) from member where mLevel > 0;
+
 
 select count(*) from member where mId like concat('%', 'y' ,'%') and NOT mLevel IN ('0');

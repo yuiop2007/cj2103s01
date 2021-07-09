@@ -44,7 +44,18 @@
 	  </interceptor>
 	  <interceptor>
 	    <mapping path="/board/**"/>
-	    	<exclude-mapping path="/board/proShow"/>
+	    	<exclude-mapping path="/board/event"/>
+	    	<exclude-mapping path="/board/eSearch"/>
+	    	<exclude-mapping path="/board/notice"/>
+	    	<exclude-mapping path="/board/nSearch"/>
+	    	<exclude-mapping path="/board/qna"/>
+	    	<exclude-mapping path="/board/qSearch"/>
+	    	<exclude-mapping path="/board/review"/>
+	    	<exclude-mapping path="/board/rSearch"/>
+	    	<exclude-mapping path="/board/eContent"/>
+	    	<exclude-mapping path="/board/nContent"/>
+	    	<exclude-mapping path="/board/qContent"/>
+	    	<exclude-mapping path="/board/rContent"/>
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
 	  <interceptor>

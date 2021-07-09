@@ -81,32 +81,32 @@
 
 			<!-- Full-width images with number and caption text -->
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner1.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner2.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner3.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner4.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner5.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 
 			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner11101.jpg" style="width: 100%; height: 500px;">
+				<img src="${ctp}/resources/slideshow/banner6.jpg" style="width: 100%; height: 500px;">
 				<div class="text">MINIM</div>
 			</div>
 

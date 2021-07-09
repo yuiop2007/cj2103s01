@@ -42,5 +42,9 @@ public interface MemberService {
 	public void updateMemberBuy(String mId);
 
 	public void setUpdatePoint(String mId, int mile);
+
+	public int totSellCnt();
+
+	public void updateMemberPoint(String mId, int point);
 	
 }

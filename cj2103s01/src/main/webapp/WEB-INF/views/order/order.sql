@@ -43,6 +43,8 @@ select * from orders where mId = 'yuiop2007';
 
 select count(*) from orders where oStatus = '입금전' and mId = 'yuiop2007';
 
+select * from orders_detail group by oId;
 
+select count(*) from orders where oStatus = 'notPay';
 
 select * from orders_detail where mId = 'yuiop2007' group by oId;

@@ -60,4 +60,26 @@ public interface OrderService {
 
 	public List<OrderDetailVO> getOrderDetailListMid(String mId);
 
+	public List<OrderVO> getOrderListStatus(String mId, int time, String status);
+
+	public List<OrderVO> getOrderListChange(String mId, int time, String change);
+
+	public List<OrderVO> getOrderAllList(int startIndexNo, int pageSize);
+
+	public List<OrderVO> getAdminOlistStatus(String status, int startIndexNo, int pageSize);
+
+	public List<OrderVO> getAdminOlistChange(String change, int startIndexNo, int pageSize);
+
+	public List<OrderVO> getOrderSCList(String status, String change, int startIndexNo, int pageSize);
+
+	public List<OrderDetailVO> getOrderDetailList();
+
+	public void statusUpdate(String oId, String oStatus);
+
+	public List<OrderVO> getMemberListMid(String mId, int startIndexNo, int pageSize);
+
+	public OrderVO getOrderContent(String mId, int oId);
+
+	public List<OrderDetailVO> getOrderDetailListOid(String mId, int oId);
+
 }

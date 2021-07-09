@@ -130,7 +130,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	</div>
 	<div class="container">
 		<h6>회원 목록</h6>
-		</br> </br> </br> </br>
+		<br/><br/><br/><br/>
 		<div style="padding: 10px 0px;">
 			<form name="adminForm">
 				<table class="table table-borderless" style="width: 100%; margin: 0px; padding: 0px;">

@@ -50,5 +50,8 @@ public interface MemberDAO {
 
 	public void setUpdatePoint(@Param("mId") String mId, @Param("mile") int mile);
 
+	public int totSellCnt();
+
+	public void updateMemberPoint(@Param("mId") String mId, @Param("point") int point);
 
 }

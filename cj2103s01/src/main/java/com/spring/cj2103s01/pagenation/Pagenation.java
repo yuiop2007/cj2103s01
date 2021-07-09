@@ -8,6 +8,7 @@ import com.spring.cj2103s01.dao.CouponDAO;
 import com.spring.cj2103s01.dao.EventDAO;
 import com.spring.cj2103s01.dao.MemberDAO;
 import com.spring.cj2103s01.dao.NoticeDAO;
+import com.spring.cj2103s01.dao.OrderDAO;
 import com.spring.cj2103s01.dao.ProductDAO;
 import com.spring.cj2103s01.dao.QnaDAO;
 import com.spring.cj2103s01.dao.ReviewDAO;
@@ -41,6 +42,9 @@ public class Pagenation {
 	
 	@Autowired
 	CartDAO cartDAO;
+	
+	@Autowired
+	OrderDAO orderDAO;
 
 	public PagenationVO pagenation(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 5;
@@ -121,6 +125,25 @@ public class Pagenation {
 		else if (partName.equals("cart")) {
 			if (!search.equals("") && searchString.equals("")) {
 				totRecCnt = cartDAO.totRecCntMid(search);
+			}
+		}
+		else if (partName.equals("oaList")) {
+			if (searchString.equals("")) {
+				totRecCnt = orderDAO.totOrderCnt();
+			}
+			else if(!search.equals("") && searchString.equals("")) {
+				totRecCnt = orderDAO.totRecChange(search);
+			}
+			else if(search.equals("") && !searchString.equals("")){
+				totRecCnt = orderDAO.totRecCntStatus(searchString);
+			}
+			else{
+				if(search.equals("mId") && !searchString.equals("")) {
+					totRecCnt = orderDAO.totRecCntMid(searchString);
+				}
+				else {
+					totRecCnt = orderDAO.totSearchRecCnt(search, searchString);
+				}
 			}
 		}
 

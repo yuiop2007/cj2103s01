@@ -32,42 +32,44 @@
 		    		<ul class = "order">
 						<li>
 							<strong>입금전</strong>
-							<a href="${ctp}/order/notPayList" class="count"><span>${notPayCnt}</span></a>
+							<a href="${ctp}/admin/oaList?status=입금전" class="count"><span>${notPayCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송준비중</strong>
-							<a href="${ctp}/order/readyList" class="count"><span>${delReadyCnt}</span></a>
+							<a href="${ctp}/admin/oaList?status=배송준비중" class="count"><span>${delReadyCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송중</strong>
-							<a href="${ctp}/order/ingList" class="count"><span>${delingCnt}</span></a>
+							<a href="${ctp}/admin/oaList?status=배송중" class="count"><span>${delingCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송완료</strong>
-							<a href="${ctp}/order/endList" class="count"><span>${delEndCnt}</span></a>
+							<a href="${ctp}/admin/oaList?status=배송완료" class="count"><span>${delEndCnt }</span></a>
 						</li>
 					</ul>
 					<ul class ="cs">
 						<li>
 							<span class="icoDot"></span>
 							<strong>취소</strong>
-							<a href="${ctp}/order/cancelList" class="count"><span>${cancelCnt}</span></a>
+							<a href="${ctp}/admin/oaList?change=취소" class="count"><span>${cancelCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>교환</strong>
-							<a href="${ctp}/order/changeList" class="count"><span>${changeCnt}</span></a>
+							<a href="${ctp}/admin/oaList?change=교환" class="count"><span>${changeCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>반품</strong>
-							<a href="${ctp}/order/returnCnt" class="count"><span>${returnCnt}</span></a>
+							<a href="${ctp}/admin/oaList?change=반품" class="count"><span>${returnCnt }</span></a>
 						</li>
 					</ul>
 		    	</div>
 		    </div>
 	  	</div>
-	  	
+	  	<div class=boardbtn style="margin-left: 30px;">
+			<a href="${ctp}/admin/oaList" style="color: #fff; background-color: black;" >주문전체조회</a>
+		</div>
 		<div class="row bankbook">
 		    <div class="col">
 				<ul>
@@ -85,11 +87,11 @@
 					</li>
 					<li class="etc">
 						<span class="title">총 판매량</span>
-						<span class="data">0 회</span>
+						<span class="data">${totSell} 회</span>
 					</li>
 					<li class="etc">
 						<span class="title">총 매출액</span>
-						<span class="data">0<span>개</span></span>
+						<span class="data">0<span>원</span></span>
 						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
 				

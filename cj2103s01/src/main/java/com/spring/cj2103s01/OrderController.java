@@ -198,6 +198,11 @@ public class OrderController {
 		String message = request.getParameter("oMessage") == null ? "" : request.getParameter("oMessage");
 		vo.setoMessage(message);
 		
+		String point = request.getParameter("point");
+		if(point==null || point.trim().equals("")) {
+			point = "0";
+		}
+		
 		String mile = request.getParameter("mile");
 		if(mile==null || mile.trim().equals("")) {
 			mile = "0";
@@ -226,9 +231,10 @@ public class OrderController {
 		//orderVO에 추가
 		orderService.setInputOrder(vo);
 		
-		//회원 구매횟수 올리기(카드결제면올리고) 적립은 배송시작시
+		//회원 구매횟수 올리기(카드결제면올리고) + 적립시키기
 		if(vo.getoStatus().equals("배송준비중")) {
 			memberService.updateMemberBuy(vo.getmId());
+			memberService.updateMemberPoint(vo.getmId(), Integer.parseInt(point));
 		}
 		//포인트 사용시 깎고 사용포인트에 추가
 		if(Integer.parseInt(mile)>0) {
@@ -250,33 +256,78 @@ public class OrderController {
 	@RequestMapping(value = "/oList", method = RequestMethod.GET)
 	public String oListGet(HttpSession session, Model model,
 			@RequestParam(name = "time", defaultValue = "30", required = false) int time,
-			@RequestParam(name = "time", defaultValue = "All", required = false) String status) {
+			@RequestParam(name = "status", defaultValue = "All", required = false) String status,
+			@RequestParam(name = "change", defaultValue = "All", required = false) String change) {
 		String mId = (String) session.getAttribute("smid");
 		List<OrderVO> ovos = null;
 		
-		if(status.equals("입금전")) {
-//			ovos = orderService.getOrderListStatus(mId, time, status);
+		if(status.equals("notPay")) {
+			model.addAttribute("status", status);
+			status = "입금전";
+			ovos = orderService.getOrderListStatus(mId, time, status);
 		}
-		else if(status.equals("배송준비중")) {
-			
+		else if(status.equals("readyDel")) {
+			model.addAttribute("status", status);
+			status = "배송준비중";
+			ovos = orderService.getOrderListStatus(mId, time, status);
 		}
-		else if(status.equals("배송중")) {
-			
+		else if(status.equals("ingDel")) {
+			model.addAttribute("status", status);
+			status = "배송중";
+			ovos = orderService.getOrderListStatus(mId, time, status);
 		}
-		else if(status.equals("배송완료")) {
-			
+		else if(status.equals("endDel")) {
+			model.addAttribute("status", status);
+			status = "배송완료";
+			ovos = orderService.getOrderListStatus(mId, time, status);
 		}
 		else {
-			ovos = orderService.getOrderListMid(mId, time);
+			if(change.equals("cancel")) {
+				model.addAttribute("change", change);
+				change = "취소";
+				ovos = orderService.getOrderListChange(mId, time, change);
+			}
+			else if(change.equals("change")) {
+				model.addAttribute("change", change);
+				change = "교환";
+				ovos = orderService.getOrderListChange(mId, time, change);
+			}
+			else if(change.equals("return")) {
+				model.addAttribute("change", change);
+				change = "반품";
+				ovos = orderService.getOrderListChange(mId, time, change);
+			}
+			else {
+				ovos = orderService.getOrderListMid(mId, time);
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+			}
 		}
 		List<OrderDetailVO> odvos = orderService.getOrderDetailListMid(mId);
 		List<ProductVO> pvos = productService.getProductAllList();
 		
+		
+		model.addAttribute("time", time);
 		model.addAttribute("ovos", ovos);
 		model.addAttribute("odvos", odvos);
 		model.addAttribute("pvos", pvos);
 
 		return "order/oList";
+	}
+	
+	@RequestMapping(value = "/oContent", method = RequestMethod.GET)
+	public String oContentGet(int oId, HttpSession session, Model model) {
+		String mId = (String) session.getAttribute("smid");
+		
+		OrderVO vo = orderService.getOrderContent(mId, oId);
+		List<OrderDetailVO> odvos = orderService.getOrderDetailListOid(mId, oId);
+		List<ProductVO> pvos = productService.getProductAllList();
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("pvos", pvos);
+		model.addAttribute("odvos", odvos);
+		
+		return "order/oContent";
 	}
 	
 }

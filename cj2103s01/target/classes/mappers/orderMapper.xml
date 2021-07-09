@@ -70,12 +70,76 @@
 	    select count(*) from orders where oChange = '반품' and mId = #{mId};
 	</select>
 	
+	<select id="totOrderCnt" resultType="int">
+	    select count(*) from orders;
+	</select>
+	
+	<select id="totRecCntMid" resultType="int">
+	    select count(*) from orders where mId = #{searchString};
+	</select>
+	
+	<select id="totRecCntStatus" resultType="int">
+	    select count(*) from orders where oStatus = #{searchString};
+	</select>
+	
+	<select id="totRecChange" resultType="int">
+	    select count(*) from orders where oChange = #{search};
+	</select>
+	
+	<select id="totSearchRecCnt" resultType="int">
+	    select count(*) from orders where oChange = #{search} and oStatus = #{searchString};
+	</select>
+	
+	<select id="getOrderAllList" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb order by bb.oId desc limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<select id="getMemberListMid" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.mid = #{mId} order by bb.oId desc limit #{startIndexNo}, #{pageSize};
+	</select>
+
 	<select id="getOrderListMid" resultType="com.spring.cj2103s01.vo.OrderVO">
 		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.mid = #{mId} and bb.oRdate > date_add(now(), interval -#{time} day) order by bb.oId desc;
+	</select>
+	
+	<select id="getOrderListStatus" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.mid = #{mId} and bb.oStatus = #{status} and bb.oRdate > date_add(now(), interval -#{time} day) order by bb.oId desc;
+	</select>
+	
+	<select id="getAdminOlistStatus" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oStatus = #{status} order by bb.oId desc limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<select id="getOrderListChange" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.mid = #{mId} and bb.oChange = #{change} and bb.oRdate > date_add(now(), interval -#{time} day) order by bb.oId desc;
+	</select>
+	
+	<select id="getAdminOlistChagne" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} order by bb.oId desc limit #{startIndexNo}, #{pageSize};
 	</select>
 	
 	<select id="getOrderDetailListMid" resultType="com.spring.cj2103s01.vo.OrderDetailVO">
 		select * from orders_detail where mId = #{mId} group by oId;
 	</select>
+	
+	<select id="getOrderDetailListOid" resultType="com.spring.cj2103s01.vo.OrderDetailVO">
+		select * from orders_detail where mId = #{mId} and oId = #{oId};
+	</select>
+	
+	<select id="getOrderDetailList" resultType="com.spring.cj2103s01.vo.OrderDetailVO">
+		select * from orders_detail group by oId;
+	</select>
+	
+	<select id="getOrderContent" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select * from orders where mId = #{mId} and oId = #{oId};
+	</select>
+	
+	<select id="getOrderSCList" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} and bb.oStatus = #{status} order by bb.oId desc  limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<update id="statusUpdate">
+	    update orders set oStatus=#{oStatus} where oId=#{oId};
+	</update>
 	
 </mapper>

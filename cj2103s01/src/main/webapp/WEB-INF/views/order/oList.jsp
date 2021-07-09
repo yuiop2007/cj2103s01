@@ -34,16 +34,16 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
            		<h3 class="title">내역조회</h3>
 	            <div class="description" style="display: flex;">
 	                <div class=boardbtn>
-						<a href="${ctp}/order/oList?time=7">1주일</a>
+						<a href="${ctp}/order/oList?time=7&status=${status}&change=${change}">1주일</a>
 					</div>
 	                <div class=boardbtn>
-						<a href="${ctp}/order/oList?time=30">1개월</a>
+						<a href="${ctp}/order/oList?time=30&status=${status}&change=${change}">1개월</a>
 					</div>
 	                <div class=boardbtn>
-						<a href="${ctp}/order/oList?time=90">3개월</a>
+						<a href="${ctp}/order/oList?time=90&status=${status}&change=${change}">3개월</a>
 					</div>
 	                <div class=boardbtn>
-						<a href="${ctp}/order/oList?time=180">6개월</a>
+						<a href="${ctp}/order/oList?time=180&status=${status}&change=${change}">6개월</a>
 					</div>
 				</div>
 			</div>
@@ -57,8 +57,8 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 						<th scope="col" style="width: 10%;"></th>
 						<th scope="col" style="width: 35%; text-align: left;">대표상품명/옵션</th>
 						<th scope="col" style="width: 10%;">상품구매금액</th>
-						<th scope="col" style="width: 10%;">주문처리상태</th>
-						<th scope="col" style="width: 10%;">취소/교환/반품</th>
+						<th scope="col" style="width: 10%;">배송상태</th>
+						<th scope="col" style="width: 10%;">주문상태</th>
 						<th scope="col" style="width: 10%;">주문일자</th>
 					</tr>
 				</thead>

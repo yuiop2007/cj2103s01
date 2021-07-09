@@ -103,6 +103,16 @@ public class MemberServiceImpl implements MemberService {
 	public void setUpdatePoint(String mId, int mile) {
 		memberDAO.setUpdatePoint(mId, mile);
 	}
+
+	@Override
+	public int totSellCnt() {
+		return memberDAO.totSellCnt();
+	}
+
+	@Override
+	public void updateMemberPoint(String mId, int point) {
+		memberDAO.updateMemberPoint(mId, point);
+	}
 	
 	
 }

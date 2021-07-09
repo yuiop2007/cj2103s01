@@ -20,6 +20,9 @@ import com.spring.cj2103s01.service.OrderService;
 import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.vo.CouponVO;
 import com.spring.cj2103s01.vo.MemberVO;
+import com.spring.cj2103s01.vo.OrderDetailVO;
+import com.spring.cj2103s01.vo.OrderVO;
+import com.spring.cj2103s01.vo.ProductVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -55,6 +58,7 @@ public class AdminController {
 		model.addAttribute("cancelCnt", orderService.cancelCnt()); // 취소 갯수
 		model.addAttribute("changeCnt", orderService.changeCnt()); // 교환 갯수
 		model.addAttribute("returnCnt", orderService.returnCnt()); // 반품 갯수
+		model.addAttribute("totSell", memberService.totSellCnt()); // 총 판매 갯수
 
 		return "admin/admin";
 	}
@@ -216,4 +220,145 @@ public class AdminController {
 		return "redirect:/msg/" + msgFlag;
 	}
 
+	@RequestMapping(value = "/oaList", method = RequestMethod.GET)
+	public String oaListGet(HttpSession session, Model model,
+			@RequestParam(name = "status", defaultValue = "All", required = false) String status,
+			@RequestParam(name = "change", defaultValue = "All", required = false) String change,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "30", required = false) int pageSize) {
+		if (pag < 1) {
+			pag = 1;
+		}
+		
+		List<OrderVO> ovos = null;
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "oaList", "", "");
+		
+		if(change.equals("All") && !status.equals("All")) {
+			pageVO = pagenation.pagenation(pag, pageSize, "oaList", "", status);
+			if(status.equals("입금전")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistStatus(status, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(status.equals("배송준비중")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistStatus(status, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(status.equals("배송중")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistStatus(status, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(status.equals("배송완료")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistStatus(status, pageVO.getStartIndexNo(), pageSize);
+			}
+			else {
+				ovos = orderService.getOrderAllList(pageVO.getStartIndexNo(), pageSize);
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+			}
+		}
+		else if(!change.equals("All") && status.equals("All")) {
+			pageVO = pagenation.pagenation(pag, pageSize, "oaList", change, "");
+			if(change.equals("취소")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistChange(change, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(change.equals("교환")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistChange(change, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(change.equals("반품")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistChange(change, pageVO.getStartIndexNo(), pageSize);
+			}
+			else if(change.equals("구매확정")) {
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+				ovos = orderService.getAdminOlistChange(change, pageVO.getStartIndexNo(), pageSize);
+			}
+			else {
+				ovos = orderService.getOrderAllList(pageVO.getStartIndexNo(), pageSize);
+				model.addAttribute("status", status);
+				model.addAttribute("change", change);
+			}
+		}
+		else if(!change.equals("All") && !status.equals("All")) {
+			pageVO = pagenation.pagenation(pag, pageSize, "oaList", change, status);
+			ovos = orderService.getOrderSCList(status, change, pageVO.getStartIndexNo(), pageSize);
+			model.addAttribute("status", status);
+			model.addAttribute("change", change);
+		}
+		else {
+			ovos = orderService.getOrderAllList(pageVO.getStartIndexNo(), pageSize);
+			model.addAttribute("status", status);
+			model.addAttribute("change", change);
+		}
+			
+		
+		List<OrderDetailVO> odvos = orderService.getOrderDetailList();
+		List<ProductVO> pvos = productService.getProductAllList();
+		
+		model.addAttribute("ovos", ovos);
+		model.addAttribute("odvos", odvos);
+		model.addAttribute("pvos", pvos);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "admin/oaList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/oStatusCheck", method = RequestMethod.GET)
+	public String oStatusCheckGet(String status, String delItems) {
+		String[] oId = delItems.split("/");
+		String[] oStatus = status.split("/");
+		if(oId.length == oStatus.length) {
+			for (int i=0; i<oId.length; i++) {
+				orderService.statusUpdate(oId[i], oStatus[i]);
+			}
+		}else {
+			return "false";
+		}
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "/oSearch", method = RequestMethod.GET)
+	public String oSearchGet(Model model, String mId,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "30", required = false) int pageSize) {
+		
+		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "oaList", "mId", mId);
+		
+		List<OrderVO> ovos = orderService.getMemberListMid(mId, pageVO.getStartIndexNo(), pageSize);
+		List<OrderDetailVO> odvos = orderService.getOrderDetailListMid(mId);
+		List<ProductVO> pvos = productService.getProductAllList();
+		
+		model.addAttribute("ovos", ovos);
+		model.addAttribute("odvos", odvos);
+		model.addAttribute("pvos", pvos);
+		model.addAttribute("pageVO", pageVO);
+
+		return "admin/oaList";
+	}
+	
+	@RequestMapping(value = "/oInfo", method = RequestMethod.GET)
+	public String oInfoGet(String mId, int oId, HttpSession session, Model model) {
+		
+		OrderVO vo = orderService.getOrderContent(mId, oId);
+		List<OrderDetailVO> odvos = orderService.getOrderDetailListOid(mId, oId);
+		List<ProductVO> pvos = productService.getProductAllList();
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("pvos", pvos);
+		model.addAttribute("odvos", odvos);
+		
+		return "admin/oInfo";
+	}
 }

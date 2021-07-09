@@ -46,32 +46,32 @@
 						</li>
 						<li>
 							<strong>배송준비중</strong>
-							<a href="#" class="count"><span>${delReadyCnt }</span></a>
+							<a href="${ctp}/order/oList?status=readyDel" class="count"><span>${delReadyCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송중</strong>
-							<a href="#" class="count"><span>${delingCnt }</span></a>
+							<a href="${ctp}/order/oList?status=ingDel" class="count"><span>${delingCnt }</span></a>
 						</li>
 						<li>
 							<strong>배송완료</strong>
-							<a href="#" class="count"><span>${delEndCnt }</span></a>
+							<a href="${ctp}/order/oList?status=endDel" class="count"><span>${delEndCnt }</span></a>
 						</li>
 					</ul>
 					<ul class ="cs">
 						<li>
 							<span class="icoDot"></span>
 							<strong>취소</strong>
-							<a href="#" class="count"><span>${cancelCnt }</span></a>
+							<a href="${ctp}/order/oList?change=cancel" class="count"><span>${cancelCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>교환</strong>
-							<a href="#" class="count"><span>${changeCnt }</span></a>
+							<a href="${ctp}/order/oList?change=change" class="count"><span>${changeCnt }</span></a>
 						</li>
 						<li>
 							<span class="icoDot"></span>
 							<strong>반품</strong>
-							<a href="#" class="count"><span>${returnCnt }</span></a>
+							<a href="${ctp}/order/oList?change=return" class="count"><span>${returnCnt }</span></a>
 						</li>
 					</ul>
 		    	</div>
@@ -84,7 +84,6 @@
 					<li class=" ">
 						<span class="title">가용 적립금</span>
 						<span class="data use">${vo.mPoint}원</span>
-						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
 					<li>
 						<span class="title">총 적립금</span>
