@@ -74,6 +74,10 @@
 		update member set mBuy = mBuy + 1 where mId = #{mId};
 	</update>
 	
+	<update id="updateMemberBuyDown">
+		update member set mBuy = mBuy - 1 where mId = #{mId};
+	</update>
+	
 	<update id="updateMemberPoint">
 		update member set mPoint = mPoint + #{point} where mId = #{mId};
 	</update>

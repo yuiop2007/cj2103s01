@@ -80,4 +80,20 @@ public interface OrderDAO {
 
 	List<OrderDetailVO> getOrderDetailListOid(@Param("mId") String mId,@Param("oId") int oId);
 
+	void setBuyUpdate(@Param("oId") int oId);
+
+	void setReturnUpdate(@Param("oId") int oId);
+
+	void setChangeUpdate(@Param("oId") int oId);
+
+	void setCancelUpdate(@Param("oId") int oId);
+
+	void setReturnEndUpdate(@Param("oId") int oId);
+
+	void setChangeEndUpdate(@Param("oId") int oId);
+
+	void setCancelEndUpdate(@Param("oId") int oId);
+
+	OrderVO getOrderInfo(@Param("oId") int oId);
+
 }

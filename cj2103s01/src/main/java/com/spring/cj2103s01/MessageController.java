@@ -143,6 +143,10 @@ public class MessageController {
 			model.addAttribute("msg", "선택한 회원(들)을 삭제처리 하였습니다.");
 			model.addAttribute("url", "admin/mList");
 		}
+		else if(msgFlag.equals("StockNo")) {
+			model.addAttribute("msg", "재고가 부족합니다.");
+			model.addAttribute("url", "order/cartList");
+		}
 	
 		
 		

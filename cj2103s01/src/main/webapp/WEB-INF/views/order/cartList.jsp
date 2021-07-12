@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttribute("slevel");
 %>
@@ -110,17 +111,17 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 									<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${pvo.pName}/${vo.pOption}</a>
 								</td>
 								<td class="td1" style="width: 15%; padding-top: 70px;">${vo.pCnt}</td>
-								<td class="td1" style="width: 10%; padding-top: 70px;">${pvo.pSale}</td>
+								<td class="td1" style="width: 10%; padding-top: 70px;"><fmt:formatNumber value="${pvo.pSale}" pattern="#,###" /></td>
 								<c:set var="pSale" value="${pSale + pvo.pSale }"/>
 								<%-- <td class="td1" style="width: 5%; padding-top: 70px;">${vo.pPrice}</td> --%>
 								<c:choose>
 									<c:when test="${pvo.pSale>0}">
 										<c:set var="salePrice" value="${vo.pPrice-(pvo.pSale*vo.pCnt)}" />
-										<td class="td1" style="width: 10%; padding-top: 70px;"><span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span></td>
+										<td class="td1" style="width: 10%; padding-top: 70px;"><span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
 									</c:when>
 									<c:otherwise>
 										<c:set var="salePrice" value="${vo.pPrice}" />
-										<td class="td1" style="width: 10%; padding-top: 70px;"><span style="font-size:11px;color:#000000;">${salePrice}원</span></td>
+										<td class="td1" style="width: 10%; padding-top: 70px;"><span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
 									</c:otherwise>
 								</c:choose>
 								<c:set var="totPrice" value="${totPrice + salePrice}"></c:set>
@@ -161,16 +162,16 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
                 </thead>
                 <tbody>
 	                <tr> 
-						<td class="price"><div class="box"><strong>${totPrice + pSale}</strong>원 <span class="tail displaynone"></span></div></td>
+						<td class="price"><div class="box"><strong><fmt:formatNumber value="${totPrice + pSale}" pattern="#,###" /></strong>원 <span class="tail displaynone"></span></div></td>
 						<td class="option"><div class="box"><strong>+</strong>
 						<strong>
 						<c:set var="Delivery" value="3000"/>
 						<c:if test="${totPrice>60000}"><c:set var="Delivery" value="0"/></c:if>
-						${Delivery}
+						<fmt:formatNumber value="${Delivery}" pattern="#,###" />
 						</strong>원 <span class="tail displaynone"></span></div></td>
-						<td class="discount displaynone"><strong>-</strong><strong>${pSale}</strong>원</td>
+						<td class="discount displaynone"><strong>-</strong><strong><fmt:formatNumber value="${pSale}" pattern="#,###" /></strong>원</td>
 						<c:set var="orderPrice" value="${totPrice + Delivery}"/>
-						<td class="total"><div class="box"><strong>=</strong><strong>${orderPrice}</strong>원 <span class="tail displaynone"></span></div></td>
+						<td class="total"><div class="box"><strong>=</strong><strong><fmt:formatNumber value="${orderPrice}" pattern="#,###" /></strong>원 <span class="tail displaynone"></span></div></td>
 	                </tr>
                 </tbody>
 			</table>
@@ -184,6 +185,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 		            <li class="item3">- 선택하신 상품의 수량을 변경하시려면 제품을 누르신뒤 원하시는 옵션을 선택후 다시 등록하시면 됩니다.</li>
 		            <li class="item4">- [쇼핑계속하기] 버튼을 누르시면 쇼핑을 계속 하실 수 있습니다.</li>
 		            <li class="item5">- 장바구니와 관심상품을 이용하여 원하시는 상품만 주문하거나 관심상품으로 등록하실 수 있습니다.</li>
+		            <li class="item6">- 6만원 이상 구매시 배송비 무료입니다.</li>
 		        </ul>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
   int level = session.getAttribute("slevel")==null ? 99 : (int) session.getAttribute("slevel");
 %>
@@ -91,7 +92,7 @@
 					</li>
 					<li class="etc">
 						<span class="title">총 매출액</span>
-						<span class="data">0<span>원</span></span>
+						<span class="data"><fmt:formatNumber value="0" pattern="#,###" /><span>원</span></span>
 						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
 				

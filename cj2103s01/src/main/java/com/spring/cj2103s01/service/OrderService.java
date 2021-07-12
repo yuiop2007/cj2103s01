@@ -82,4 +82,20 @@ public interface OrderService {
 
 	public List<OrderDetailVO> getOrderDetailListOid(String mId, int oId);
 
+	public void setBuyUpdate(int oId);
+
+	public void setReturnUpdate(int oId);
+
+	public void setChangeUpdate(int oId);
+
+	public void setCancelUpdate(int oId);
+
+	public void setReturnEndUpdate(int oId);
+
+	public void setChangeEndUpdate(int oId);
+
+	public void setCancelEndUpdate(int oId);
+
+	public OrderVO getOrderInfo(int oId);
+
 }

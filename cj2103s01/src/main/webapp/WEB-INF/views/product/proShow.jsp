@@ -4,6 +4,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -39,29 +42,29 @@
 									<c:choose>
 										<c:when test="${vo.pSale>0}">
 											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
-											<span style="font-size:11px;color:#000000; text-decoration: line-through;">${vo.pPrice}원</span>
-											<span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span>
+											<span style="font-size:11px;color:#000000; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>
+											<span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice }" pattern="#,###" />원</span>
 										</c:when>
 										<c:otherwise>
-											<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>	
+											<span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>	
 										</c:otherwise>
 									</c:choose>
 								</li>
 								<li>
 									<div class="proColor">
-											<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000" color_no displaygroup="1"></span></c:if>
-										 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500" color_no displaygroup="1"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000"></span></c:if>
+										 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00"></span></c:if>
+											<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500"></span></c:if>
 									</div>
 								</li>
 							</ul>
@@ -69,47 +72,96 @@
 					</li>
 					</c:if>
 					<c:if test="${cate eq 'ALL'}">
-					<li class="item" style="width: 33%;">
-						<div class="box">
-							<p class="proImg">
-								<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}"><img class="pImg" src="${ctp}/resources/pMainImages/${vo.pImage}"/></a>
-							<p> 
-							<p class="proName">
-								<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.pName}</a>
-							<p>
-							<ul class="listitem">
-								<li>
-									<c:choose>
-										<c:when test="${vo.pSale>0}">
-											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
-											<span style="font-size:11px;color:#000000; text-decoration: line-through;">${vo.pPrice}원</span>
-											<span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span>
-										</c:when>
-										<c:otherwise>
-											<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>	
-										</c:otherwise>
-									</c:choose>
-								</li>
-								<li>
-									<div class="proColor">
-											<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000" color_no displaygroup="1"></span></c:if>
-										 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00" color_no displaygroup="1"></span></c:if>
-											<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500" color_no displaygroup="1"></span></c:if>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</li>
+						<li class="item" style="width: 33%;">
+							<div class="box">
+								<p class="proImg">
+									<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}"><img class="pImg" src="${ctp}/resources/pMainImages/${vo.pImage}"/></a>
+								<p> 
+								<p class="proName">
+									<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.pName}</a>
+								<p>
+								<ul class="listitem">
+									<li>
+										<c:choose>
+											<c:when test="${vo.pSale>0}">
+												<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+												<span style="font-size:11px;color:#000000; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>
+												<span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice }" pattern="#,###" /></span>
+											</c:when>
+											<c:otherwise>
+												<span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>	
+											</c:otherwise>
+										</c:choose>
+									</li>
+									<li>
+										<div class="proColor">
+												<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000"></span></c:if>
+											 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500"></span></c:if>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</c:if>
+					<c:if test="${cate eq 'NEW'}">
+					<fmt:parseDate value="${today}" var="strPlanDate" pattern="yyyy-MM-dd"/>
+					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+					<fmt:parseDate value="${vo.pRdate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
+					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
+						<c:if test="${(strDate - endDate) < 30}">
+						<li class="item" style="width: 33%;">
+							<div class="box">
+								<p class="proImg">
+									<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}"><img class="pImg" src="${ctp}/resources/pMainImages/${vo.pImage}"/></a>
+								<p> 
+								<p class="proName">
+									<a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.pName}</a>
+								<p>
+								<ul class="listitem">
+									<li>
+										<c:choose>
+											<c:when test="${vo.pSale>0}">
+												<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+												<span style="font-size:11px;color:#000000; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>
+												<span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span>
+											</c:when>
+											<c:otherwise>
+												<span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>	
+											</c:otherwise>
+										</c:choose>
+									</li>
+									<li>
+										<div class="proColor">
+												<c:if test="${fn:contains(vo.pColor,'블랙')}"><span class="chips" style="background-color:#000000"></span></c:if>
+											 	<c:if test="${fn:contains(vo.pColor,'화이트')}"><span class="chips" style="background-color:#FFFFFF"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'차콜')}"><span class="chips" style="background-color:#555555"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그레이')}"><span class="chips" style="background-color:#808080"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'아이보리')}"><span class="chips" style="background-color:#e8d5ac"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'베이지')}"><span class="chips" style="background-color:#b6a070"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'블루')}"><span class="chips" style="background-color:#0000ff"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'스카이블루')}"><span class="chips" style="background-color:#87ceeb"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'핑크')}"><span class="chips" style="background-color:#ffc0cb"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'그린')}"><span class="chips" style="background-color:#008000"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'레드')}"><span class="chips" style="background-color:#ff0000"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'옐로우')}"><span class="chips" style="background-color:#ffff00"></span></c:if>
+												<c:if test="${fn:contains(vo.pColor,'오렌지')}"><span class="chips" style="background-color:#ffa500"></span></c:if>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</li>
+						</c:if>
 					</c:if>
 					</c:forEach>
 			</ul>

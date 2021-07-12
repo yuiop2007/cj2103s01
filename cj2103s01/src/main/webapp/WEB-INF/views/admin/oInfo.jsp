@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -12,14 +13,83 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <script>
-
+	function cancelCheck(mId, oId) {
+		var ans = confirm("취소 완료 하시겠습니까?");
+		if(ans) {
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/cancelEnd",
+				data : {
+					mId : mId,
+					oId : oId
+				},
+				success : function(data) {
+					alert("취소 완료 되었습니다.");
+					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+				}
+			});
+		}
+	}
 	
+	function changeCheck(oId) {
+		var ans = confirm("교환 완료 하시겠습니까?");
+		if(ans) {
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/changeEnd",
+				data : {
+					oId : oId
+				},
+				success : function(data) {
+					alert("교환 완료 되었습니다.");
+					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+				}
+			});
+		}
+	}
+	
+	function returnCheck(mId, oId) {
+		var ans = confirm("반품 완료 하시겠습니까?");
+		if(ans) {
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/returnEnd",
+				data : {
+					mId : mId,
+					oId : oId
+				},
+				success : function(data) {
+					alert("반품 완료 되었습니다.");
+					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+				}
+			});
+		}
+	}
+	
+	function buyOkCheck(oId) {
+		var ans = confirm("구매 확정 하시겠습니까?");
+		if(ans) {
+			$.ajax({
+				type : "get",
+				url : "${ctp}/order/buyOk",
+				data : {
+					oId : oId
+				},
+				success : function(data) {
+					alert("구매가 확정되었습니다.");
+					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+				}
+			});
+		}
+	}
+		
 </script>
 </head>
 <body>
 	<div class="container">
 		<br/><br/><br/><br/>
 		<form name=contentform method="post">
+			<input type="hidden" id="mId" value="${vo.mId}"/>
 			<div class=board>
 				<div class=boardview>
 					<table class="boardtable">
@@ -54,7 +124,7 @@
 							</tr>
 							<tr>
 								<th scope="row">PRICE</th>
-								<td class="subject2"><font color="#f76560"><b>${vo.oPrice}</b></font></td>
+								<td class="subject2"><font color="#f76560"><b><fmt:formatNumber value="${vo.oPrice}" pattern="#,###" /></b></font></td>
 							</tr>
 							<tr>
 								<th scope="row">PAYMENT</th>
@@ -104,17 +174,17 @@
 																	<a href="${ctp}/product/pContent?pId=${odvo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${pvo.pName}/${odvo.odOption}</a>
 																</td>
 																<td class="td1" style="width: 5%; padding-top: 50px;">${odvo.odCnt}</td>
-																<td class="td1" style="width: 15%; padding-top: 50px;">${pvo.pSale}</td>
+																<td class="td1" style="width: 15%; padding-top: 50px;"><fmt:formatNumber value="${pvo.pSale}" pattern="#,###" /></td>
 																<c:set var="pSale" value="${pSale + pvo.pSale }"/>
 																<%-- <td class="td1" style="width: 5%; padding-top: 50px;">${vo.pPrice}</td> --%>
 																<c:choose>
 																	<c:when test="${pvo.pSale>0}">
 																		<c:set var="salePrice" value="${odvo.odPrice-(pvo.pSale*odvo.odCnt)}" />
-																		<td class="td1" style="width: 10%; padding-top: 50px;"><span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span></td>
+																		<td class="td1" style="width: 10%; padding-top: 50px;"><span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
 																	</c:when>
 																	<c:otherwise>
 																		<c:set var="salePrice" value="${odvo.odPrice}" />
-																		<td class="td1" style="width: 10%; padding-top: 50px;"><span style="font-size:11px;color:#000000;">${salePrice}원</span></td>
+																		<td class="td1" style="width: 10%; padding-top: 50px;"><span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
 																	</c:otherwise>
 																</c:choose>
 																<c:set var="totPrice" value="${totPrice + salePrice}"></c:set>
@@ -133,10 +203,10 @@
 				</div>
 				<div class=boardbtn>
 					<a href="#" onclick="window.close()">창닫기</a>
-					<a href="#" onclick="cancleCheck()">주문취소</a>
-					<a href="#" onclick="changeCheck()">교환신청</a>
-					<a href="#" onclick="returnCheck()">반품신청</a>
-					<a href="#" onclick="buyOkCheck()">구매확정</a>
+					<a href="#" onclick="cancelCheck('${vo.mId}', ${vo.oId})">취소완료</a>
+					<a href="#" onclick="changeCheck(${vo.oId})">교환완료</a>
+					<a href="#" onclick="returnCheck('${vo.mId}', ${vo.oId})">반품완료</a>
+					<a href="#" onclick="buyOkCheck(${vo.oId})">구매확정</a>
 				</div>
 				<br/><br/><br/><br/><br/><br/><br/><br/>
 			</div>

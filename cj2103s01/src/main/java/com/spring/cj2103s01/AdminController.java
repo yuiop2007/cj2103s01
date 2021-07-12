@@ -320,6 +320,13 @@ public class AdminController {
 		String[] oStatus = status.split("/");
 		if(oId.length == oStatus.length) {
 			for (int i=0; i<oId.length; i++) {
+				OrderVO ovo = orderService.getOrderInfo(Integer.parseInt(oId[i]));
+				if(ovo.getoStatus().equals("입금전") && !oStatus[i].equals("입금전")) {
+					memberService.updateMemberBuy(ovo.getmId());
+				}
+				else if(!ovo.getoStatus().equals("입금전") && oStatus[i].equals("입금전")) {
+					memberService.updateMemberBuyDown(ovo.getmId());
+				}
 				orderService.statusUpdate(oId[i], oStatus[i]);
 			}
 		}else {

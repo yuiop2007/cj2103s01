@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttribute("slevel");
 %>
@@ -159,7 +160,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<c:if test="${pvo.pId eq odvo.pId}">
 								<td style="width: 10%;">${ovo.mId}</td>
 								<td><a href="javascript:newWin('${ovo.mId}','${ovo.oId}');">${pvo.pName}/${odvo.odOption}</a></td>
-								<td style="width: 10%;">${ovo.oPrice}</td>
+								<td style="width: 10%;"><fmt:formatNumber value="${ovo.oPrice}" pattern="#,###" /></td>
 								<td style="width: 8%;">
 									<select name="oStatus" id="oStatus${ovo.oId}" style="width: 90px; padding: 3px; border: 1px solid #ccc;">
 										<option value="입금전" <c:if test="${ovo.oStatus eq '입금전'}">selected</c:if>>입금전</option>

@@ -46,5 +46,7 @@ public interface MemberService {
 	public int totSellCnt();
 
 	public void updateMemberPoint(String mId, int point);
+
+	public void updateMemberBuyDown(String mId);
 	
 }

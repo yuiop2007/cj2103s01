@@ -31,7 +31,7 @@ import com.spring.cj2103s01.vo.ProductVO;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
+	String msgFlag = "";
 	@Autowired
 	Pagenation pagenation;
 	
@@ -142,6 +142,14 @@ public class OrderController {
 		
 		for (String idx : idxs) {
 			cartvo = orderService.getIdxVo(Integer.parseInt(idx));
+			for(ProductVO vo : pvos) {
+				if(vo.getpId()==cartvo.getpId()) {
+					if(cartvo.getpCnt()>vo.getpStock()) {
+						msgFlag = "StockNo";
+						return "redirect:/msg/" + msgFlag;
+					}
+				}
+			}
 			cvos.add(cartvo);
 		}
 		
@@ -240,10 +248,11 @@ public class OrderController {
 		if(Integer.parseInt(mile)>0) {
 			memberService.setUpdatePoint(vo.getmId(), Integer.parseInt(mile));
 		}
-		//카트에 있던거 오더디테일로 옮기고 카트에서 삭제
+		//카트에 있던거 오더디테일로 옮기고 카트에서 삭제 + 상품 재고 줄이기
 		int lastoId = orderService.getLastoId(vo.getmId());
 		for (String idx : idxs) {
 			cartvo = orderService.getIdxVo(Integer.parseInt(idx));
+			productService.setStockUpdate(cartvo.getpId(), cartvo.getpCnt());
 			orderService.setOrderDetail(cartvo, lastoId);
 			orderService.cartDelete(Integer.parseInt(idx));
 			cart = cart - 1;
@@ -330,4 +339,70 @@ public class OrderController {
 		return "order/oContent";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/buyOk", method = RequestMethod.GET)
+	public String buyOkGet(int oId) {
+		orderService.setBuyUpdate(oId);
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/returnOk", method = RequestMethod.GET)
+	public String returnOkGet(int oId) {
+		orderService.setReturnUpdate(oId);
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/changeOk", method = RequestMethod.GET)
+	public String changeOkGet(int oId) {
+		orderService.setChangeUpdate(oId);
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/cancelOk", method = RequestMethod.GET)
+	public String cancelOkGet(int oId) {
+		orderService.setCancelUpdate(oId);
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/returnEnd", method = RequestMethod.GET)
+	public String returnEndGet(String mId, int oId) {
+		orderService.setReturnEndUpdate(oId);
+		
+		List<OrderDetailVO> vos = orderService.getOrderDetailListOid(mId, oId);
+		for(OrderDetailVO vo : vos) {
+			productService.setCancelStockUpdate(vo.getpId(), vo.getOdCnt());
+		}
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/changeEnd", method = RequestMethod.GET)
+	public String changeEndGet(int oId) {
+		orderService.setChangeEndUpdate(oId);
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/cancelEnd", method = RequestMethod.GET)
+	public String cancelEndGet(String mId, int oId) {
+		orderService.setCancelEndUpdate(oId);
+		// 취소완료시 오더의 재고처리, 포인트삭감, 구매횟수 삭감
+		// vos에 oId에 대한 모든 orderDetail 불러오기
+		// 그 pId마다 수량 올리기
+		List<OrderDetailVO> vos = orderService.getOrderDetailListOid(mId, oId);
+		for(OrderDetailVO vo : vos) {
+			productService.setCancelStockUpdate(vo.getpId(), vo.getOdCnt());
+		}
+		
+		return "";
+	}
 }

@@ -76,7 +76,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 								<td class="td2" style="width: 35%; text-align: left; padding-top: 55px;">
 									<a href="${ctp}/order/oContent?oId=${ovo.oId}">${pvo.pName}/${odvo.odOption}</a>
 								</td>
-								<td class="td1" style="width: 10%; padding-top: 55px;">${ovo.oPrice}</td>
+								<td class="td1" style="width: 10%; padding-top: 55px;"><fmt:formatNumber value="${ovo.oPrice}" pattern="#,###" /></td>
 								<td class="td1" style="width: 10%; padding-top: 55px;">
 									${ovo.oStatus}
 								</td>

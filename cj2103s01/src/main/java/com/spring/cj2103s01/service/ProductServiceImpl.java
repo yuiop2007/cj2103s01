@@ -123,5 +123,15 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> getProductAllList() {
 		return productDAO.getProductAllList();
 	}
+
+	@Override
+	public void setStockUpdate(int pId, int Cnt) {
+		productDAO.setStockUpdate(pId, Cnt);
+	}
+
+	@Override
+	public void setCancelStockUpdate(int pId, int Cnt) {
+		productDAO.setCancelStockUpdate(pId, Cnt);
+	}
 	
 }

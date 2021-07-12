@@ -29,7 +29,7 @@ $(document).ready(function () {
 				<a class="nav-link" href="${ctp}/product/proShow?cate=ALL">ALL</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">NEW</a>
+				<a class="nav-link" href="${ctp}/product/proShow?cate=NEW">NEW</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="${ctp}/product/proShow?cate=MADE">MADE</a>

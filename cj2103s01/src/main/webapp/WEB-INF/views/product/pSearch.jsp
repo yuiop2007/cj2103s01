@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,7 @@
 	</div>
 	<div class="container">
 		<h6>상품 목록</h6>
-		</br></br></br></br>
+		<br/><br/><br/><br/>
 		<form name="pageForm">
 		<font color="blue"><b>${searchTitle}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>(을)를 검색한 결과 <font color="blue"><b>${searchCount}</b></font>건이 검색되었습니다.
 			<select name="pageSize" onchange="pageCheck()" style="width:130px; float:right; text-align: left; padding: 5px 0px; margin: 0;">
@@ -68,7 +69,7 @@
 					<td class="ptd1">${vo.pId}</td>
 					<td class="ptd2"><a href="${ctp}/product/pContent?pId=${vo.pId}">${vo.pName}</a></td>
 					<td class="ptd3">${vo.pCate}</td>
-					<td class="ptd4">${vo.pPrice}</td>
+					<td class="ptd4"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" /></td>
 					<td class="ptd5">${vo.pStock}</td>
 					<td class="ptd6">${vo.pRdate}</td>
 				</tr>

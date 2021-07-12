@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -136,11 +137,11 @@
 									<c:choose>
 										<c:when test="${vo.pSale>0}">
 											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
-											<span style="font-size:11px;color:#000000; text-decoration: line-through;">${vo.pPrice}원</span>
-											<span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span>
+											<span style="font-size:11px;color:#000000; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>
+											<span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice }" pattern="#,###" />원</span>
 										</c:when>
 										<c:otherwise>
-											<span style="font-size:11px;color:#000000;">${vo.pPrice}원</span>	
+											<span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${vo.pPrice }" pattern="#,###" />원</span>	
 										</c:otherwise>
 									</c:choose>
 								</li>

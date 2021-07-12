@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttribute("slevel");
 %>
@@ -40,10 +41,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	</div>
 	<div class="container">
 		<h6>쿠폰</h6>
-		</br>
-		</br>
-		</br>
-		</br>
+		<br/><br/><br/><br/>
 		<form name="pageForm">
 			<table class="table table-borderless">
 				<thead>
@@ -73,7 +71,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<c:if test="${vo.cmCate eq 5}">모든회원</c:if>
 						</td>
 						<td class="" style="width: 10%;">${vo.cpCate}</td>
-						<td class="" style="width: 15%;">${vo.cDiscount}% / ${vo.cPrice}원</td>
+						<td class="" style="width: 15%;">${vo.cDiscount}% / <fmt:formatNumber value="${vo.cPrice}" pattern="#,###" />원</td>
 						<td class="" style="width: 10%;">${vo.cRdate}</td>
 						<td class="" style="width: 10%;">${vo.cEnddate}</td>
 						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck(${vo.cId})">삭제</a></div></c:if></td>
@@ -95,7 +93,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<c:if test="${vo.cmCate eq 5}">모든회원</c:if>
 						</td>
 						<td class="" style="width: 10%;">${vo.cpCate}</td>
-						<td class="" style="width: 15%;">${vo.cDiscount}% / ${vo.cPrice}원</td>
+						<td class="" style="width: 15%;">${vo.cDiscount}% / <fmt:formatNumber value="${vo.cPrice}" pattern="#,###" />원</td>
 						<td class="" style="width: 10%;">${vo.cRdate}</td>
 						<td class="" style="width: 10%;">${vo.cEnddate}</td>
 						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck(${vo.cId})">삭제</a></div></c:if></td>

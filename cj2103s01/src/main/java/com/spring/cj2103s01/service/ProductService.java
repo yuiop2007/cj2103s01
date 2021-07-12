@@ -30,4 +30,8 @@ public interface ProductService {
 
 	public List<ProductVO> getProductAllList();
 
+	public void setStockUpdate(int pId, int Cnt);
+
+	public void setCancelStockUpdate(int pId, int Cnt);
+
 }

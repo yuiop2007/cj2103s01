@@ -205,6 +205,46 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.getOrderDetailListOid(mId, oId);
 	}
 
+	@Override
+	public void setBuyUpdate(int oId) {
+		orderDAO.setBuyUpdate(oId);
+	}
+
+	@Override
+	public void setReturnUpdate(int oId) {
+		orderDAO.setReturnUpdate(oId);
+	}
+
+	@Override
+	public void setChangeUpdate(int oId) {
+		orderDAO.setChangeUpdate(oId);
+	}
+
+	@Override
+	public void setCancelUpdate(int oId) {
+		orderDAO.setCancelUpdate(oId);
+	}
+
+	@Override
+	public void setReturnEndUpdate(int oId) {
+		orderDAO.setReturnEndUpdate(oId);
+	}
+
+	@Override
+	public void setChangeEndUpdate(int oId) {
+		orderDAO.setChangeEndUpdate(oId);
+	}
+
+	@Override
+	public void setCancelEndUpdate(int oId) {
+		orderDAO.setCancelEndUpdate(oId);
+	}
+
+	@Override
+	public OrderVO getOrderInfo(int oId) {
+		return orderDAO.getOrderInfo(oId);
+	}
+
 
 
 }

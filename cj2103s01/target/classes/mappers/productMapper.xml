@@ -30,6 +30,14 @@
 	    update product set pHit = pHit + 1 where pId = #{pId};
 	</update>
 	
+	<update id="setStockUpdate">
+	    update product set pStock = pStock - #{Cnt} where pId = #{pId};
+	</update>
+	
+	<update id="setCancelStockUpdate">
+	    update product set pStock = pStock + #{Cnt} where pId = #{pId};
+	</update>
+	
 	<select id="getProductContent" resultType="com.spring.cj2103s01.vo.ProductVO">
 		select * from product where pId = #{pId};
 	</select>

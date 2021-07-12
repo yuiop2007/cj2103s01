@@ -134,12 +134,44 @@
 		select * from orders where mId = #{mId} and oId = #{oId};
 	</select>
 	
+	<select id="getOrderInfo" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select * from orders where oId = #{oId};
+	</select>
+	
 	<select id="getOrderSCList" resultType="com.spring.cj2103s01.vo.OrderVO">
 		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} and bb.oStatus = #{status} order by bb.oId desc  limit #{startIndexNo}, #{pageSize};
 	</select>
 	
 	<update id="statusUpdate">
 	    update orders set oStatus=#{oStatus} where oId=#{oId};
+	</update>
+	
+	<update id="setBuyUpdate">
+	    update orders set oChange = '구매확정' where oId=#{oId};
+	</update>
+	
+	<update id="setReturnUpdate">
+	    update orders set oChange = '반품' where oId=#{oId};
+	</update>
+	
+	<update id="setReturnEndUpdate">
+	    update orders set oChange = '반품완료' where oId=#{oId};
+	</update>
+	
+	<update id="setChangeUpdate">
+	    update orders set oChange = '교환' where oId=#{oId};
+	</update>
+	
+	<update id="setChangeEndUpdate">
+	    update orders set oChange = '교환완료' where oId=#{oId};
+	</update>
+	
+	<update id="setCancelUpdate">
+	    update orders set oChange = '취소' where oId=#{oId};
+	</update>
+	
+	<update id="setCancelEndUpdate">
+	    update orders set oChange = '취소완료' where oId=#{oId};
 	</update>
 	
 </mapper>

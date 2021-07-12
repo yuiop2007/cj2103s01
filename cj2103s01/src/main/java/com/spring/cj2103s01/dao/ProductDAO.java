@@ -34,4 +34,8 @@ public interface ProductDAO {
 
 	public List<ProductVO> getProductAllList();
 
+	public void setStockUpdate(@Param("pId") int pId,@Param("Cnt") int Cnt);
+
+	public void setCancelStockUpdate(@Param("pId") int pId,@Param("Cnt") int cnt);
+
 }

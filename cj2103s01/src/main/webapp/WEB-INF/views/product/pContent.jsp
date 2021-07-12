@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <% pageContext.setAttribute("newLine", "\n"); %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -46,6 +47,8 @@
 		var oNum = document.getElementsByName("orderNum[]");
 		var oPrice = document.getElementsByName("orderPrice[]");
 		var pId = $("#pId").val();
+		var pStock = $("#pStock").val();
+		var totCnt = 0;
 		
 		var orderName = [];
 		var orderNum = [];
@@ -61,28 +64,35 @@
 				orderName.push(oName[i].value);
 				orderNum.push(oNum[i].value);
 				orderPrice.push(oPrice[i].value);
+				totCnt += parseInt(oNum[i].value);
+			}
+			if(totCnt > pStock){
+				alert("재고가 부족합니다.");
+				return false;
 			}
 			
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/cartOk",
-				traditional : true,
-				datatype : "json",
-				data : {
-					check : check,
-					pId : pId,
-					orderName : orderName,
-					orderNum : orderNum, 
-					orderPrice : orderPrice
-				},
-				success : function(data) {
-					alert("장바구니에 등록되었습니다.");
-					var ans = confirm("주문창으로 이동하시겠습니까?");
-					if(ans){
-						location.href="${ctp}/order/orderInfo?delItems=" + data;
+			else{
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/cartOk",
+					traditional : true,
+					datatype : "json",
+					data : {
+						check : check,
+						pId : pId,
+						orderName : orderName,
+						orderNum : orderNum, 
+						orderPrice : orderPrice
+					},
+					success : function(data) {
+						alert("장바구니에 등록되었습니다.");
+						var ans = confirm("주문창으로 이동하시겠습니까?");
+						if(ans){
+							location.href="${ctp}/order/orderInfo?delItems=" + data;
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 	
@@ -93,6 +103,8 @@
 		var oNum = document.getElementsByName("orderNum[]");
 		var oPrice = document.getElementsByName("orderPrice[]");
 		var pId = $("#pId").val();
+		var pStock = $("#pStock").val();
+		var totCnt = 0;		
 		
 		var orderName = [];
 		var orderNum = [];
@@ -108,28 +120,35 @@
 				orderName.push(oName[i].value);
 				orderNum.push(oNum[i].value);
 				orderPrice.push(oPrice[i].value);
+				totCnt += parseInt(oNum[i].value);
+			}
+			if(totCnt > pStock){
+				alert("재고가 부족합니다.");
+				return false;
 			}
 			
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/cartOk",
-				traditional : true,
-				datatype : "json",
-				data : {
-					check : check,
-					pId : pId,
-					orderName : orderName,
-					orderNum : orderNum, 
-					orderPrice : orderPrice
-				},
-				success : function(data) {
-					alert("장바구니에 등록되었습니다.");
-					var ans = confirm("장바구니로 이동하시겠습니까?");
-					if(ans){
-						location.href="${ctp}/order/cartList";
+			else{
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/cartOk",
+					traditional : true,
+					datatype : "json",
+					data : {
+						check : check,
+						pId : pId,
+						orderName : orderName,
+						orderNum : orderNum, 
+						orderPrice : orderPrice
+					},
+					success : function(data) {
+						alert("장바구니에 등록되었습니다.");
+						var ans = confirm("장바구니로 이동하시겠습니까?");
+						if(ans){
+							location.href="${ctp}/order/cartList";
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 
@@ -334,6 +353,7 @@
 					  <input type="hidden" name="pageSize" value="${pageSize}"/>
 					</c:if>
 				<input type="hidden" name="pId" Id="pId" value="${vo.pId}"/>
+				<input type="hidden" name="pStock" Id="pStock" value="${vo.pStock}"/>
 				<input type="hidden" name="mId" value="${smid}"/>
 				</div>
 					<div class="imgArea">
@@ -347,7 +367,18 @@
 									<th scope="row"><span style="font-size:16px;color:#000000;font-weight:bold;">${vo.pName}</span></th>
 								</tr>
 								<tr class=" xans-record-">
-									<th scope="row"><span style="font-size:13px;color:#000000;font-weight:bold;">${vo.pPrice}</span></th>
+									<th scope="row">
+									<c:choose>
+										<c:when test="${vo.pSale>0}">
+											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+											<span style="font-size:13px;color:#000000;font-weight:bold; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>
+											<span style="font-size:13px;color:#000000;font-weight:bold;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span>
+										</c:when>
+										<c:otherwise>
+											<span style="font-size:13px;color:#000000;font-weight:bold;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>	
+										</c:otherwise>
+									</c:choose>
+									</th>
 								</tr>
 								<tr class=" xans-record-">
 									<th scope="row"><span style="font-size:13px;color:#333333;"><pre>${vo.pInfo}</pre></span></th>

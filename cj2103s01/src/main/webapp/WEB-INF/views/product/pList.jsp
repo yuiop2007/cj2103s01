@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -114,7 +115,7 @@
 					<td class="ptd1">${curScrStartNo}</td>
 					<td class="ptd2"><a href="${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.pName}</a></td>
 					<td class="ptd3">${vo.pCate}</td>
-					<td class="ptd4">${vo.pPrice}</td>
+					<td class="ptd4"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" /></td>
 					<td class="ptd5">${vo.pStock}</td>
 					<td class="ptd6">
 						<c:if test="${vo.diffTime <= 24}">${fn:substring(vo.pRdate,11,19)}</c:if>
