@@ -31,7 +31,11 @@ ALTER TABLE orders ADD FOREIGN KEY (customer_sid) REFERENCES customer (sid);
 
 select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where pId=10 order by rId desc limit 1,5;
 
+select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where mId = #{mId} order by rId desc limit #{startIndexNo},#{rpageSize};
+
 select count(*) from review where pId = 10;
 
 
 select count(*) from review where pId;
+
+select count(*) from review where mId = 'yuiop2007';

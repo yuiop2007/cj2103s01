@@ -30,5 +30,7 @@ public interface QnaService {
 
 	void qnaReplyOk(QnaVO vo);
 
+	List<QnaVO> getQnaMemberList(String mId, int startIndexNo, int qpageSize);
+
 }
  

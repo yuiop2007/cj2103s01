@@ -22,4 +22,6 @@ public interface CouponDAO {
 
 	public int getCouponCnt(@Param("mId") String mId);
 
+	public void setJoinCoupon(@Param("mId") String mId);
+
 }

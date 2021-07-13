@@ -142,7 +142,7 @@
 	  	</div>
 		<div class="row myshopMain">
 		    <div class="col shopMain">
-		    	<a href="#">
+		    	<a href="${ctp}/member/myBoard">
 		    		<strong>my board</strong>
 		    		고객님께서 작성하신 게시물을 관리하는 공간입니다.
 		    		<br/>

@@ -18,4 +18,6 @@ public interface CouponService {
 
 	public int getCouponCnt(String mId);
 
+	public void setJoinCoupon(String mId);
+
 }

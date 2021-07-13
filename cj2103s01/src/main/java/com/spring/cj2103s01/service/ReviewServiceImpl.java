@@ -61,4 +61,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<ReviewVO> getReviewSearchList(int startIndexNo, int pageSize, String search, String searchString) {
 		return reviewDAO.getReviewSearchList(startIndexNo, pageSize, search, searchString);
 	}
+
+	@Override
+	public List<ReviewVO> getReviewMemberList(String mId, int startIndexNo, int rpageSize) {
+		return reviewDAO.getReviewMemberList(mId, startIndexNo, rpageSize);
+	}
 }

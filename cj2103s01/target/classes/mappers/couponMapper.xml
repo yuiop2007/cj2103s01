@@ -27,6 +27,10 @@
 		insert into coupon values (default, #{vo.mId}, #{vo.cmCate}, #{vo.cpCate}, #{vo.cName}, #{vo.cDiscount}, #{vo.cPrice}, #{vo.cRdate}, #{vo.cEnddate});
 	</insert>
 	
+	<insert id="setJoinCoupon">
+		insert into coupon values (default, #{mId}, 5, 'ALL', '가입축하쿠폰', 0, '2000', '2015-01-01 00:00:00', '2027-10-14 00:00:00');
+	</insert>
+	
 	<delete id="cDeleteOk">
 		delete from coupon where cId = #{cId};
 	</delete>

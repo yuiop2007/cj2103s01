@@ -38,5 +38,9 @@ public interface QnaDAO {
 
 	void qnaReplyOk(@Param("vo") QnaVO vo);
 
+	int totmIdRecCnt(@Param("mId") String mId);
+
+	List<QnaVO> getQnaMemberList(@Param("mId") String mId,@Param("startIndexNo") int startIndexNo,@Param("qpageSize") int qpageSize);
+
 
 }

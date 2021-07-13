@@ -37,6 +37,7 @@ label{
 }
 
 </style>
+
 </head>
 <body>
 	<div class="jumbotron text-center">

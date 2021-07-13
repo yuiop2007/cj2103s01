@@ -98,9 +98,15 @@ public class Pagenation {
 			int pId = Integer.parseInt(search);
 			totRecCnt = reviewDAO.totpIdRecCnt(pId);
 		}
+		else if(partName.equals("mreview")) {
+			totRecCnt = reviewDAO.totmIdRecCnt(search);
+		}
 		else if(partName.equals("pqna")) {
 			int pId = Integer.parseInt(search);
 			totRecCnt = qnaDAO.totpIdRecCnt(pId);
+		}
+		else if(partName.equals("mqna")) {
+			totRecCnt = qnaDAO.totmIdRecCnt(search);
 		}
 		else if(partName.equals("mywish")){
 			totRecCnt = wishDAO.totWishRecCnt(search);

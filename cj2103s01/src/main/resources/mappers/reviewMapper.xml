@@ -14,6 +14,10 @@
 	    select count(*) from review where pId = #{pId};
 	</select>
 	
+	<select id="totmIdRecCnt" resultType="int">
+	    select count(*) from review where rWriter = #{mId};
+	</select>
+	
 	<select id="totSearchRecCnt" resultType="int">
 		select count(rId) from review where ${search} like concat('%', #{searchString} ,'%');
 	</select>
@@ -48,6 +52,10 @@
 	
 	<select id="getReviewSearchList" resultType="com.spring.cj2103s01.vo.ReviewVO">
 		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where ${search} like concat('%',#{searchString},'%')  order by rId desc limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="getReviewMemberList" resultType="com.spring.cj2103s01.vo.ReviewVO">
+		select bb.*, cast(timestampdiff(minute, bb.rRdate, now())/60 as signed integer) as diffTime from review bb where rWriter = #{mId} order by rId desc limit #{startIndexNo},#{rpageSize};
 	</select>
 	
 </mapper>

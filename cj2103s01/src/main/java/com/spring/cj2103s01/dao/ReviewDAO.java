@@ -32,4 +32,8 @@ public interface ReviewDAO {
 
 	List<ReviewVO> getReviewSearchList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("search") String search,@Param("searchString") String searchString);
 
+	int totmIdRecCnt(@Param("mId") String mId);
+
+	List<ReviewVO> getReviewMemberList(@Param("mId") String mId,@Param("startIndexNo") int startIndexNo,@Param("rpageSize") int rpageSize);
+
 }

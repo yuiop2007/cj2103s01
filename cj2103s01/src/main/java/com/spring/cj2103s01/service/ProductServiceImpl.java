@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s01.dao.ProductDAO;
@@ -86,6 +90,11 @@ public class ProductServiceImpl implements ProductService {
 				UUID uid = UUID.randomUUID();
 				String saveFileName = uid + "_" + oFileName;
 				
+				//기존파일 삭제
+				HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+						.getRequest();
+				String uploadPath = request.getSession().getServletContext().getRealPath("/resources/pMainImages/");
+				fileService.fileDeleteCheck(uploadPath + vo.getpImage());
 				
 				// 파일업로드처리
 				fileService.writeFile(file, saveFileName, root); // 메소드를 통해서 파일을 서버에 저장시킨다.

@@ -10,6 +10,10 @@
 	    select count(*) from qna;
 	</select>
 	
+ 	<select id="totmIdRecCnt" resultType="int">
+	    select count(*) from qna where qWriter = #{mId};
+	</select>
+	
  	<select id="getQnaLastVo" resultType="com.spring.cj2103s01.vo.QnaVO">
 	    select * from qna order by qId desc limit 1;
 	</select>
@@ -20,6 +24,10 @@
 	
 	<select id="getQnaContentList" resultType="com.spring.cj2103s01.vo.QnaVO">
 		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb where pId = ${pId} order by originNo desc, groupNo asc limit #{startIndexNo},#{qpageSize};
+	</select>
+	
+	<select id="getQnaMemberList" resultType="com.spring.cj2103s01.vo.QnaVO">
+		select bb.*, cast(timestampdiff(minute, bb.qRdate, now())/60 as signed integer) as diffTime from qna bb where qWriter = #{mId} order by originNo desc, groupNo asc limit #{startIndexNo},#{qpageSize};
 	</select>
 	
 	<insert id="setQnaInput">

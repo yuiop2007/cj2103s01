@@ -50,4 +50,9 @@ public class CouponServiceImpl implements CouponService{
 	public int getCouponCnt(String mId) {
 		return couponDAO.getCouponCnt(mId);
 	}
+
+	@Override
+	public void setJoinCoupon(String mId) {
+		couponDAO.setJoinCoupon(mId);
+	}
 }

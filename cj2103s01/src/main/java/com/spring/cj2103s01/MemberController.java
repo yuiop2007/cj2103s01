@@ -12,12 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.cj2103s01.pagenation.Pagenation;
+import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.CouponService;
 import com.spring.cj2103s01.service.MemberService;
 import com.spring.cj2103s01.service.OrderService;
+import com.spring.cj2103s01.service.QnaService;
+import com.spring.cj2103s01.service.ReviewService;
 import com.spring.cj2103s01.vo.MemberVO;
+import com.spring.cj2103s01.vo.QnaVO;
+import com.spring.cj2103s01.vo.ReviewVO;
 
 @Controller
 @RequestMapping("/member")
@@ -32,6 +39,15 @@ public class MemberController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	Pagenation pagenation;
+	
+	@Autowired
+	ReviewService reviewService;
+	
+	@Autowired
+	QnaService qnaService;
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -79,7 +95,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String joinGet() {
-		
 		return "member/join";
 	}
 	
@@ -120,6 +135,9 @@ public class MemberController {
 		}
 
 		memberService.setMemberInput(vo);
+		
+		//가입쿠폰발급
+		couponService.setJoinCoupon(vo.getmId());
 		
 		return "redirect:/msg/mJoinOk";
 	}
@@ -283,5 +301,33 @@ public class MemberController {
 			return "redirect:/msg/" + msgFlag;
 		}
 		
+	}
+	
+	@RequestMapping(value = "/myBoard", method = RequestMethod.GET)
+	public String myBoardGet(Model model, HttpSession session,
+			@RequestParam(name = "rpag", defaultValue = "1", required = false) int rpag,
+			@RequestParam(name = "rpageSize", defaultValue = "5", required = false) int rpageSize,
+			@RequestParam(name = "qpag", defaultValue = "1", required = false) int qpag,
+			@RequestParam(name = "qpageSize", defaultValue = "5", required = false) int qpageSize) {
+		if (rpag < 1) {
+			rpag = 1;
+		}
+		String mId = (String) session.getAttribute("smid");
+		
+		PagenationVO rpageVO = pagenation.pagenation(rpag, rpageSize, "mreview", mId , "");
+		
+		List<ReviewVO> rvos = reviewService.getReviewMemberList(mId ,rpageVO.getStartIndexNo(), rpageSize);
+
+		model.addAttribute("rvos", rvos);
+		model.addAttribute("rpageVO", rpageVO);
+		
+		PagenationVO qpageVO = pagenation.pagenation(qpag, qpageSize, "mqna", mId , "");
+		
+		List<QnaVO> qvos = qnaService.getQnaMemberList(mId ,qpageVO.getStartIndexNo(), qpageSize);
+		
+		model.addAttribute("qvos", qvos);
+		model.addAttribute("qpageVO", qpageVO);
+		
+		return "member/myBoard";
 	}
 }

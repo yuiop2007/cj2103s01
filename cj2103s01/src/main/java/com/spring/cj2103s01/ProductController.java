@@ -223,7 +223,6 @@ public class ProductController {
 
 		int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize") == null ? 1 : Integer.parseInt(request.getParameter("pageSize"));
-		System.out.println(res);
 		if(res==1) {
 			msgFlag = "productUpdateOk$pId=" + vo.getpId() + "&pag=" + pag + "&pageSize=" + pageSize;
 		} else {

@@ -23,6 +23,8 @@ label{
 	margin-top: 15px;
 }
 </style>
+<script>
+</script>
 </head>
 <body>
 	<div class="jumbotron text-center">

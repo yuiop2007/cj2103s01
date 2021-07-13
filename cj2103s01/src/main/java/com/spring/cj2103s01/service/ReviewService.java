@@ -24,5 +24,7 @@ public interface ReviewService {
 
 	List<ReviewVO> getReviewSearchList(int startIndexNo, int pageSize, String search, String searchString);
 
+	List<ReviewVO> getReviewMemberList(String mId, int startIndexNo, int rpageSize);
+
 
 }

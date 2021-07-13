@@ -21,3 +21,5 @@ drop table coupon;
 desc coupon;
 
 select * from coupon group by cName;
+
+insert into coupon values (default, 'yuiop2007', 5, 'ALL', '가입축하쿠폰', 0, '2000', '2015-01-01 00:00:00', '2027-10-14 00:00:00');
