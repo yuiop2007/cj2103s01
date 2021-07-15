@@ -11,6 +11,8 @@ public class OrderVO {
 	private String oEmail;
 	private String oMessage;
 	private int oPrice;
+	private int oUsePoint;
+	private int oSetPoint;
 	private String oPayment; /* 무통장 카드 */
 	private String oDelivery; // 0원무료배송 3000원일반배송등
 	private String oStatus;
@@ -18,6 +20,24 @@ public class OrderVO {
 
 	private int diffTime;
 	
+	
+	
+	public int getoUsePoint() {
+		return oUsePoint;
+	}
+
+	public void setoUsePoint(int oUsePoint) {
+		this.oUsePoint = oUsePoint;
+	}
+
+	public int getoSetPoint() {
+		return oSetPoint;
+	}
+
+	public void setoSetPoint(int oSetPoint) {
+		this.oSetPoint = oSetPoint;
+	}
+
 	public int getDiffTime() {
 		return diffTime;
 	}

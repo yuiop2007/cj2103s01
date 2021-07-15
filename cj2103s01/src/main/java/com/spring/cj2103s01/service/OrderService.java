@@ -98,4 +98,10 @@ public interface OrderService {
 
 	public OrderVO getOrderInfo(int oId);
 
+	public int getCartIdx(String mId, int pId, String pOption);
+
+	public void updateCancelStatus(int oId);
+
+	public int totSellMoney();
+
 }

@@ -34,4 +34,6 @@ public interface ProductService {
 
 	public void setCancelStockUpdate(int pId, int Cnt);
 
+	public String getImagePid(int pId);
+
 }

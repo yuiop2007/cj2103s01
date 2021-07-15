@@ -34,6 +34,10 @@
 	<select id="getLastCartIdx" resultType="int">
 	    select cartId from cart where mId = #{mId} order by cartId desc limit 1;
 	</select>
+	
+	<select id="getCartIdx" resultType="int">
+	    select cartId from cart where mId = #{mId} and pOption = #{pOption} and pId = #{pId};
+	</select>
 <!-- 	
 	<select id="getCouponList" resultType="com.spring.cj2103s01.vo.CouponVO">
 		select * from coupon;

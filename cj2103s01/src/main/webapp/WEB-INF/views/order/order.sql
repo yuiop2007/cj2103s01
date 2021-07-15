@@ -21,6 +21,8 @@ create table orders(
 	oEmail varchar(100) null,
 	oMessage varchar(500) null,
 	oPrice int null,
+	oUsePoint int null default 0,
+	oSetPoint int null default 0,
 	oPayment varchar(100) null, /* 무통장, 카드 */
 	oDelivery varchar(50) null,
 	oStatus varchar(50) null default '입금전', /* 배송준비중 배송중 배송완료*/
@@ -45,6 +47,10 @@ select count(*) from orders where oStatus = '입금전' and mId = 'yuiop2007';
 
 select * from orders_detail group by oId;
 
+select count(*) from orders where oChange = '취소' or oChange = '취소완료' and mId ='admin';
+
 select count(*) from orders where oStatus = 'notPay';
+
+select sum(oPrice) from orders where oStatus = '배송완료' and oChange = '구매확정';
 
 select * from orders_detail where mId = 'yuiop2007' group by oId;

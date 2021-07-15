@@ -27,24 +27,37 @@
 	// 게시글 삭제처리
 	function delCheck() {
 		var ans = confirm("게시글을 삭제하시겠습니까?");
-		var pwd = contentform.qPwd.value;
-		
+		var slevel = $("#slevel").val();
 		if(ans) {
-			if(pwd == "") {
-	    		alert("비밀번호를 입력하세요")
-	    		contentform.qPwd.focus();
-	    		return false;
-	    }
-			else {
+			if(slevel==0){
 				$.ajax({
 					type : "post",
-					url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${param.pId}&rPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+					url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${param.pId}&qPwd=admin&pag=${pag}&pageSize=${pageSize}",
 					success: function(data) {
 						alert("삭제처리 되었습니다.");
 						location.href="${ctp}/board/qna";
 					}
 				});
 			}
+			else{
+				var pwd = contentform.qPwd.value;
+				if(pwd == "") {
+		    		alert("비밀번호를 입력하세요")
+		    		contentform.qPwd.focus();
+		    		return false;
+			    }
+				else {
+					$.ajax({
+						type : "post",
+						url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${param.pId}&qPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+						success: function(data) {
+							alert("삭제처리 되었습니다.");
+							location.href="${ctp}/board/qna";
+						}
+					});
+				}
+			}
+			
 		}
 	}
 	
@@ -57,10 +70,7 @@
 	</div>
 	<div class="container">
 		<h6>리뷰</h6>
-		</br>
-		</br>
-		</br>
-		</br>
+		<br/><br/><br/><br/>
 		<form name=contentform method="post">
 			<div class=board>
 				<div class=boardview>
@@ -105,7 +115,7 @@
 					<c:if test="${slevel==0 }">
 					<a href="${ctp}/board/qReply?qId=${vo.qId}&pId=${vo.pId}&pag=${pag}&pageSize=${pageSize}">답변</a>
 					</c:if>
-					<c:if test="${smid == vo.qWriter}">
+					<c:if test="${smid == vo.qWriter || slevel == 0}">
 					<a href="#" onclick="updCheck()">수정</a>
 					<a href="#" onclick="delCheck()">삭제</a>
 					</c:if>
@@ -114,6 +124,7 @@
 					  <input type="hidden" name="pageSize" value="${pageSize}"/>
 					  <input type="hidden" name="qId" value="${vo.qId}"/>
 					  <input type="hidden" name="pId" value="${vo.pId}"/>
+					  <input type="hidden" id="slevel" value="${slevel}"/>
 			</div>
 		</form>
 	</div>

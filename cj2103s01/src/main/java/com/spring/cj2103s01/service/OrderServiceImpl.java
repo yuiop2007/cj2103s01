@@ -245,6 +245,21 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.getOrderInfo(oId);
 	}
 
+	@Override
+	public int getCartIdx(String mId, int pId, String pOption) {
+		return cartDAO.getCartIdx(mId, pId, pOption);
+	}
+
+	@Override
+	public void updateCancelStatus(int oId) {
+		orderDAO.updateCancelStatus(oId);
+	}
+
+	@Override
+	public int totSellMoney() {
+		return orderDAO.totSellMoney();
+	}
+
 
 
 }

@@ -38,4 +38,6 @@ public interface ProductDAO {
 
 	public void setCancelStockUpdate(@Param("pId") int pId,@Param("Cnt") int cnt);
 
+	public String getImagePid(@Param("pId") int pId);
+
 }

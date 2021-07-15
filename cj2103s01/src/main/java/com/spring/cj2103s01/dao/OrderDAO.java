@@ -96,4 +96,8 @@ public interface OrderDAO {
 
 	OrderVO getOrderInfo(@Param("oId") int oId);
 
+	void updateCancelStatus(@Param("oId") int oId);
+
+	int totSellMoney();
+
 }

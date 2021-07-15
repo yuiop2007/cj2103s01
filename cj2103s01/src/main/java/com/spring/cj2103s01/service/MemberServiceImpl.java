@@ -118,6 +118,16 @@ public class MemberServiceImpl implements MemberService {
 	public void updateMemberBuyDown(String mId) {
 		memberDAO.updateMemberBuyDown(mId);
 	}
+
+	@Override
+	public void downPointBuy(String mId, int point) {
+		memberDAO.downPointBuy(mId, point);
+	}
+
+	@Override
+	public void upMemberPoint(String mId, int point) {
+		memberDAO.upMemberPoint(mId, point);
+	}
 	
 	
 }

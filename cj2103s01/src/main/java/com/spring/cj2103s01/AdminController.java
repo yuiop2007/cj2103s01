@@ -59,6 +59,7 @@ public class AdminController {
 		model.addAttribute("changeCnt", orderService.changeCnt()); // 교환 갯수
 		model.addAttribute("returnCnt", orderService.returnCnt()); // 반품 갯수
 		model.addAttribute("totSell", memberService.totSellCnt()); // 총 판매 갯수
+		model.addAttribute("totSellMoney", orderService.totSellMoney()); //총 판매가격 배송완료+구매확정제품
 
 		return "admin/admin";
 	}
@@ -323,9 +324,10 @@ public class AdminController {
 				OrderVO ovo = orderService.getOrderInfo(Integer.parseInt(oId[i]));
 				if(ovo.getoStatus().equals("입금전") && !oStatus[i].equals("입금전")) {
 					memberService.updateMemberBuy(ovo.getmId());
+					memberService.mPointInput(ovo.getmId(), ovo.getoSetPoint());
 				}
 				else if(!ovo.getoStatus().equals("입금전") && oStatus[i].equals("입금전")) {
-					memberService.updateMemberBuyDown(ovo.getmId());
+					memberService.downPointBuy(ovo.getmId(), ovo.getoSetPoint());
 				}
 				orderService.statusUpdate(oId[i], oStatus[i]);
 			}

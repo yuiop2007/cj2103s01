@@ -92,7 +92,7 @@
 					</li>
 					<li class="etc">
 						<span class="title">총 매출액</span>
-						<span class="data"><fmt:formatNumber value="0" pattern="#,###" /><span>원</span></span>
+						<span class="data"><fmt:formatNumber value="${totSellMoney}" pattern="#,###" /><span>원</span></span>
 						<a href="#"><img src="${ctp}/images/btn_result.gif" alt="조회"></a>
 					</li>
 				

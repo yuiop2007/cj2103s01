@@ -24,4 +24,6 @@ public interface CartDAO {
 
 	public int getLastCartIdx(@Param("mId") String mId);
 
+	public int getCartIdx(@Param("mId") String mId, @Param("pId") int pId,@Param("pOption") String pOption);
+
 }

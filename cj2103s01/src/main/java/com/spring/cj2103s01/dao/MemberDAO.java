@@ -56,4 +56,8 @@ public interface MemberDAO {
 
 	public void updateMemberBuyDown(@Param("mId") String mId);
 
+	public void downPointBuy(@Param("mId") String mId,@Param("point") int point);
+
+	public void upMemberPoint(@Param("mId")String mId,@Param("point") int point);
+
 }

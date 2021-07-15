@@ -27,23 +27,35 @@
 	// 게시글 삭제처리
 	function delCheck() {
 		var ans = confirm("게시글을 삭제하시겠습니까?");
-		var pwd = contentform.rPwd.value;
-		
+		var slevel = $("#slevel").val();
 		if(ans) {
-			if(pwd == "") {
-	    		alert("비밀번호를 입력하세요")
-	    		contentform.rPwd.focus();
-	    		return false;
-	    }
-			else {
+			if(slevel==0){
 				$.ajax({
 					type : "post",
-					url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${param.pId}&rPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+					url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${param.pId}&rPwd=admin&pag=${pag}&pageSize=${pageSize}",
 					success: function(data) {
 						alert("삭제처리 되었습니다.");
 						location.href="${ctp}/board/review";
 					}
 				});
+			}
+			else{
+				var pwd = contentform.qPwd.value;
+				if(pwd == "") {
+		    		alert("비밀번호를 입력하세요")
+		    		contentform.rPwd.focus();
+		    		return false;
+		    	}
+				else {
+					$.ajax({
+						type : "post",
+						url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${param.pId}&rPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+						success: function(data) {
+							alert("삭제처리 되었습니다.");
+							location.href="${ctp}/board/review";
+						}
+					});
+				}
 			}
 		}
 	}
@@ -57,10 +69,7 @@
 	</div>
 	<div class="container">
 		<h6>리뷰</h6>
-		</br>
-		</br>
-		</br>
-		</br>
+		<br/><br/><br/><br/>
 		<form name=contentform method="post">
 			<div class=board>
 				<div class=boardview>
@@ -102,7 +111,7 @@
 				</div>
 				<div class=boardbtn>
 					<a href="${ctp}/product/pContent?pId=${param.pId}&pag=${pag}&pageSize=${pageSize}">목록</a>
-					<c:if test="${smid == vo.rWriter}">
+					<c:if test="${smid == vo.rWriter || slevel==0}">
 					<a href="#" onclick="updCheck()">수정</a>
 					<a href="#" onclick="delCheck()">삭제</a>
 					</c:if>
@@ -111,6 +120,7 @@
 					  <input type="hidden" name="pageSize" value="${pageSize}"/>
 					  <input type="hidden" name="rId" value="${vo.rId}"/>
 					  <input type="hidden" name="pId" value="${vo.pId}"/>
+					  <input type="hidden" id="slevel" value="${slevel}"/>
 			</div>
 		</form>
 	</div>

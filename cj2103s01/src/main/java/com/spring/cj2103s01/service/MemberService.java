@@ -48,5 +48,9 @@ public interface MemberService {
 	public void updateMemberPoint(String mId, int point);
 
 	public void updateMemberBuyDown(String mId);
+
+	public void downPointBuy(String mId, int point);
+
+	public void upMemberPoint(String mId, int point);
 	
 }

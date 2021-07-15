@@ -90,11 +90,6 @@ public class ProductServiceImpl implements ProductService {
 				UUID uid = UUID.randomUUID();
 				String saveFileName = uid + "_" + oFileName;
 				
-				//기존파일 삭제
-				HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-						.getRequest();
-				String uploadPath = request.getSession().getServletContext().getRealPath("/resources/pMainImages/");
-				fileService.fileDeleteCheck(uploadPath + vo.getpImage());
 				
 				// 파일업로드처리
 				fileService.writeFile(file, saveFileName, root); // 메소드를 통해서 파일을 서버에 저장시킨다.
@@ -141,6 +136,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void setCancelStockUpdate(int pId, int Cnt) {
 		productDAO.setCancelStockUpdate(pId, Cnt);
+	}
+
+	@Override
+	public String getImagePid(int pId) {
+		return productDAO.getImagePid(pId);
 	}
 	
 }

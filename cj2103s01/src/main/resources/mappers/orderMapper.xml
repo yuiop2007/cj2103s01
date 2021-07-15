@@ -3,7 +3,7 @@
 <mapper namespace="com.spring.cj2103s01.dao.OrderDAO">
   
 	<insert id="setInputOrder">
-		insert into orders values (default, #{vo.mId}, default, #{vo.oName}, #{vo.oPhone}, #{vo.oPost}, #{vo.oAddress}, #{vo.oEmail}, #{vo.oMessage}, #{vo.oPrice}, #{vo.oPayment}, #{vo.oDelivery}, #{vo.oStatus}, default);
+		insert into orders values (default, #{vo.mId}, default, #{vo.oName}, #{vo.oPhone}, #{vo.oPost}, #{vo.oAddress}, #{vo.oEmail}, #{vo.oMessage}, #{vo.oPrice}, #{vo.oUsePoint}, #{vo.oSetPoint}, #{vo.oPayment}, #{vo.oDelivery}, #{vo.oStatus}, default);
 	</insert>
 	
 	<insert id="setOrderDetail">
@@ -47,27 +47,31 @@
 	</select>
 	
 	<select id="cancelCnt" resultType="int">
-	    select count(*) from orders where oChange = '취소';
+	    select count(*) from orders where oChange = '취소' or oChange = '취소완료';
 	</select>
 	
 	<select id="cancelCntMid" resultType="int">
-	    select count(*) from orders where oChange = '취소' and mId = #{mId};
+	    select count(*) from orders where oChange = '취소' or oChange = '취소완료' and mId = #{mId};
 	</select>
 	
 	<select id="changeCnt" resultType="int">
-	    select count(*) from orders where oChange = '교환';
+	    select count(*) from orders where oChange = '교환' or oChange = '교환완료';
 	</select>
 	
 	<select id="changeCntMid" resultType="int">
-	    select count(*) from orders where oChange = '교환' and mId = #{mId};
+	    select count(*) from orders where oChange = '교환' or oChange = '교환완료' and mId = #{mId};
 	</select>
 	
 	<select id="returnCnt" resultType="int">
-	    select count(*) from orders where oChange = '반품';
+	    select count(*) from orders where oChange = '반품' or oChange = '반품완료';
 	</select>
 	
 	<select id="returnCntMid" resultType="int">
-	    select count(*) from orders where oChange = '반품' and mId = #{mId};
+	    select count(*) from orders where oChange = '반품' or oChange = '반품완료' and mId = #{mId};
+	</select>
+	
+	<select id="totSellMoney" resultType="int">
+	    select sum(oPrice) from orders where oStatus = '배송완료' and oChange = '구매확정';
 	</select>
 	
 	<select id="totOrderCnt" resultType="int">
@@ -111,11 +115,11 @@
 	</select>
 	
 	<select id="getOrderListChange" resultType="com.spring.cj2103s01.vo.OrderVO">
-		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.mid = #{mId} and bb.oChange = #{change} and bb.oRdate > date_add(now(), interval -#{time} day) order by bb.oId desc;
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where (bb.oChange = #{change} or bb.oChange = '${change}완료') and bb.mid = #{mId} and bb.oRdate > date_add(now(), interval -#{time} day) order by bb.oId desc;
 	</select>
 	
 	<select id="getAdminOlistChagne" resultType="com.spring.cj2103s01.vo.OrderVO">
-		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} order by bb.oId desc limit #{startIndexNo}, #{pageSize};
+		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} or bb.oChange = '${change}완료' order by bb.oId desc limit #{startIndexNo}, #{pageSize};
 	</select>
 	
 	<select id="getOrderDetailListMid" resultType="com.spring.cj2103s01.vo.OrderDetailVO">
@@ -172,6 +176,10 @@
 	
 	<update id="setCancelEndUpdate">
 	    update orders set oChange = '취소완료' where oId=#{oId};
+	</update>
+	
+	<update id="updateCancelStatus">
+	    update orders set oStatus = '배송완료' where oId=#{oId};
 	</update>
 	
 </mapper>

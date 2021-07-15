@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
+import com.spring.cj2103s01.service.FileService;
 import com.spring.cj2103s01.service.ImageService;
 import com.spring.cj2103s01.service.ProductService;
 import com.spring.cj2103s01.service.QnaService;
@@ -41,6 +44,9 @@ public class ProductController {
 	
 	@Autowired
 	QnaService qnaService;
+	
+	@Autowired
+	FileService fileService;
 
 	@RequestMapping(value = "/pInput", method = RequestMethod.GET)
 	public String pInputGet() {
@@ -219,6 +225,12 @@ public class ProductController {
 			vo.setpContent(vo.getpContent().replace("/resources/ckeditor/images/", "/resources/ckeditor/images/src/"));
 		}
 		
+		
+		//기존파일 삭제
+		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/pMainImages/");
+		String pImage = productService.getImagePid(vo.getpId());
+		fileService.fileDeleteCheck(uploadPath + pImage);
+		
 		int res = productService.productUpdateOk(file, vo, root); // 잘 정비된 VO를 DB에 저장한다.
 
 		int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
@@ -245,6 +257,10 @@ public class ProductController {
 		model.addAttribute("vos", vos);
 		model.addAttribute("pageVO", pageVO);
 		
+		//기존파일 삭제
+		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/pMainImages/");
+		String pImage = productService.getImagePid(pId);
+		fileService.fileDeleteCheck(uploadPath + pImage);
 		
 		ProductVO vo = productService.getIdCheck(pId);
 		productService.pDelete(vo.getpId());

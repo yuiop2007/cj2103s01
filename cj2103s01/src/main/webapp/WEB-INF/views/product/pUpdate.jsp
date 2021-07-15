@@ -37,7 +37,43 @@ label{
 }
 
 </style>
+<script>
+function inputCheck() {
+	
+	// 선택된 갯수
+	var pColor = $("input:checkbox[name=pColor]:checked").length;	
+	var pSize = $("input:checkbox[name=pSize]:checked").length;	
+	var pName = $("#pName").val();
+	var pPrice = $("#pPrice").val();
+	
+	if(pName==""){
+		alert("상품명을 입력하세요.");
+		return false;
+	}
+	else if(pColor < 1){
+		alert("색상을 체크하세요.");
+		return false;
+	}
+	else if(pSize < 1){
+		alert("사이즈를 체크하세요.");
+		return false;
+	}
+	else if(pPrice==""){
+		alert("가격을 입력하세요.");
+		return false;
+	}
+	else if($('#file').val() == ""){
+		alert("대표이미지 첨부파일은 필수입니다.");
+	    $("#file").focus();
+	    return false;
+	}
+	else {
+		pUpdateform.submit();	
+	}
+	
+}
 
+</script>
 </head>
 <body>
 	<div class="jumbotron text-center">
@@ -92,9 +128,7 @@ label{
 					<input type="number" id="pStock" name="pStock" value="${vo.pStock}"><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required>
-					<div class="boardbtn">
-						<img src="${ctp}/resources/pMainImages/${vo.pImage}" width="300px;"/><a href="#" class="infoRemove">삭제</a>
-					</div>
+					❗&nbsp;&nbsp;<strong style="color: red;">제품 정보 수정시 대표이미지는 꼭 새로 업로드 하십시오.</strong>
 					<br/><br/><br/>
 				<label>제품 정보</label>
 					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;">${vo.pInfo}</textarea>
@@ -109,7 +143,7 @@ label{
 					</script>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/product/pContent?pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}'">취소</button>
-				<button type="submit" class="btn btn-dark">수정하기</button>
+				<button type="button" class="btn btn-dark" onclick="inputCheck()">수정하기</button>
 				<input type="hidden" name="pId" value="${vo.pId}"/>
 			    <input type="hidden" name="pag" value="${pageVO.pag}"/>
 			    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>

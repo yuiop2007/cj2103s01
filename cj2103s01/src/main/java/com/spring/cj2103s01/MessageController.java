@@ -147,6 +147,10 @@ public class MessageController {
 			model.addAttribute("msg", "재고가 부족합니다.");
 			model.addAttribute("url", "order/cartList");
 		}
+		else if(msgFlag.equals("orderOk")) {
+			model.addAttribute("msg", "주문이 완료되었습니다.");
+			model.addAttribute("url", "order/oList");
+		}
 	
 		
 		

@@ -15,7 +15,7 @@
 <script>
 	function cancelCheck(oId) {
 		var oStatus = $("#oStatus").val();
-		var ans = confirm("취소 신청 하시겠습니까?");
+		var ans = confirm("취소 신청 하시겠습니까? 배송완료 처리 후 취소됩니다.");
 		if(ans) {
 			if(oStatus=="배송준비중" || oStatus=="입금전"){
 				$.ajax({
@@ -37,53 +37,71 @@
 	}
 	
 	function changeCheck(oId) {
+		var oStatus = $("#oStatus").val();
 		var ans = confirm("교환 신청 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/changeOk",
-				data : {
-					oId : oId
-				},
-				success : function(data) {
-					alert("교환 신청 되었습니다.");
-					location.href="${ctp}/order/oContent?oId=" + oId;
-				}
-			});
+			if(oStatus=="배송완료"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/changeOk",
+					data : {
+						oId : oId
+					},
+					success : function(data) {
+						alert("교환 신청 되었습니다.");
+						location.href="${ctp}/order/oContent?oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("배송완료 후 가능합니다.");
+			}
 		}
 	}
 	
 	function returnCheck(oId) {
+		var oStatus = $("#oStatus").val();
 		var ans = confirm("반품 신청 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/returnOk",
-				data : {
-					oId : oId
-				},
-				success : function(data) {
-					alert("반품 신청 되었습니다.");
-					location.href="${ctp}/order/oContent?oId=" + oId;
-				}
-			});
+			if(oStatus=="배송완료"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/returnOk",
+					data : {
+						oId : oId
+					},
+					success : function(data) {
+						alert("반품 신청 되었습니다.");
+						location.href="${ctp}/order/oContent?oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("배송완료 후 가능합니다.");
+			}
 		}
 	}
 	
 	function buyOkCheck(oId) {
+		var oStatus = $("#oStatus").val();
 		var ans = confirm("구매 확정 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/buyOk",
-				data : {
-					oId : oId
-				},
-				success : function(data) {
-					alert("구매가 확정되었습니다.");
-					location.href="${ctp}/order/oContent?oId=" + oId;
-				}
-			});
+			if(oStatus=="배송완료"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/buyOk",
+					data : {
+						oId : oId
+					},
+					success : function(data) {
+						alert("구매가 확정되었습니다.");
+						location.href="${ctp}/order/oContent?oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("배송완료 후 가능합니다.");
+			}
 		}
 	}
 	
@@ -133,7 +151,7 @@
 							</tr>
 							<tr>
 								<th scope="row">PRICE</th>
-								<td class="subject2"><font color="#f76560"><b><fmt:formatNumber value="${vo.oPrice}" pattern="#,###" /></b></font></td>
+								<td class="subject2"><font color="#f76560"><b><fmt:formatNumber value="${vo.oPrice}" pattern="#,###" /> 원</b></font></td>
 							</tr>
 							<tr>
 								<th scope="row">PAYMENT</th>
@@ -150,6 +168,14 @@
 							<tr>
 								<th scope="row">STATUS</th>
 								<td class="subject2"><font color="#f76560"><b>${vo.oStatus}</b></font></td>
+							</tr>
+							<tr>
+								<th scope="row">Use Point</th>
+								<td class="subject2"><fmt:formatNumber value="${vo.oUsePoint}" pattern="#,###" /> 원</td>
+							</tr>
+							<tr>
+								<th scope="row">적립예정금액</th>
+								<td class="subject2"><fmt:formatNumber value="${vo.oSetPoint}" pattern="#,###" /> 원</td>
 							</tr>
 							<tr>
 								<th scope="row">MESSAGE</th>

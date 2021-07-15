@@ -368,16 +368,21 @@
 								</tr>
 								<tr class=" xans-record-">
 									<th scope="row">
-									<c:choose>
-										<c:when test="${vo.pSale>0}">
-											<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
-											<span style="font-size:13px;color:#000000;font-weight:bold; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>
-											<span style="font-size:13px;color:#000000;font-weight:bold;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span>
-										</c:when>
-										<c:otherwise>
-											<span style="font-size:13px;color:#000000;font-weight:bold;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>	
-										</c:otherwise>
-									</c:choose>
+										<c:if test="${vo.pStock>0}">
+											<c:choose>
+												<c:when test="${vo.pSale>0}">
+													<c:set var="salePrice" value="${vo.pPrice-vo.pSale}" />
+													<span style="font-size:13px;color:#000000;font-weight:bold; text-decoration: line-through;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>
+													<span style="font-size:13px;color:#000000;font-weight:bold;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span>
+												</c:when>
+												<c:otherwise>
+													<span style="font-size:13px;color:#000000;font-weight:bold;"><fmt:formatNumber value="${vo.pPrice}" pattern="#,###" />원</span>	
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+										<c:if test="${vo.pStock eq 0}">
+											<span style="font-size:13px;color:#000000;font-weight:bold;">Sold Out</span>
+										</c:if>
 									</th>
 								</tr>
 								<tr class=" xans-record-">

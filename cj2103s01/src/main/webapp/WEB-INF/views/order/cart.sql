@@ -12,4 +12,6 @@ create table cart(
 
 select *from cart where cartId = 60;
 
+select cartId from cart where mId = 'admin' and pOption = 'Black_L' and pId = 19;
+
 drop table cart;

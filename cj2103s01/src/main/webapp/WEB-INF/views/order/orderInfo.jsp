@@ -182,6 +182,25 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 			}
 		});
 	});
+
+	$(document).ready(function(){
+		$("#pointUse").on('click', function(){
+			var oPrice = $("#oPricemilecheck").val();
+			var pSale = $("#salecheck").val();
+			var mPoint = $("#mPoint").val();
+			
+			oPrice = parseInt(oPrice);
+			mPoint = parseInt(mPoint);
+			pSale = parseInt(pSale);
+			
+			$("#mile").val(mPoint);
+			
+			oPrice = oPrice - mPoint;
+			pSale = pSale + mPoint;
+			orderForm.oPrice.value = oPrice;
+			orderForm.pSale.value = pSale;
+		});
+	});
 </script>
 </head>
 <body>
@@ -248,16 +267,16 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 									<c:set var="totPoint" value="${totPoint + point}"/>
 									<img src="${ctp}/resources/images/point.gif"/>${point}원
 								</td>
-								<td class="td1" style="width: 10%; padding-top: 55px;"><fmt:formatNumber value="${vo.pSale}" pattern="#,###" /></td>
+								<td class="td1" style="width: 10%; padding-top: 55px;">${pvo.pSale}</td>
 								<c:set var="pSale" value="${pSale + pvo.pSale }"/>
 								<c:choose>
 									<c:when test="${pvo.pSale>0}">
 										<c:set var="salePrice" value="${cvo.pPrice-(pvo.pSale*cvo.pCnt)}" />
-										<td class="td1" style="width: 10%; padding-top: 55px;"><span style="font-size:11px;color:#000000;">&nbsp;<fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
+										<td class="td1" style="width: 10%; padding-top: 55px;"><span style="font-size:11px;color:#000000;">&nbsp;${salePrice}원</span></td>
 									</c:when>
 									<c:otherwise>
 										<c:set var="salePrice" value="${cvo.pPrice}" />
-										<td class="td1" style="width: 10%; padding-top: 55px;"><span style="font-size:11px;color:#000000;"><fmt:formatNumber value="${salePrice}" pattern="#,###" />원</span></td>
+										<td class="td1" style="width: 10%; padding-top: 55px;"><span style="font-size:11px;color:#000000;">${salePrice}원</span></td>
 									</c:otherwise>
 								</c:choose>
 								<c:set var="totPrice" value="${totPrice + salePrice}"/>
@@ -270,7 +289,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 				<c:set var="orderPrice" value="${totPrice + Delivery}"/>
 					<tr>
 						<td style="text-align: right;" colspan="7">
-							<span style="font-size: 12px;">상품구매금액 <fmt:formatNumber value="${totPrice}" pattern="#,###" /> + 배송비 <fmt:formatNumber value="${Delivery}" pattern="#,###" /> <c:if test="${Delivery eq 0}">(무료)</c:if> = 합계 : </span><strong><font color="#f76560" size="4px"><fmt:formatNumber value="${orderPrice}" pattern="#,###" /></font><font color="#f76560" size="4px">원</font></strong>
+							<span style="font-size: 12px;">상품구매금액 ${totPrice} + 배송비 ${Delivery} <c:if test="${Delivery eq 0}">(무료)</c:if> = 합계 : </span><strong><font color="#f76560" size="4px">${orderPrice}</font><font color="#f76560" size="4px">원</font></strong>
 						</td>
 					</tr>
 				</tbody>
@@ -365,7 +384,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 							<td class="price"><div class="box"><strong>${totPrice + pSale}</strong>원 <span class="tail displaynone"></span></div></td>
 							<td class="option"><div class="box"><strong>+</strong>
 							<strong>${Delivery}</strong>원 <span class="tail displaynone"></span></div></td>
-							<td class="discount displaynone"><strong>-</strong><strong><input id="pSale" name="pSale" type="text" value="${pSale}" readonly style="border: 0px; margin: 0; padding: 0; width: 17%; font-weight: bold;"></strong>원</td>
+							<td class="discount displaynone"><strong>-</strong><strong><input id="pSale" name="pSale" type="text" value="${pSale}" readonly style="border: 0px; margin: 0; padding: 0; width: 20%; font-weight: bold;"></strong>원</td>
 							<td class="total"><div class="box"><strong>=</strong><strong><input id="oPrice" name="oPrice" type="text" value="${orderPrice}" readonly style="border: 0px; margin: 0; padding: 0; width: 20%; font-weight: bold;"></strong>원 <span class="tail displaynone"></span></div></td>
 		                </tr>
 		               </tbody>
@@ -378,15 +397,17 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 				</colgroup>
 				<tbody>
 				<tr class="sum txt14">
-					<th scope="row"><strong>총 할인결제금액</strong></th>
-	                <td><strong id="total_addpay_price_view">0</strong>원</td>
 	            </tr>
 	            </tbody>
 				<!-- 적립금 -->
 				<tbody class="">
 					<tr class="txt15">
 						<th scope="row">적립금</th>
-				        <td><p><input id="mile" name="mile" size="10" value="" type="text" style="width: 190px;"> 원 (총 사용가능 적립금 : <strong class="txtWarn" style="color: #f76560;">${mvo.mPoint}</strong>원)</p>
+				        <td><p><input id="mile" name="mile" size="10" value="0" type="text" style="width: 190px;"> 원 (총 사용가능 적립금 : <strong class="txtWarn" style="color: #f76560;">${mvo.mPoint}</strong>원)</p>
+				        <input type="hidden" id="mPoint" value="${mvo.mPoint }">
+				        <div class=boardbtn>
+							<a href="#" id="pointUse">모두사용</a>
+						</div>
 						</td>
 		            </tr>
 					<tr class="txt15">
@@ -407,8 +428,8 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 			<c:set var="salecheck" value="${pSale}"/>
 			<input type="hidden" id="salecheck" value="${salecheck}"/>
 			<input type="hidden" id="oPricemilecheck" value="${milecheck}"/>
-			<input type="hidden" id="delItems" name="delItems" value="${delItems}"/>
-			<input type="hidden" name="point" value="${totPoint}"/>
+			<input type="hidden" name="delItems" value="${delItems}"/>
+			<input type="hidden" name="oSetPoint" value="${totPoint}"/>
 			<input type="hidden" name="mId" value="${smid}"/>
 			<input type="hidden" name="oDelivery" value="${Delivery}"/>
 		</form>

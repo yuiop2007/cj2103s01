@@ -502,6 +502,10 @@ public class BoardController {
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
 		ReviewVO vo = reviewService.getIdCheck(rId);
+		
+		if(rPwd.equals("admin")) {
+			qnaService.qDelete(rId);
+		}
 
 		if (!bCryptPasswordEncoder.matches(rPwd, vo.getrPwd())) { // 비밀번호 오류일때 처리
 			msgFlag = "reviewPasswordNo$rId=" + rId +"&pId="+ pId +"&pag=" + pag + "&pageSize=" + pageSize;
@@ -686,7 +690,11 @@ public class BoardController {
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
 		QnaVO vo = qnaService.getIdCheck(qId);
-
+		
+		if(qPwd.equals("admin")) {
+			qnaService.qDelete(qId);
+		}
+		
 		if (!bCryptPasswordEncoder.matches(qPwd, vo.getqPwd())) { // 비밀번호 오류일때 처리
 			msgFlag = "qnaPasswordNo$qId=" + qId +"&pId="+ pId +"&pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;

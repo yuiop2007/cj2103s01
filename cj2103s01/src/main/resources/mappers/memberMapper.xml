@@ -18,6 +18,14 @@
 		update member set mDrop='YES' where mId=#{mId};
 	</update>
 
+	<update id="downPointBuy">
+		update member set mBuy=mBuy-1, mPoint=mPoint-#{point} where mId=#{mId};
+	</update>
+	
+	<update id="upMemberPoint">
+		update member set mPoint=mPoint+#{point}, mUsepoint=mUsepoint-#{point} where mId=#{mId};
+	</update>
+
 	<select id="getPwdSearch" resultType="com.spring.cj2103s01.vo.MemberVO">
 		select * from member where mId = #{mId} and mEmail = #{mEmail};
 	</select>

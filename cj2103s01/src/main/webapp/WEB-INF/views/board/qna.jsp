@@ -41,10 +41,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 	</div>
 	<div class="container">
 		<h6>Q & A</h6>
-		</br>
-		</br>
-		</br>
-		</br>
+		<br/><br/><br/><br/>
 		<form name="pageForm">
 			<table class="table table-borderless">
 				<thead>

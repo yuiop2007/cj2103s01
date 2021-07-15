@@ -18,6 +18,10 @@
 		select count(pId) from product where ${search} like concat('%', #{searchString} ,'%');
 	</select>
 	
+	<select id="getImagePid" resultType="String">
+		select pImage from product where pId = #{pId};
+	</select>
+	
 	<insert id="setProductInput">
 	    insert into product values (default, #{vo.pName}, #{vo.pCate}, #{vo.pColor}, #{vo.pSize}, #{vo.pPrice}, default, #{vo.pStock}, #{vo.pImage}, #{vo.pInfo}, #{vo.pContent}, #{vo.pDelivery}, default, default, default);
 	</insert>
@@ -31,11 +35,11 @@
 	</update>
 	
 	<update id="setStockUpdate">
-	    update product set pStock = pStock - #{Cnt} where pId = #{pId};
+	    update product set pStock = pStock - #{Cnt}, pSell = pSell + #{Cnt} where pId = #{pId};
 	</update>
 	
 	<update id="setCancelStockUpdate">
-	    update product set pStock = pStock + #{Cnt} where pId = #{pId};
+	    update product set pStock = pStock + #{Cnt}, pSell=pSell-#{Cnt} where pId = #{pId};
 	</update>
 	
 	<select id="getProductContent" resultType="com.spring.cj2103s01.vo.ProductVO">

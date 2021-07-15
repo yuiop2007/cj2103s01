@@ -28,3 +28,5 @@ update product set pName='버튼 미니멀 레더 자켓' where pId=3;
 update product set pName='1', pCate='O', pColor='q', pSize='M', pPrice=123, pStock=12, pImage='asd', pInfo='123', pContent='asd' where pId=3;
 
 delete from product where pId = 13;
+
+select pImage from product where pId = 13;

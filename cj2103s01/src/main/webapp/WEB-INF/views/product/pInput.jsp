@@ -24,6 +24,40 @@ label{
 }
 </style>
 <script>
+	function inputCheck() {
+		
+		// 선택된 갯수
+		var pColor = $("input:checkbox[name=pColor]:checked").length;	
+		var pSize = $("input:checkbox[name=pSize]:checked").length;	
+		var pName = $("#pName").val();
+		var pPrice = $("#pPrice").val();
+		
+		if(pName==""){
+			alert("상품명을 입력하세요.");
+			return false;
+		}
+		else if(pColor < 1){
+			alert("색상을 체크하세요.");
+			return false;
+		}
+		else if(pSize < 1){
+			alert("사이즈를 체크하세요.");
+			return false;
+		}
+		else if(pPrice==""){
+			alert("가격을 입력하세요.");
+			return false;
+		}
+		else if($('#file').val() == ""){
+			alert("대표이미지 첨부파일은 필수입니다.");
+		    $("#file").focus();
+		    return false;
+		}
+		else {
+			pInputform.submit();	
+		}
+		
+	}
 </script>
 </head>
 <body>
@@ -76,7 +110,9 @@ label{
 				<label>재고</label>
 					<input type="number" id="pStock" name="pStock" value="0"><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
-					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required><br/><br/><br/>
+					<input type="file" id="file" name="file" accept=".gif,.jpg,.png,.jpeg,.bmp" required>
+					❗&nbsp;&nbsp;<strong style="color: red;">대표이미지는 필수로 업로드 하십시오.</strong>
+					<br/><br/><br/>
 				<label>제품 정보</label>
 					<textarea rows="3" cols="20" name="pInfo" required style="height: 200px;">제품 정보
 상세사이즈
@@ -94,7 +130,7 @@ label{
 					</script>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/admin/admin'">취소</button>
-				<button type="submit" class="btn btn-dark">등록하기</button>
+				<button type="button" class="btn btn-dark" onclick="inputCheck()">등록하기</button>
 			</div>
 		</form>
 	</div>

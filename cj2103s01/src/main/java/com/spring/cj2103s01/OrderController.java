@@ -81,6 +81,8 @@ public class OrderController {
 						if(vo.getpId() == pId && vo.getpOption().equals(orderName[i])) {
 							orderService.setCartCntUpdate(mId, pId, orderName[i], Integer.parseInt(orderNum[i]), Integer.parseInt(orderPrice[i]));
 							sw = 1;
+							int idx = orderService.getCartIdx(mId, pId, orderName[i]);
+							delItems += Integer.toString(idx) + "/";
 						}
 					}
 				}
@@ -205,16 +207,13 @@ public class OrderController {
 		
 		String message = request.getParameter("oMessage") == null ? "" : request.getParameter("oMessage");
 		vo.setoMessage(message);
-		
-		String point = request.getParameter("point");
-		if(point==null || point.trim().equals("")) {
-			point = "0";
-		}
+
 		
 		String mile = request.getParameter("mile");
 		if(mile==null || mile.trim().equals("")) {
 			mile = "0";
 		}
+		vo.setoUsePoint(Integer.parseInt(mile));
 		
 		String[] idxs = delItems.split("/");
 		CartVO cartvo = new CartVO();
@@ -242,7 +241,7 @@ public class OrderController {
 		//회원 구매횟수 올리기(카드결제면올리고) + 적립시키기
 		if(vo.getoStatus().equals("배송준비중")) {
 			memberService.updateMemberBuy(vo.getmId());
-			memberService.updateMemberPoint(vo.getmId(), Integer.parseInt(point));
+			memberService.updateMemberPoint(vo.getmId(), vo.getoSetPoint());
 		}
 		//포인트 사용시 깎고 사용포인트에 추가
 		if(Integer.parseInt(mile)>0) {
@@ -259,7 +258,8 @@ public class OrderController {
 		}
 		
 		session.setAttribute("cart", cart);
-		return "redirect:/main";
+		msgFlag = "orderOk";
+		return "redirect:/msg/" + msgFlag;
 	}
 	
 	@RequestMapping(value = "/oList", method = RequestMethod.GET)
@@ -395,14 +395,21 @@ public class OrderController {
 	@RequestMapping(value = "/cancelEnd", method = RequestMethod.GET)
 	public String cancelEndGet(String mId, int oId) {
 		orderService.setCancelEndUpdate(oId);
-		// 취소완료시 오더의 재고처리, 포인트삭감, 구매횟수 삭감
+		OrderVO ovo = orderService.getOrderInfo(oId);
+		memberService.upMemberPoint(mId, ovo.getoUsePoint());//구매시 사용한 포인트 재적립 + 사용포인트 다시 줄이기
+		
+		// 취소완료시 오더의 재고처리, 적립금삭감, 구매횟수 삭감
 		// vos에 oId에 대한 모든 orderDetail 불러오기
-		// 그 pId마다 수량 올리기
+		// 그 pId마다 재고다시 채우고 판매횟수에서 삭감
 		List<OrderDetailVO> vos = orderService.getOrderDetailListOid(mId, oId);
 		for(OrderDetailVO vo : vos) {
 			productService.setCancelStockUpdate(vo.getpId(), vo.getOdCnt());
 		}
+		if(!ovo.getoStatus().equals("입금전")) {
+			memberService.downPointBuy(mId, ovo.getoSetPoint()); // 구매횟수 + 적립금삭감
+		}
 		
+		orderService.updateCancelStatus(oId); //배송완료처리
 		return "";
 	}
 }

@@ -14,72 +14,96 @@
 <link rel="stylesheet" type="text/css" href="${ctp}/resources/css/css.css">
 <script>
 	function cancelCheck(mId, oId) {
+		var oChange = $("#oChange").val();
 		var ans = confirm("취소 완료 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/cancelEnd",
-				data : {
-					mId : mId,
-					oId : oId
-				},
-				success : function(data) {
-					alert("취소 완료 되었습니다.");
-					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
-				}
-			});
+			if(oChange=="취소"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/cancelEnd",
+					data : {
+						mId : mId,
+						oId : oId
+					},
+					success : function(data) {
+						alert("취소 완료 되었습니다.");
+						location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("취소 상태일 때 만 가능합니다.");
+			}
 		}
 	}
 	
-	function changeCheck(oId) {
+	function changeCheck(mId, oId) {
+		var oChange = $("#oChange").val();
 		var ans = confirm("교환 완료 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/changeEnd",
-				data : {
-					oId : oId
-				},
-				success : function(data) {
-					alert("교환 완료 되었습니다.");
-					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
-				}
-			});
+			if(oChange=="교환"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/changeEnd",
+					data : {
+						oId : oId
+					},
+					success : function(data) {
+						alert("교환 완료 되었습니다.");
+						location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("교환 상태일 때 만 가능합니다.");
+			}
 		}
 	}
 	
 	function returnCheck(mId, oId) {
+		var oChange = $("#oChange").val();
 		var ans = confirm("반품 완료 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/returnEnd",
-				data : {
-					mId : mId,
-					oId : oId
-				},
-				success : function(data) {
-					alert("반품 완료 되었습니다.");
-					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
-				}
-			});
+			if(oChange=="반품"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/returnEnd",
+					data : {
+						mId : mId,
+						oId : oId
+					},
+					success : function(data) {
+						alert("반품 완료 되었습니다.");
+						location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("반품 상태일 때 만 가능합니다.");
+			}
 		}
 	}
 	
-	function buyOkCheck(oId) {
+	function buyOkCheck(mId, oId) {
+		var oStatus = $("#oStatus").val();
 		var ans = confirm("구매 확정 하시겠습니까?");
 		if(ans) {
-			$.ajax({
-				type : "get",
-				url : "${ctp}/order/buyOk",
-				data : {
-					oId : oId
-				},
-				success : function(data) {
-					alert("구매가 확정되었습니다.");
-					location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
-				}
-			});
+			if(oStatus=="배송완료"){
+				$.ajax({
+					type : "get",
+					url : "${ctp}/order/buyOk",
+					data : {
+						oId : oId
+					},
+					success : function(data) {
+						alert("구매가 확정되었습니다.");
+						location.href="${ctp}/admin/oInfo?mId="+mId+"&oId=" + oId;
+					}
+				});
+			}
+			else{
+				alert("배송완료 후 가능합니다.");
+			}
 		}
 	}
 		
@@ -90,6 +114,8 @@
 		<br/><br/><br/><br/>
 		<form name=contentform method="post">
 			<input type="hidden" id="mId" value="${vo.mId}"/>
+			<input type="hidden" id="oChange" value="${vo.oChange}"/>
+			<input type="hidden" id="oStatus" value="${vo.oStatus}"/>
 			<div class=board>
 				<div class=boardview>
 					<table class="boardtable">
@@ -124,7 +150,7 @@
 							</tr>
 							<tr>
 								<th scope="row">PRICE</th>
-								<td class="subject2"><font color="#f76560"><b><fmt:formatNumber value="${vo.oPrice}" pattern="#,###" /></b></font></td>
+								<td class="subject2"><font color="#f76560"><b><fmt:formatNumber value="${vo.oPrice}" pattern="#,###" /> 원</b></font></td>
 							</tr>
 							<tr>
 								<th scope="row">PAYMENT</th>
@@ -141,6 +167,14 @@
 							<tr>
 								<th scope="row">STATUS</th>
 								<td class="subject2"><font color="#f76560"><b>${vo.oStatus}</b></font></td>
+							</tr>
+							<tr>
+								<th scope="row">Use Point</th>
+								<td class="subject2"><fmt:formatNumber value="${vo.oUsePoint}" pattern="#,###" /> 원</td>
+							</tr>
+							<tr>
+								<th scope="row">적립예정금액</th>
+								<td class="subject2"><fmt:formatNumber value="${vo.oSetPoint}" pattern="#,###" /> 원</td>
 							</tr>
 							<tr>
 								<th scope="row">MESSAGE</th>
@@ -204,9 +238,9 @@
 				<div class=boardbtn>
 					<a href="#" onclick="window.close()">창닫기</a>
 					<a href="#" onclick="cancelCheck('${vo.mId}', ${vo.oId})">취소완료</a>
-					<a href="#" onclick="changeCheck(${vo.oId})">교환완료</a>
+					<a href="#" onclick="changeCheck('${vo.mId}', ${vo.oId})">교환완료</a>
 					<a href="#" onclick="returnCheck('${vo.mId}', ${vo.oId})">반품완료</a>
-					<a href="#" onclick="buyOkCheck(${vo.oId})">구매확정</a>
+					<a href="#" onclick="buyOkCheck('${vo.mId}', ${vo.oId})">구매확정</a>
 				</div>
 				<br/><br/><br/><br/><br/><br/><br/><br/>
 			</div>
