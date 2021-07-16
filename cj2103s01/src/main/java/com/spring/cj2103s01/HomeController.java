@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.ProductService;
+import com.spring.cj2103s01.service.SlideService;
 import com.spring.cj2103s01.vo.ProductVO;
+import com.spring.cj2103s01.vo.SlideVO;
 
 @Controller
 public class HomeController {
@@ -34,6 +36,9 @@ public class HomeController {
 	
 	@Autowired
 	Pagenation pagenation;
+	
+	@Autowired
+	SlideService slideService;
 	
 	@RequestMapping(value = {"/","main"}, method = RequestMethod.GET)
 	public String main(@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
@@ -45,9 +50,13 @@ public class HomeController {
 		
 		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
 		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
-
+		List<SlideVO> svos = slideService.getSlideMainList();
+		int sCnt = slideService.getSlideTotCnt();
+		
 		model.addAttribute("cate", cate);
+		model.addAttribute("sCnt", sCnt);
 		model.addAttribute("vos", vos);
+		model.addAttribute("svos", svos);
 		model.addAttribute("pageVO", pageVO);
 		
 		return "main/main";

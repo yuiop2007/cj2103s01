@@ -23,52 +23,52 @@
 	
 	//HTML 로드가 끝난 후 동작
 	window.onload=function(){
-	showSlides(slideIndex);
-	
-	// Auto Move Slide
-	var sec = 3000;
-	setInterval(function(){
-	 slideIndex++;
-	 showSlides(slideIndex);
-	
-	}, sec);
+		showSlides(slideIndex);
+		
+		// Auto Move Slide
+		var sec = 3000;
+		setInterval(function(){
+		 slideIndex++;
+		 showSlides(slideIndex);
+		
+		}, sec);
 	}
 	
 	
 	//Next/previous controls
 	function moveSlides(n) {
-	slideIndex = slideIndex + n
-	showSlides(slideIndex);
+		slideIndex = slideIndex + n
+		showSlides(slideIndex);
 	}
 	
 	//Thumbnail image controls
 	function currentSlide(n) {
-	slideIndex = n;
-	showSlides(slideIndex);
+		slideIndex = n;
+		showSlides(slideIndex);
 	}
 	
 	function showSlides(n) {
 	
-	var slides = document.getElementsByClassName("mySlides");
-	var dots = document.getElementsByClassName("dot");
-	var size = slides.length;
-	
-	if ((n+1) > size) {
-	 slideIndex = 0; n = 0;
-	}else if (n < 0) {
-	 slideIndex = (size-1);
-	 n = (size-1);
-	}
-	
-	for (i = 0; i < slides.length; i++) {
-	   slides[i].style.display = "none";
-	}
-	for (i = 0; i < dots.length; i++) {
-	   dots[i].className = dots[i].className.replace(" active", "");
-	}
-	
-	slides[n].style.display = "block";
-	dots[n].className += " active";
+		var slides = document.getElementsByClassName("mySlides");
+		var dots = document.getElementsByClassName("dot");
+		var size = slides.length;
+		
+		if ((n+1) > size) {
+		 slideIndex = 0; n = 0;
+		}else if (n < 0) {
+		 slideIndex = (size-1);
+		 n = (size-1);
+		}
+		
+		for (i = 0; i < slides.length; i++) {
+		   slides[i].style.display = "none";
+		}
+		for (i = 0; i < dots.length; i++) {
+		   dots[i].className = dots[i].className.replace(" active", "");
+		}
+		
+		slides[n].style.display = "block";
+		dots[n].className += " active";
 	}
 </script>
 </head>
@@ -78,49 +78,29 @@
 		<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	</div>
 	<div class="container">
-		<div class="slideshow-container">
-
-			<!-- Full-width images with number and caption text -->
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner1.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
+		<c:if test="${sCnt>1}">
+			<div class="slideshow-container">
+				<!-- Full-width images with number and caption text -->
+				<c:forEach var="svo" items="${svos}">
+					<div class="mySlides fade">
+						<img src="${ctp}/resources/slideshow/${svo.sImage}" style="width: 100%; height: 500px;">
+						<div class="text">MINIM</div>
+					</div>
+				</c:forEach>
+				
+				<!-- Next and previous buttons -->
+				<a class="prev" onclick="moveSlides(-1)">&#10094;</a> <a class="next" onclick="moveSlides(1)">&#10095;</a>
 			</div>
-
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner2.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
+			<br />
+			<!-- The dots/circles -->
+			<div style="text-align: center">
+				<c:set var="num" value="0"/>
+				<c:forEach var="svo" items="${svos}">
+					<span class="dot" onclick="currentSlide(${num})"></span>
+					<c:set var="num" value="${num+1}"/>
+				</c:forEach>
 			</div>
-
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner3.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
-			</div>
-
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner4.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
-			</div>
-
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner5.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
-			</div>
-
-			<div class="mySlides fade">
-				<img src="${ctp}/resources/slideshow/banner6.jpg" style="width: 100%; height: 500px;">
-				<div class="text">MINIM</div>
-			</div>
-
-			<!-- Next and previous buttons -->
-			<a class="prev" onclick="moveSlides(-1)">&#10094;</a> <a class="next" onclick="moveSlides(1)">&#10095;</a>
-		</div>
-		<br />
-		<!-- The dots/circles -->
-		<div style="text-align: center">
-			<span class="dot" onclick="currentSlide(0)"></span> <span class="dot" onclick="currentSlide(1)"></span> <span class="dot" onclick="currentSlide(2)"></span>
-			<span class="dot" onclick="currentSlide(3)"></span> <span class="dot" onclick="currentSlide(4)"></span> <span class="dot" onclick="currentSlide(5)"></span>
-		</div>
-		
+		</c:if>
 		<div class="mainProduct">
 			<ul class="proList column4">
 					<c:forEach var="vo" items="${vos}">

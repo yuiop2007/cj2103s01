@@ -34,6 +34,9 @@ public class FileService {
 			else if(root.equals("eInput")) {
 				root = "boardfile";
 			}
+			else if(root.equals("sInput")) {
+				root = "slideshow";
+			}
 			
 			
 			String uploadPath = request.getSession().getServletContext().getRealPath("/resources/"+ root +"/");
@@ -72,5 +75,19 @@ public class FileService {
 		public void fileDeleteCheck(String delFilePath) {
 			File delFile = new File(delFilePath);
 			if(delFile.exists()) delFile.delete();
+		}
+
+		public int imgDelete(String uploadPath) {
+			File path = new File(uploadPath);
+			// 파일객체를 통해서 uploadPath경로안의 모든 파일의 정보를 담아와서 배열로 저장한다.
+			File[] fileList = path.listFiles();
+			
+			int fileCnt = fileList.length - 1;
+			
+			for(int i=0; i<fileCnt; i++) {
+				fileList[i].delete();
+			}
+			
+			return fileCnt;
 		}
 }

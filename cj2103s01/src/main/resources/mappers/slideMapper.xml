@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s01.dao.SlideDAO">
+  
+	<select id="getSlideList" resultType="com.spring.cj2103s01.vo.SlideVO">
+		select * from slide;
+	</select>
+  
+	<select id="getSlideMainList" resultType="com.spring.cj2103s01.vo.SlideVO">
+		select *from slide order by sNum asc;
+	</select>
+
+	<select id="getSlideTotCnt" resultType="int">
+		select count(*) from slide;
+	</select>
+	
+	<insert id="setSlideInput">
+		insert into slide values(default, #{vo.sImage}, #{vo.sNum});
+	</insert>
+	
+	<select id="getImageSid" resultType="String">
+		select sImage from slide where sId = #{sId};
+	</select>
+	
+	<delete id="sDelete">
+		delete from slide where sId = #{sId};
+	</delete>
+	
+	<update id="sNumUpdate">
+	    update slide set sNum = #{sNum} where sId=#{sId};
+	</update>
+</mapper>

@@ -83,6 +83,14 @@ public class MessageController {
 			model.addAttribute("msg", "상품등록에 실패하였습니다.");
 			model.addAttribute("url", "product/pList");
 		}
+		else if(msgFlag.equals("sInputOk")) {
+			model.addAttribute("msg", "이미지가 등록되었습니다.");
+			model.addAttribute("url", "admin/sInput");
+		}
+		else if(msgFlag.equals("sInputNo")) {
+			model.addAttribute("msg", "이미지등록에 실패하였습니다.");
+			model.addAttribute("url", "admin/sInput");
+		}
 		else if(msgFlag.equals("nInputOk")) {
 			model.addAttribute("msg", "게시물이 등록되었습니다.");
 			model.addAttribute("url", "board/notice");
@@ -155,6 +163,10 @@ public class MessageController {
 		
 		
 		// 예) msgFlag = "boardPasswordNo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
+		else if(msgFlag.substring(0, 11).equals("imgDeleteOk")) {
+			model.addAttribute("msg", "임시 그림파일("+msgFlag.substring(12)+"개)이 모두 삭제되었습니다.");
+			model.addAttribute("url", "admin/admin");
+		}
 		else if(msgFlag.substring(0,15).equals("eventPasswordNo")) {
 			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
 			model.addAttribute("url", "board/eContent?"+msgFlag.substring(16));
@@ -243,6 +255,7 @@ public class MessageController {
 			model.addAttribute("msg", "추가하였습니다.");
 			model.addAttribute("url", "product/pContent?"+msgFlag.substring(10));
 		}
+		
 		return "include/message";
 	}
 }

@@ -245,7 +245,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/pDelete", method = RequestMethod.POST)
-	public String pDeleteGet(int pId, HttpServletRequest request,
+	public String pDeletePost(int pId, HttpServletRequest request,
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
 		

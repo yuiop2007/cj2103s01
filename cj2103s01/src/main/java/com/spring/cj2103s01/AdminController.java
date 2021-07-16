@@ -2,6 +2,7 @@ package com.spring.cj2103s01;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s01.pagenation.Pagenation;
 import com.spring.cj2103s01.pagenation.PagenationVO;
 import com.spring.cj2103s01.service.CouponService;
+import com.spring.cj2103s01.service.FileService;
 import com.spring.cj2103s01.service.MemberService;
 import com.spring.cj2103s01.service.OrderService;
 import com.spring.cj2103s01.service.ProductService;
+import com.spring.cj2103s01.service.SlideService;
 import com.spring.cj2103s01.vo.CouponVO;
 import com.spring.cj2103s01.vo.MemberVO;
 import com.spring.cj2103s01.vo.OrderDetailVO;
 import com.spring.cj2103s01.vo.OrderVO;
 import com.spring.cj2103s01.vo.ProductVO;
+import com.spring.cj2103s01.vo.SlideVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -43,11 +48,18 @@ public class AdminController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	FileService fileService;
+	
+	@Autowired
+	SlideService slideService;
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminGet(Model model) {
 
-
+		//모든 주문내역 날짜 체크 후 배송완료+주문상태의 일주일 이후 주문은 구매확정 처리
+		
 		model.addAttribute("totMember", memberService.totMemberCnt()); // 총회원수
 		model.addAttribute("dropMember", memberService.dropMemberCnt()); // 탈퇴회원수
 		model.addAttribute("totProduct", productService.totProductCnt()); // 총 상품수
@@ -369,5 +381,79 @@ public class AdminController {
 		model.addAttribute("odvos", odvos);
 		
 		return "admin/oInfo";
+	}
+	
+	@RequestMapping(value = "/fileDel", method = RequestMethod.GET)
+	public String fileDelGet(HttpServletRequest request) {
+		
+		String uploadPath = request.getRealPath("/resources/ckeditor/images/");
+		int fileCnt = fileService.imgDelete(uploadPath);
+		
+		msgFlag = "imgDeleteOk$"+fileCnt;
+		
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	@RequestMapping(value = "/slideShow", method = RequestMethod.GET)
+	public String slideShowGet(Model model) {
+		
+		List<SlideVO> vos = slideService.getSlideList();
+		int sCnt = slideService.getSlideTotCnt();
+		
+		model.addAttribute("vos", vos);
+		model.addAttribute("sCnt", sCnt);
+		
+		return "admin/slideShow";
+	}
+	
+	@RequestMapping(value = "/sInput", method = RequestMethod.GET)
+	public String sInputGet(Model model) {
+		
+		int sCnt = slideService.getSlideTotCnt();
+		model.addAttribute("sCnt", sCnt);
+		
+		return "admin/sInput";
+	}
+	
+	@RequestMapping(value = "/sInput", method = RequestMethod.POST)
+	public String sInputPost(MultipartFile file, SlideVO vo) {
+		String root = "sInput";
+		int res = slideService.setSlideInput(file, vo, root);
+		
+		if (res == 1)
+			msgFlag = "sInputOk";
+		else
+			msgFlag = "sInputNo";
+
+		return "redirect:/msg/" + msgFlag;
+	}
+	
+	@RequestMapping(value = "/sDelete", method = RequestMethod.GET)
+	public String sDeleteGet(int sId, HttpServletRequest request) {
+		
+		//기존파일 삭제
+		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/slideshow/");
+		String sImage = slideService.getImageSid(sId);
+		fileService.fileDeleteCheck(uploadPath + sImage);
+		
+		slideService.sDelete(sId);
+
+		return "redirect:/admin/slideShow";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/sNumCheck", method = RequestMethod.GET)
+	public String sNumCheckGet(String Num, String delItems) {
+		String[] sId = delItems.split("/");
+		String[] sNum = Num.split("/");
+		if(sId.length == sNum.length) {
+			for (int i=0; i<sId.length; i++) {
+				slideService.sNumUpdate(Integer.parseInt(sId[i]), Integer.parseInt(sNum[i]));
+			}
+		}else {
+			return "false";
+		}
+		
+		return "";
 	}
 }

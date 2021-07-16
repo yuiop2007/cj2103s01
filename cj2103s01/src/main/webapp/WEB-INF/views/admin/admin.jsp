@@ -131,23 +131,22 @@
 		    </div>
 	  	</div>
 		<div class="row myshopMain">
-		<!--     <div class="col shopMain">
-		    	<a href="#">
-		    		<strong>coupon</strong>
-		    		고객님이 보유하고 계신 쿠폰내역을 보여드립니다.
+		     <div class="col shopMain">
+		    	<a href="${ctp}/admin/slideShow">
+		    		<strong>슬라이드쇼</strong>
+		    		메인 화면에 표시될 슬라이드 쇼를 등록 및 관리 할 수 있습니다.
 		    		<br/>
 		    	</a>
 		    </div>
 		    <div class="col shopMain">
-		    	<a href="#">
-		    		<strong>my board</strong>
-		    		고객님께서 작성하신 게시물을 관리하는 공간입니다.
+		    	<a href="${ctp}/admin/fileDel">
+		    		<strong>임시 파일 삭제</strong>
+		    		사용되지 않는 임시 데이터를 삭제합니다.
 		    		<br/>
-		    		고객님께서 작성하신 글을 한눈에 관리하실 수 있습니다.
 		    	</a>
 		    </div>
 	  	</div>
-		<div class="row myshopMain">
+		<!-- <div class="row myshopMain">
 		    <div class="col shopMain">
 		    	<a href="#">
 		    		<strong>address</strong>
@@ -161,8 +160,8 @@
 		    		회원 탈퇴
 		    		
 		    	</a>
-		    </div> -->
-	  	</div>
+		    </div>
+	  	</div> -->
 	</div>
 	<div class="jumbotron">
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
