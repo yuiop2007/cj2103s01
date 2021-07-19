@@ -87,6 +87,8 @@
 	<div class="container">
 	<h6>총 판매량</h6>
 		<br/><br/><br/><br/>
+		❗&nbsp;&nbsp;<strong style="color: red; font-size: 8px;">모든 매출액은 배송완료된 상품의 구매확정 상태만 집계됩니다.</strong>
+		<br/><br/><br/><br/>
 		<div id="donutchart" style="width: 600px; height: 300px;">
 			<input type="hidden" value="${MadeSell}" id="MadeSell">
 			<input type="hidden" value="${OuterSell}" id="OuterSell">
