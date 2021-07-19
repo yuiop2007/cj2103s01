@@ -11,5 +11,14 @@
    
   <select id="getAddressSearch" resultType="com.spring.cj2103s10.vo.AreaVO">
     select distinct address1, address2, latitude, longitude from area where address1 = #{address1} and address2 = #{address2};
-  </select> 
+  </select>
+  
+  <select id="getCartTest" resultType="com.spring.cj2103s10.vo.CartTestVO">
+    select * from cartTest2 order by idx;
+  </select>
+  
+  <select id="getOrderList" resultType="com.spring.cj2103s10.vo.CartTestVO">
+  	select * from cartTest2 where idx in(${idxsStr});
+  </select>
+  
 </mapper>

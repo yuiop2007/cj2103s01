@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.spring.cj2103s10.dao.BoardDAO;
 import com.spring.cj2103s10.dao.GuestDAO;
 import com.spring.cj2103s10.dao.MemberDAO;
+import com.spring.cj2103s10.dao.PdsmDAO;
+import com.spring.cj2103s10.dao.ReservationDAO;
+import com.spring.cj2103s10.dao.VoteDAO;
 
 @Service
 public class Pagination {
@@ -17,7 +20,17 @@ public class Pagination {
   
   @Autowired
   BoardDAO boardDAO;
+  
+  @Autowired
+  PdsmDAO pdsmDAO;
+  
+  @Autowired
+  ReservationDAO reservationDAO;
+  
+  @Autowired
+  VoteDAO voteDAO;
 
+  // 인자 : 1.page번호, 2.page크기, 3.소속(예:게시판-board, 멀티자료실:pdms), 4.part(분류)-예:'전체'/'여행', 5.검색어
 	public PaginationVO pagination(int pag, int pageSize, String partName, String partValue, String searchString) {
 		int blockSize = 3;
 		int totRecCnt = 0;
@@ -46,6 +59,16 @@ public class Pagination {
 				String search = partValue;
 				totRecCnt = boardDAO.totSearchRecCnt(search, searchString);
 			}
+		}
+		else if(partName.equals("pdsm")) {
+			totRecCnt = pdsmDAO.totRecCnt(partValue);
+		}
+		else if(partName.equals("reservation")) {
+			String room = partValue;
+			totRecCnt = reservationDAO.totRecCnt(room);
+		}
+		else if(partName.equals("vote")) {
+			totRecCnt = voteDAO.totRecCnt();
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (int)(totRecCnt / pageSize) +1;

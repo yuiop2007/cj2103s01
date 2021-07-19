@@ -117,7 +117,8 @@ public class BoardController {
   	return "";
   }
   
-  @RequestMapping(value="/bContent", method=RequestMethod.POST)
+  @SuppressWarnings("deprecation")
+	@RequestMapping(value="/bContent", method=RequestMethod.POST)
   public String bContentPost(int idx, String pwd, HttpServletRequest request,
   		@RequestParam(name="pag", defaultValue="1", required=false) int pag,
 			@RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize,
@@ -154,7 +155,8 @@ public class BoardController {
   	return "board/bUpdate";
   }
   
-  @RequestMapping(value="/bUpdate", method=RequestMethod.POST)
+  @SuppressWarnings("deprecation")
+	@RequestMapping(value="/bUpdate", method=RequestMethod.POST)
   public String bUpdatePost(BoardVO vo, Model model, HttpServletRequest request) {
   	// 이곳에 오기전에 content안의 그림을 만약에 대비하여 image폴더에 백업받아 두었다.
   	// 수정작업이 되었고(텍스트 or 그림포함), 이때 content안의 'src='태그속성이 있다면, image에 있는 그림파일을 src폴더로 복사작업한다.

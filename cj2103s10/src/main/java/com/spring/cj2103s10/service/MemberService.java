@@ -1,8 +1,11 @@
 package com.spring.cj2103s10.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s10.vo.MemberVO;
+import com.spring.cj2103s10.vo.NotifyVO;
 
 public interface MemberService {
 
@@ -21,5 +24,9 @@ public interface MemberService {
 	public void setPwdChange(String mid, String encode);
 
 	public MemberVO getIdSearch(String tel, String toMail);
+
+	public List<NotifyVO> getMNList();
+
+	public NotifyVO getPopup(int idx);
 
 }

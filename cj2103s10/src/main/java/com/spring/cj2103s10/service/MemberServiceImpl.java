@@ -3,6 +3,7 @@ package com.spring.cj2103s10.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s10.dao.MemberDAO;
 import com.spring.cj2103s10.vo.MemberVO;
+import com.spring.cj2103s10.vo.NotifyVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -127,6 +129,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO getIdSearch(String tel, String toMail) {
 		return memberDAO.getIdSearch(tel, toMail);
+	}
+
+	@Override
+	public List<NotifyVO> getMNList() {
+		return memberDAO.getMNList();
+	}
+
+	@Override
+	public NotifyVO getPopup(int idx) {
+		return memberDAO.getPopup(idx);
 	}
 	
 }

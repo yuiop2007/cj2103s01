@@ -16,17 +16,20 @@
   <div class="w3-bar w3-black w3-card">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="${ctp}/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="${ctp}/member/notify/mnList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Notice</a>
     <a href="${ctp}/guest/gList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Guest</a>
     <a href="${ctp}/board/bList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Board</a>
     <c:if test="${slevel <= 4}">
-	    <a href="${ctp}/pds/pList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Pds</a>
+	    <a href="${ctp}/pdsm/pmList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Pdsm</a>
 	    <div class="w3-dropdown-hover w3-hide-small">
 	      <button class="w3-padding-large w3-button" title="More">Study <i class="fa fa-caret-down"></i></button>     
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
 	        <a href="${ctp}/study/calendar" class="w3-bar-item w3-button">Calendar</a>
 	        <a href="${ctp}/study/woo" class="w3-bar-item w3-button">우편번호API</a>
 	        <a href="${ctp}/study/kakao" class="w3-bar-item w3-button">카카오지도API</a>
-	        <a href="#" class="w3-bar-item w3-button">미니쇼핑몰</a>
+	        <a href="${ctp}/study/thumbnail" class="w3-bar-item w3-button">썸네일연습</a>
+	        <a href="${ctp}/photo/photo" class="w3-bar-item w3-button">포토갤러리</a>
+	        <a href="${ctp}/study/cartTest/cartTestView" class="w3-bar-item w3-button">임시장바구니</a>
 	      </div>
 	    </div>
 	    <div class="w3-dropdown-hover w3-hide-small">
@@ -34,6 +37,7 @@
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
 	        <a href="${ctp}/mail/mailForm" class="w3-bar-item w3-button">메일보내기</a>
 	        <a href="${ctp}/schedule/schedule" class="w3-bar-item w3-button">일정관리</a>
+	        <a href="${ctp}/reservation/reservation" class="w3-bar-item w3-button">예약관리</a>
 	        <a href="${ctp}/member/mUpdateCheck" class="w3-bar-item w3-button">정보수정</a>
 	        <a href="javascript:mDeleteCheck();" class="w3-bar-item w3-button">회원탈퇴</a>
 	        <c:if test="${slevel == 0}">
@@ -42,6 +46,7 @@
 	      </div>
 	    </div>
 	  </c:if>
+	  <a href="${ctp}/vote/voteInforInsert" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Vote</a>
     <c:if test="${empty slevel}">
       <a href="${ctp}/member/mLogin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
       <a href="${ctp}/member/mJoin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Join</a>

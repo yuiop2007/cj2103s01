@@ -125,7 +125,12 @@ function inputCheck() {
 				<label>상품 할인율(원)</label>
 					<input type="number" id="pSale" name="pSale" value="${vo.pSale}" required min="0"><br/>
 				<label>재고</label>
-					<input type="number" id="pStock" name="pStock" value="${vo.pStock}"><br/><br/><br/><br/>
+					<input type="number" id="pStock" name="pStock" value="${vo.pStock}"><br/>
+				<label>노출 형태 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❗&nbsp;&nbsp;<strong style="color: red; font-size: 8px;">기획상품은 메인화면에 가장 먼저 노출됩니다.</strong></label>
+					<select name="pEvent">
+						<option value="1" <c:if test="${vo.pEvent eq 1}">selected</c:if>>기본상품</option>
+						<option value="2" <c:if test="${vo.pEvent eq 2}">selected</c:if>>기획상품</option>
+					</select><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png" required>
 					❗&nbsp;&nbsp;<strong style="color: red;">제품 정보 수정시 대표이미지는 꼭 새로 업로드 하십시오.</strong>

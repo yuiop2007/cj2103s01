@@ -59,6 +59,10 @@ public class AdminController {
 	public String adminGet(Model model) {
 
 		//모든 주문내역 날짜 체크 후 배송완료+주문상태의 일주일 이후 주문은 구매확정 처리
+		List<OrderVO> vos = orderService.getBuyEndList(); // 일주일 지난 배송완료 + 주문상태 리스트
+		for(OrderVO vo : vos) {
+			orderService.setBuyEnd(vo); // 구매확정 처리
+		}
 		
 		model.addAttribute("totMember", memberService.totMemberCnt()); // 총회원수
 		model.addAttribute("dropMember", memberService.dropMemberCnt()); // 탈퇴회원수
@@ -455,5 +459,26 @@ public class AdminController {
 		}
 		
 		return "";
+	}
+	
+	@RequestMapping(value = "/charts", method = RequestMethod.GET)
+	public String chartsGet(Model model) {
+		
+		model.addAttribute("MadeSell", productService.MadeSellCnt()); // made 총 판매수
+		model.addAttribute("OuterSell", productService.OuterSellCnt()); // outer
+		model.addAttribute("TopSell", productService.TopSellCnt()); // top
+		model.addAttribute("BottomSell", productService.BottomSellCnt()); // bottm
+		model.addAttribute("AccSell", productService.AccSellCnt()); // acc
+
+		
+		model.addAttribute("NowMonth", orderService.nowMonth()); // 현재 년도와 월
+		model.addAttribute("Pre1Month", orderService.pre1Month()); // 현재 년도와 -1월
+		model.addAttribute("Pre2Month", orderService.pre2Month()); // 현재 년도와 -2월
+		model.addAttribute("Pre3Month", orderService.pre3Month()); // 현재 년도와 -3월
+		model.addAttribute("Pre4Month", orderService.pre4Month()); // 현재 년도와 -4월
+		
+		// 월별 총 판매가격 and 카테고리별 월별 판매가격
+		
+		return "admin/charts";
 	}
 }

@@ -100,4 +100,18 @@ public interface OrderDAO {
 
 	int totSellMoney();
 
+	List<OrderVO> getBuyEndList();
+
+	void setBuyEnd(@Param("vo") OrderVO vo);
+
+	String nowMonth();
+
+	String pre1Month();
+
+	String pre2Month();
+
+	String pre3Month();
+
+	String pre4Month();
+
 }

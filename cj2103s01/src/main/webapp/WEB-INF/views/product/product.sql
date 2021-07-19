@@ -7,6 +7,7 @@ create table product(
 	pPrice int not null,
 	pSale int not null default 0,
 	pStock int not null,
+	pEvent int null default 1,
 	pImage varchar(1000) not null,
 	pInfo mediumtext not null,
 	pContent mediumtext not null,
@@ -30,3 +31,9 @@ update product set pName='1', pCate='O', pColor='q', pSize='M', pPrice=123, pSto
 delete from product where pId = 13;
 
 select pImage from product where pId = 13;
+
+select bb.*, cast(timestampdiff(minute, bb.pRdate, now())/60 as signed integer) as diffTime from product bb order by pEvent desc, pId desc;
+
+select IFNULL(sum(pSell), 0) from product where pCate = 'MADE';
+
+select * from product where datediff(now(), pRdate) > 7;

@@ -44,4 +44,12 @@
   <select id="totRecCntMid" resultType="int">
     select count(*) from member2 where mid = #{partValue};
   </select>
+  
+  <select id="getMNList" resultType="com.spring.cj2103s10.vo.NotifyVO">
+    select * from notify order by idx desc;
+  </select>
+  
+  <select id="getPopup" resultType="com.spring.cj2103s10.vo.NotifyVO">
+    select * from notify where idx = #{idx};
+  </select>
 </mapper>

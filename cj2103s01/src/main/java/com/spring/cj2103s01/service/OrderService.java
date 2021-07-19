@@ -104,4 +104,18 @@ public interface OrderService {
 
 	public int totSellMoney();
 
+	public List<OrderVO> getBuyEndList();
+
+	public void setBuyEnd(OrderVO vo);
+
+	public String nowMonth();
+
+	public String pre1Month();
+
+	public String pre2Month();
+
+	public String pre3Month();
+
+	public String pre4Month();
+
 }

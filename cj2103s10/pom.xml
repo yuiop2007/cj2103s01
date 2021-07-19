@@ -180,6 +180,41 @@
         <version>5.2.9.RELEASE</version>
     </dependency>
 		
+		<!-- AJax 라이브러리(2개) -->
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-asl</artifactId>
+		    <version>1.9.13</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.8.9</version>
+		</dependency>
+		
+		<!-- lombok (getters/setters를 자동으로 만들어주는 라이브러리) -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.12</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- thumbnailator(썸네일 이미지 처리 라이브러리) -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.8</version>
+		</dependency>
+		
+		<!-- imgscalr-lib(이미지 크기를 변경(잘라냄)시켜서 저장하는 라이브러리) -->
+		<dependency>
+		    <groupId>org.imgscalr</groupId>
+		    <artifactId>imgscalr-lib</artifactId>
+		    <version>4.2</version>
+		</dependency>
+		
 		
 		       
 	</dependencies>

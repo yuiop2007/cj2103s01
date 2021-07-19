@@ -1,5 +1,6 @@
 package com.spring.cj2103s10;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s10.service.MemberService;
 import com.spring.cj2103s10.vo.MemberVO;
+import com.spring.cj2103s10.vo.NotifyVO;
 
 @Controller
 @RequestMapping("/member")
@@ -257,6 +259,30 @@ public class MemberController {
 			msgFlag = "pwdConfirmNo";
 			return "redirect:/msg/" + msgFlag;
 		}
+	}
+	
+	@RequestMapping(value="/notify/mnList", method=RequestMethod.GET)
+  public String mnListGet(Model model) {
+  	List<NotifyVO> vos = memberService.getMNList();
+  	model.addAttribute("vos", vos);
+  	model.addAttribute("num", vos.size());
+  	
+  	return "member/mnList";
+  }
+	
+	@RequestMapping(value="/notify/mnPopup", method=RequestMethod.GET)
+	public String popupGet(int idx, Model model) {
+		NotifyVO vo = memberService.getPopup(idx);
+		model.addAttribute("vo", vo);
 		
+		return "member/mnPopup";
+	}
+	
+	@RequestMapping(value="/notify/mNotifyView", method=RequestMethod.GET)
+	public String mnNotifyViewGet(int idx, Model model) {
+		NotifyVO vo = memberService.getPopup(idx);
+		model.addAttribute("vo", vo);
+		
+		return "member/mNotifyView";
 	}
 }

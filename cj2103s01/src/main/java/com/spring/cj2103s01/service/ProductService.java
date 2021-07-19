@@ -36,4 +36,16 @@ public interface ProductService {
 
 	public String getImagePid(int pId);
 
+	public List<ProductVO> getEventProductList(int startIndexNo, int pageSize);
+
+	public int MadeSellCnt();
+
+	public int OuterSellCnt();
+
+	public int TopSellCnt();
+
+	public int BottomSellCnt();
+
+	public int AccSellCnt();
+
 }

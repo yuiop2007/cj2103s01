@@ -9,6 +9,7 @@ public class ProductVO {
 	private int pPrice;
 	private int pSale;
 	private int pStock;
+	private int pEvent; //1:기본 2:기획
 	private String pImage;
 	private String pInfo;
 	private String pContent;
@@ -20,6 +21,15 @@ public class ProductVO {
 	private int diffTime;
 	private String oriContent;
 	
+	
+	public int getpEvent() {
+		return pEvent;
+	}
+
+	public void setpEvent(int pEvent) {
+		this.pEvent = pEvent;
+	}
+
 	public int getpId() {
 		return pId;
 	}

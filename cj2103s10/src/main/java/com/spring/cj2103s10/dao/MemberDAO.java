@@ -1,8 +1,11 @@
 package com.spring.cj2103s10.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.cj2103s10.vo.MemberVO;
+import com.spring.cj2103s10.vo.NotifyVO;
 
 public interface MemberDAO {
 
@@ -27,5 +30,9 @@ public interface MemberDAO {
 	public int totRecCntLevel(@Param("searchString") String searchString);
 
 	public int totRecCntMid(@Param("partValue") String partValue);
+
+	public List<NotifyVO> getMNList();
+
+	public NotifyVO getPopup(@Param("idx") int idx);
 
 }

@@ -15,6 +15,8 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/images/**" location="/resources/images/" />
+	<!-- <resources mapping="/images/**" location="/resources/ckeditor/images/" /> -->
+	<!-- <resources mapping="/ck/**" location="/resources/ckeditor/images/" /> -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -28,6 +30,8 @@
 	<beans:bean id="memberInterceptor" class="com.spring.cj2103s10.interceptor.MemberInterceptor"/>
 	<beans:bean id="studyInterceptor" class="com.spring.cj2103s10.interceptor.StudyInterceptor"/>
 	<beans:bean id="boardInterceptor" class="com.spring.cj2103s10.interceptor.BoardInterceptor"/>
+	<beans:bean id="adminInterceptor" class="com.spring.cj2103s10.interceptor.AdminInterceptor"/>
+	<beans:bean id="pdsmInterceptor" class="com.spring.cj2103s10.interceptor.PdsmInterceptor"/>
 	<interceptors>
 	  <interceptor>
 	    <mapping path="/member/**"/>
@@ -37,6 +41,9 @@
 	    <exclude-mapping path="/member/nickCheck"/>
 	    <exclude-mapping path="/member/mPwdSearch"/>
 	    <exclude-mapping path="/member/mIdSearch"/>
+	    <exclude-mapping path="/member/notify/mnList"/>
+	    <exclude-mapping path="/member/notify/mnPopup"/>
+	    <exclude-mapping path="/member/notify/mNotifyView"/>
 	    <!-- <exclude-mapping path="/member/mUpdateCheck"/> -->
 	    <beans:ref bean="memberInterceptor"/>
 	  </interceptor>
@@ -48,6 +55,14 @@
 	    <mapping path="/board/**"/>
 	    <exclude-mapping path="/board/bList"/>
 	    <beans:ref bean="boardInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/admin/**"/>
+	    <beans:ref bean="adminInterceptor"/>
+	  </interceptor>
+	  <interceptor>
+	    <mapping path="/pdsm/input/**"/>
+	    <beans:ref bean="pdsmInterceptor"/>
 	  </interceptor>
 	</interceptors>
 	

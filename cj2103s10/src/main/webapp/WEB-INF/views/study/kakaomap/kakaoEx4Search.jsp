@@ -47,7 +47,7 @@
   <hr/>
   <p>
     도시명 : <font color="blue"><b>${address1}</b></font> &nbsp; 
-    지역명 : <font color="blue"><b>${address1}</b></font> &nbsp;
+    지역명 : <font color="blue"><b>${address2}</b></font> &nbsp;
     <input type="button" value="다시검색" onclick="location.href='${ctp}/study/kakaoEx4';"/>
   <hr/>
 

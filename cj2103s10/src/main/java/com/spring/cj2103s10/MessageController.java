@@ -110,12 +110,72 @@ public class MessageController {
 			model.addAttribute("msg", "선택한 회원(들)을 삭제처리 하였습니다.");
 			model.addAttribute("url", "admin/aMList");
 		}
+		else if(msgFlag.equals("nInputOk")) {
+			model.addAttribute("msg", "공지사항이 등록되었습니다.");
+			model.addAttribute("url", "admin/notify/nList");
+		}
+		else if(msgFlag.equals("nUpdateOk")) {
+			model.addAttribute("msg", "공지사항이 수정되었습니다.");
+			model.addAttribute("url", "admin/notify/nList");
+		}
+		else if(msgFlag.equals("pmInputOk")) {
+			model.addAttribute("msg", "자료파일이 업로드 되었습니다.");
+			model.addAttribute("url", "pdsm/pmList");
+		}
+		else if(msgFlag.equals("thumbnailCreateNo")) {
+			model.addAttribute("msg", "썸네일 이미지 업로드 실패~~");
+			model.addAttribute("url", "study/thumbnail");
+		}
+		else if(msgFlag.equals("photoInputOk")) {
+			model.addAttribute("msg", "포토갤러리에 사진이 등록되었습니다.");
+			model.addAttribute("url", "photo/photo");
+		}
+		else if(msgFlag.equals("photoDeleteOk")) {
+			model.addAttribute("msg", "포토갤러리에 선택하신 내역이 삭제 되었습니다.");
+			model.addAttribute("url", "photo/photo");
+		}
+		else if(msgFlag.equals("roomInputOk")) {
+			model.addAttribute("msg", "객실정보가 등록되었습니다.");
+			model.addAttribute("url", "admin/reservation/roomList");
+		}
+		else if(msgFlag.equals("roomDeleteOk")) {
+			model.addAttribute("msg", "객실정보가 삭제되었습니다.");
+			model.addAttribute("url", "admin/reservation/roomList");
+		}
+		else if(msgFlag.equals("reservationCancelOk")) {
+			model.addAttribute("msg", "예약이 취소 되었습니다.");
+			model.addAttribute("url", "reservation/reservationView");
+		}
+		else if(msgFlag.equals("reservationCancelNo")) {
+			model.addAttribute("msg", "예약을 취소하실 수 없습니다.");
+			model.addAttribute("url", "reservation/reservationView");
+		}
+		else if(msgFlag.equals("reservationUpdateNo")) {
+			model.addAttribute("msg", "지난 예약일의 내역은 수정하실 수 없습니다.");
+			model.addAttribute("url", "reservation/reservationView");
+		}
+		else if(msgFlag.equals("reservationUpdateOk")) {
+			model.addAttribute("msg", "예약 내역이 수정되었습니다.");
+			model.addAttribute("url", "reservation/reservationView");
+		}
+		else if(msgFlag.equals("aVoteInputOk")) {
+			model.addAttribute("msg", "설문항목이 등록되었습니다.");
+			model.addAttribute("url", "vote/aVoteList");
+		}
 		
 		
 		
 		
 		
 		// 예) msgFlag = "boardPasswordNo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize;
+		else if(msgFlag.substring(0, 11).equals("imgDeleteOk")) {
+			model.addAttribute("msg", "게시판의 임시 그림파일("+msgFlag.substring(12)+"개)이 모두 삭제되었습니다.");
+			model.addAttribute("url", "admin/file/tempDelete");
+		}
+		else if(msgFlag.substring(0,13).equals("boardUpdateOk")) {
+			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
+			model.addAttribute("url", "board/bContent?"+msgFlag.substring(14));
+		}
 		else if(msgFlag.substring(0,15).equals("boardPasswordNo")) {
 			model.addAttribute("msg", "비밀번호 오류입니다. 확인하세요.");
 			model.addAttribute("url", "board/bContent?"+msgFlag.substring(16));
@@ -124,9 +184,13 @@ public class MessageController {
 			model.addAttribute("msg", "수정창으로 이동합니다.");
 			model.addAttribute("url", "board/bUpdate?"+msgFlag.substring(16));
 		}
-		else if(msgFlag.substring(0,13).equals("boardUpdateOk")) {
-			model.addAttribute("msg", "게시글이 수정처리 되었습니다.");
-			model.addAttribute("url", "board/bContent?"+msgFlag.substring(14));
+		else if(msgFlag.substring(0,17).equals("thumbnailCreateOk")) {
+			model.addAttribute("msg", "썸네일 이미지 업로드 성공!!!");
+			model.addAttribute("url", "study/thumbnailView?"+msgFlag.substring(18));
+		}
+		else if(msgFlag.substring(0,18).equals("reservationInputOk")) {
+			model.addAttribute("msg", "객실이 예약처리 되었습니다.");
+			model.addAttribute("url", "reservation/reservation?"+msgFlag.substring(19));
 		}
 		
 		

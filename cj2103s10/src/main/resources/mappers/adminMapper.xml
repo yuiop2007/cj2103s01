@@ -24,4 +24,53 @@
   <delete id="memberDelete">
     delete from member2 where idx = #{idx}; 
   </delete>
+  
+  <select id="getNotifyList" resultType="com.spring.cj2103s10.vo.NotifyVO">
+    select * from notify order by idx desc;
+  </select>
+  
+  <insert id="nInputOk">
+    insert into notify values (default,#{vo.name},#{vo.title},#{vo.content},#{vo.startDate},#{vo.endDate},#{vo.popupSw});
+  </insert>
+  
+  <select id="nUpdate" resultType="com.spring.cj2103s10.vo.NotifyVO">
+    select * from notify where idx = #{idx};
+  </select>
+  
+  <update id="nUpdateOk">
+    update notify set name=#{vo.name},title=#{vo.title},content=#{vo.content},startDate=#{vo.startDate},endDate=#{vo.endDate},popupSw=#{vo.popupSw} where idx=#{vo.idx};
+  </update>
+  
+  <delete id="nDelete">
+    delete from notify where idx = #{idx}; 
+  </delete>
+  
+  <update id="popupCheck">
+    update notify set popupSw=#{popupSw} where idx=#{idx};
+  </update>
+  
+  <select id="getNotifyPopup" resultType="com.spring.cj2103s10.vo.NotifyVO">
+    select * from notify where popupSw = 'Y';
+  </select>
+  
+  <select id="roomList" resultType="com.spring.cj2103s10.vo.ReservationRoomVO">
+    select * from reservationRoom2 order by room;
+  </select>
+  
+  <insert id="roomInputOk">
+    insert into reservationRoom2 values (#{vo.room}, #{vo.content}, default);
+  </insert>
+  
+  <select id="getRoomSearch" resultType="com.spring.cj2103s10.vo.ReservationRoomVO">
+    select * from reservationRoom2 where room = #{room};
+  </select>
+  
+  <delete id="roomDeleteOk">
+    delete from reservationRoom2 where room = #{room};
+  </delete>
+  
+  <update id="setRoomModify">
+    update reservationRoom2 set available = #{available} where room = #{room};
+  </update>
+  
 </mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s10.dao.ReservationDAO">
+  <select id="getReservationRoomList" resultType="com.spring.cj2103s10.vo.ReservationRoomVO">
+    select * from reservationroom2 order by room;
+  </select>
+  
+  <select id="getReservationStatusList" resultType="com.spring.cj2103s10.vo.ReservationStatusVO">
+    select * from reservationstatus2 where date_format(reservationDate, '%Y-%m') = #{ym} order by reservationDate;
+  </select>
+  
+  <insert id="reservationStatusInput">
+    insert into reservationStatus2 values (default, #{stVo.reservationDate}, #{stVo.reservationRoom}, 'NO');
+  </insert>
+  
+  <select id="getReservationStatusIdx" resultType="int">
+    select max(idx) from reservationStatus2;
+  </select>
+  
+  <insert id="reservationInput">
+    insert into reservation2 values (default, #{vo.reservationStatusIdx}, #{vo.mid}, #{vo.person},#{vo.content});
+  </insert>
+  
+  <select id="getReservationContent" resultType="com.spring.cj2103s10.vo.ReservationVO">
+    select * from reservation2 where idx = #{idx};
+  </select>
+  
+  <select id="getNickName" resultType="String">
+    select nickName from member2 where mid = #{mid};
+  </select>
+  
+  <select id="getReservationRoom" resultType="com.spring.cj2103s10.vo.ReservationStatusVO">
+    select * from reservationstatus2 where idx = #{reservationStatusIdx};
+  </select>
+  
+  <select id="getReservationView" resultType="com.spring.cj2103s10.vo.ReservationVO">
+    select aa.*,(bb.reservationRoom) as room,(bb.reservationDate) as reservationDate  from reservation2 aa, reservationStatus2 bb where mid=#{mid} and aa.reservationStatusIdx=bb.idx order by bb.reservationDate desc;
+  </select>
+
+  <select id="getReservationContentIdxSearch" resultType="com.spring.cj2103s10.vo.ReservationVO">
+    select aa.*,(bb.reservationDate) as reservationDate from reservation2 aa, reservationStatus2 bb where aa.idx=#{idx} and aa.reservationStatusIdx=bb.idx;
+  </select>
+  
+  <select id="getReservationStatusView" resultType="com.spring.cj2103s10.vo.ReservationVO">
+    <if test="room == '전체'">
+    		select aa.*,(bb.reservationRoom) as room,(bb.reservationDate) as reservationDate from reservation2 aa, reservationStatus2 bb where aa.reservationStatusIdx=bb.idx order by bb.reservationDate desc limit #{startNo},#{pageSize};
+    </if>
+    <if test="room != '전체'">
+    		select aa.*,(bb.reservationRoom) as room,(bb.reservationDate) as reservationDate from reservation2 aa, reservationStatus2 bb where bb.reservationRoom=#{room} and aa.reservationStatusIdx=bb.idx order by bb.reservationDate desc limit #{startNo},#{pageSize};
+    </if>
+  </select>
+  
+  <select id="totRecCnt" resultType="int">
+    <if test="room == '전체'">
+    	select count(*) from reservation2 aa, reservationStatus2 bb where aa.reservationStatusIdx=bb.idx;
+    </if>
+    <if test="room != '전체'">
+    	select count(*) from reservation2 aa, reservationStatus2 bb where bb.reservationRoom=#{room} and aa.reservationStatusIdx=bb.idx;
+    </if>
+  </select>
+  
+  <delete id="reservationCancelProcess">
+    delete from reservation2 where idx = #{idx};
+  </delete>
+  
+  <delete id="reservationStatusCancelProcess">
+    delete from reservationStatus2 where idx = #{stIdx};
+  </delete>
+    
+  <update id="reservationUpdate">
+    update reservation2 set person = #{vo.person}, content = #{vo.content} where idx = #{vo.idx};
+  </update>
+  
+</mapper>

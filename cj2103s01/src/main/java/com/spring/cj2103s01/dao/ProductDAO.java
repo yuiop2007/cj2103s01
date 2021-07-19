@@ -40,4 +40,16 @@ public interface ProductDAO {
 
 	public String getImagePid(@Param("pId") int pId);
 
+	public List<ProductVO> getEventProductList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize);
+
+	public int MadeSellCnt();
+
+	public int OuterSellCnt();
+
+	public int TopSellCnt();
+
+	public int BottomSellCnt();
+
+	public int AccSellCnt();
+
 }

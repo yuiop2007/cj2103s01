@@ -49,7 +49,7 @@ public class HomeController {
 		String cate = "ALL";
 		
 		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "pList", "", "");
-		List<ProductVO> vos = productService.getProductList(pageVO.getStartIndexNo(), pageSize);
+		List<ProductVO> vos = productService.getEventProductList(pageVO.getStartIndexNo(), pageSize);
 		List<SlideVO> svos = slideService.getSlideMainList();
 		int sCnt = slideService.getSlideTotCnt();
 		

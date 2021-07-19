@@ -260,6 +260,41 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.totSellMoney();
 	}
 
+	@Override
+	public List<OrderVO> getBuyEndList() {
+		return orderDAO.getBuyEndList();
+	}
+
+	@Override
+	public void setBuyEnd(OrderVO vo) {
+		orderDAO.setBuyEnd(vo);
+	}
+
+	@Override
+	public String nowMonth() {
+		return orderDAO.nowMonth();
+	}
+
+	@Override
+	public String pre1Month() {
+		return orderDAO.pre1Month();
+	}
+
+	@Override
+	public String pre2Month() {
+		return orderDAO.pre2Month();
+	}
+
+	@Override
+	public String pre3Month() {
+		return orderDAO.pre3Month();
+	}
+
+	@Override
+	public String pre4Month() {
+		return orderDAO.pre4Month();
+	}
+
 
 
 }

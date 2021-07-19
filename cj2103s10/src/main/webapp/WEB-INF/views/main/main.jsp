@@ -6,11 +6,41 @@
 <head>
   <meta charset="UTF-8">
   <title>main.jsp(초기 홈페이지파일)</title>
+  <script>
+    function popupCheck() {
+    	<c:forEach var="popup" items="${popupVos}">
+    	  var url = "${ctp}/member/notify/mnPopup?idx=${popup.idx}";
+    	  openPopup(url, ${popup.idx});
+    	</c:forEach>
+    }
+    
+    var xPos = 0;
+    function openPopup(url, idx) {
+    	xPos += 100;
+    	var cookieCheck = getCookie("popupYN"+idx);
+    	if(cookieCheck != "N") {
+    		window.open(url,"","width=400px,height=600px,left="+xPos+",top=5px");
+    	}
+    }
+    
+    function getCookie(name) {
+    	var cookie = document.cookie;  // 클라이언트에 저장된 쿠키의 정보를 읽어온다.
+    	if(cookie != "") {
+    		var cookieArray = cookie.split("; ")
+    		for(var index in cookieArray) {
+    			var cookieName = cookieArray[index].split("=");
+    			if(cookieName[0] == name) {   // 쿠키명을 비교해서 같다면....
+    				return cookieName[1];				// 저장된 쿠키값(Y/N)을 넘겨준다.
+    			}
+    		}
+    	}
+    }
+  </script>
 	<style>
 		body {font-family: "Lato", sans-serif}
 		.mySlides {display: none}
 	</style>
-<body>
+<body onload="javascript:popupCheck();">
 
 <!-- Navbar -->
 <jsp:include page="/WEB-INF/views/include/nav.jsp"/>

@@ -146,6 +146,10 @@
 		select bb.*, cast(timestampdiff(minute, bb.oRdate, now())/60 as signed integer) as diffTime from orders bb where bb.oChange = #{change} and bb.oStatus = #{status} order by bb.oId desc  limit #{startIndexNo}, #{pageSize};
 	</select>
 	
+	<select id="getBuyEndList" resultType="com.spring.cj2103s01.vo.OrderVO">
+		select * from orders where datediff(now(), oRdate) > 7 and oStatus = '배송완료' and oChange = '주문';
+	</select>
+	
 	<update id="statusUpdate">
 	    update orders set oStatus=#{oStatus} where oId=#{oId};
 	</update>
@@ -181,5 +185,29 @@
 	<update id="updateCancelStatus">
 	    update orders set oStatus = '배송완료' where oId=#{oId};
 	</update>
+	
+	<update id="setBuyEnd">
+	    update orders set oChange = '구매확정' where oId=#{vo.oId};
+	</update>
+	
+	<select id="nowMonth" resultType="String">
+		select date_format(now(), '%Y/%m');
+	</select>
+	
+	<select id="pre1Month" resultType="String">
+		select date_format(DATE_SUB(now(),  INTERVAL 1 month), '%Y/%m');
+	</select>
+	
+	<select id="pre2Month" resultType="String">
+		select date_format(DATE_SUB(now(),  INTERVAL 2 month), '%Y/%m');
+	</select>
+	
+	<select id="pre3Month" resultType="String">
+		select date_format(DATE_SUB(now(),  INTERVAL 3 month), '%Y/%m');
+	</select>
+	
+	<select id="pre4Month" resultType="String">
+		select date_format(DATE_SUB(now(),  INTERVAL 4 month), '%Y/%m');
+	</select>
 	
 </mapper>

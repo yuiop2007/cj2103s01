@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cj2103s10.dao.VoteDAO">
+	<insert id="aVotePopularInputOk">
+    insert into votePopular values (default,#{vo.part},#{vo.title},#{vo.subTitle},#{vo.realImg},#{vo.thumbImg},default);
+  </insert>
+  
+  <select id="totVotePopularRecCnt" resultType="int">
+    select count(idx) from votePopular;
+  </select>
+  
+  <select id="aVotePopularList" resultType="com.spring.cj2103s10.vo.VotePopularVO">
+    select aa.*, (select count(*) from vote where popularIdx=aa.idx) as voteCnt from votePopular aa order by idx desc limit #{startNo}, #{pageSize};
+  </select>
+  
+  <select id="getVotePopularView" resultType="com.spring.cj2103s10.vo.VotePopularVO">
+    select * from votePopular where idx = #{idx};
+  </select>
+  
+  <delete id="votePopularDelete">
+    delete from vote where popularIdx = #{idx};
+    delete from votePopular where idx = #{idx};
+  </delete>
+  
+  <select id="memberSearch" resultType="String">
+    select gender from membership where mid = #{mid};
+  </select>
+  
+  <select id="getMaxVotePersonInfor" resultType="int">
+    select count(idx) from votePersonInfor;
+  </select>
+  
+  <insert id="aVoteInforInsert">
+    insert into votePersonInfor values (${personVo.idx},#{personVo.gender},#{personVo.age},#{personVo.job},#{personVo.area});
+  </insert>
+  
+  <insert id="voteSelectInsert">
+    insert into vote values (default,#{personInforIdx},#{popularIdx},#{voteNum});
+  </insert>
+  
+  <select id="voteResultView" resultType="com.spring.cj2103s10.vo.VoteVO">
+    select voteNum, count(voteNum) as voteSum, popularIdx from vote where popularIdx=#{idx} group by voteNum;
+  </select>
+  
+  <select id="getVoteTotCnt" resultType="int">
+    select count(idx) from vote where popularIdx=#{idx};
+  </select>
+  
+  <update id="setProgress">
+    update votePopular set progress = #{progress} where idx = #{idx};
+  </update>
+  
+  <select id="totRecCnt" resultType="int">
+    select count(idx) from votePopular;
+  </select>
+  
+</mapper>

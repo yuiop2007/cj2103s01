@@ -142,5 +142,35 @@ public class ProductServiceImpl implements ProductService {
 	public String getImagePid(int pId) {
 		return productDAO.getImagePid(pId);
 	}
+
+	@Override
+	public List<ProductVO> getEventProductList(int startIndexNo, int pageSize) {
+		return productDAO.getEventProductList(startIndexNo, pageSize);
+	}
+
+	@Override
+	public int MadeSellCnt() {
+		return productDAO.MadeSellCnt();
+	}
+
+	@Override
+	public int OuterSellCnt() {
+		return productDAO.OuterSellCnt();
+	}
+
+	@Override
+	public int TopSellCnt() {
+		return productDAO.TopSellCnt();
+	}
+
+	@Override
+	public int BottomSellCnt() {
+		return productDAO.BottomSellCnt();
+	}
+
+	@Override
+	public int AccSellCnt() {
+		return productDAO.AccSellCnt();
+	}
 	
 }

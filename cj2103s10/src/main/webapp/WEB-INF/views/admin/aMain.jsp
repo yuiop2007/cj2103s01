@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <title>aMain.jsp</title>
   <%@ include file="/WEB-INF/views/include/bs.jsp" %>
-  <frameset cols="120px, *">
+  <frameset cols="130px, *">
   	<frame src="${ctp}/admin/aMenu.ad" frameborder=0/>
   	<frame src="${ctp}/admin/aContent.ad" name="content" frameborder=0/>
   </frameset>

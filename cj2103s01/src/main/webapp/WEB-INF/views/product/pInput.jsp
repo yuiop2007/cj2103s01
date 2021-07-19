@@ -108,7 +108,12 @@ label{
 				<label>상품 가격</label>
 					<input type="number" id="pPrice" name="pPrice" required><br/>
 				<label>재고</label>
-					<input type="number" id="pStock" name="pStock" value="0"><br/><br/><br/><br/>
+					<input type="number" id="pStock" name="pStock" value="0"><br/>
+				<label>노출 형태 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❗&nbsp;&nbsp;<strong style="color: red; font-size: 8px;">기획상품은 메인화면에 가장 먼저 노출됩니다.</strong></label>
+					<select name="pEvent">
+						<option value="1">기본상품</option>
+						<option value="2">기획상품</option>
+					</select><br/><br/><br/><br/>
 				<label>대표이미지</label><br/>
 					<input type="file" id="file" name="file" accept=".gif,.jpg,.png,.jpeg,.bmp" required>
 					❗&nbsp;&nbsp;<strong style="color: red;">대표이미지는 필수로 업로드 하십시오.</strong>
