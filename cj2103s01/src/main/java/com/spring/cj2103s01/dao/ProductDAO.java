@@ -52,4 +52,6 @@ public interface ProductDAO {
 
 	public int AccSellCnt();
 
+	public int getSalePrice(@Param("pId") int pId);
+
 }

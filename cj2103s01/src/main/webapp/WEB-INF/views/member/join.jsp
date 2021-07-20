@@ -201,8 +201,6 @@
     	return true;
     }
     
-    var idKey = 0;
-    
     //아이디 중복처리 에이젝스
     $(document).ready(function(){
     	$("#joinbtn").attr("disabled", "disabled");
@@ -217,14 +215,13 @@
 				$("#mId").focus();
 				return false;
 			}
-			var query = {
-				mId : $("#mId").val()
-			}
-			
+			var mId = $("#mId").val();
 			$.ajax({
 				type : "post",
 				url : "${ctp}/member/idCheck",
-				data : query,
+				data : {
+					mId : mId
+				},
 				success : function(data){
 					if(data == "1"){
 						alert("이미 사용중인 아이디입니다");
@@ -233,7 +230,6 @@
 					}
 					else {
 						alert("사용 가능한 아이디입니다.");
-						idKey = 1;
 						$("#joinbtn").removeAttr("disabled");
 						$("#mPwd").focus();
 					}

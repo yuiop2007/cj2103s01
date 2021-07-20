@@ -37,3 +37,5 @@ select bb.*, cast(timestampdiff(minute, bb.pRdate, now())/60 as signed integer) 
 select IFNULL(sum(pSell), 0) from product where pCate = 'MADE';
 
 select * from product where datediff(now(), pRdate) > 7;
+
+select pSale from product where pId = 12;

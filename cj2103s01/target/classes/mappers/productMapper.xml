@@ -22,6 +22,10 @@
 		select count(pId) from product where ${search} like concat('%', #{searchString} ,'%');
 	</select>
 	
+	<select id="getSalePrice" resultType="int">
+		select pSale from product where pId = #{pId};
+	</select>
+	
 	<select id="getImagePid" resultType="String">
 		select pImage from product where pId = #{pId};
 	</select>

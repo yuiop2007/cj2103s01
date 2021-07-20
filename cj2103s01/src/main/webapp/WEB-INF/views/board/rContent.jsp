@@ -32,7 +32,7 @@
 			if(slevel==0){
 				$.ajax({
 					type : "post",
-					url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${param.pId}&rPwd=admin&pag=${pag}&pageSize=${pageSize}",
+					url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${vo.pId}&rPwd=admin&pag=${pag}&pageSize=${pageSize}",
 					success: function(data) {
 						alert("삭제처리 되었습니다.");
 						location.href="${ctp}/board/review";
@@ -49,7 +49,7 @@
 				else {
 					$.ajax({
 						type : "post",
-						url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${param.pId}&rPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+						url  : "${ctp}/board/rDelete?rId=${vo.rId}&pId=${vo.pId}&rPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
 						success: function(data) {
 							alert("삭제처리 되었습니다.");
 							location.href="${ctp}/board/review";

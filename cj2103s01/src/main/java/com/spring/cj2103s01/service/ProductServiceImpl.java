@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cj2103s01.dao.ProductDAO;
@@ -171,6 +167,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int AccSellCnt() {
 		return productDAO.AccSellCnt();
+	}
+
+	@Override
+	public int getSalePrice(int pId) {
+		return productDAO.getSalePrice(pId);
 	}
 	
 }

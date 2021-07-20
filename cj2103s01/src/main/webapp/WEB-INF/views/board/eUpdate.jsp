@@ -41,7 +41,7 @@
 					<input type="password" id="ePwd" name="ePwd" required>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/board/eContent?idx=${vo.eId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}'">취소</button>
-				<button type="submit" class="btn btn-dark">등록하기</button>
+				<button type="submit" class="btn btn-dark">수정하기</button>
 				<input type="hidden" name="eId" value="${vo.eId}"/>
 			    <input type="hidden" name="pag" value="${pageVO.pag}"/>
 			    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>

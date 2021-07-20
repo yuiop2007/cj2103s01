@@ -3,6 +3,7 @@ package com.spring.cj2103s01;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -462,7 +463,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/rContent", method = RequestMethod.GET)
-	public String rContentGet(Model model, int rId, int pId, int pag, int pageSize) {
+	public String rContentGet(Model model, int rId, int pId,
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize) {
 		// 조회수 증가
 		reviewService.addReadNum(rId);
 
@@ -504,7 +507,7 @@ public class BoardController {
 		ReviewVO vo = reviewService.getIdCheck(rId);
 		
 		if(rPwd.equals("admin")) {
-			qnaService.qDelete(rId);
+			reviewService.rDelete(rId);
 		}
 
 		if (!bCryptPasswordEncoder.matches(rPwd, vo.getrPwd())) { // 비밀번호 오류일때 처리
@@ -651,18 +654,40 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/qContent", method = RequestMethod.GET)
-	public String qContentGet(Model model, int qId, int pId, @RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
+	public String qContentGet(Model model, int qId, int pId, HttpSession session, 
+			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize) {
-		// 조회수 증가
-		qnaService.addReadNum(qId);
 
 		// 원본글 가져오기
-		QnaVO vo = qnaService.getQnaContent(qId);
-		model.addAttribute("vo", vo);
-		model.addAttribute("pag", pag);
-		model.addAttribute("pageSize", pageSize);
-
-		return "board/qContent";
+		int qCheck = qnaService.qnaCheck(qId);
+		if(qCheck==0) {
+			return "member/login";
+		}
+		else {
+			QnaVO vo = qnaService.getQnaContent(qId);
+			String smid = (String) session.getAttribute("smid")==null ? "" : (String) session.getAttribute("smid");
+			if(vo.getqSecret()==1) {
+				if(vo.getqWriter().equals(smid) || smid.equals("admin")) {
+					// 조회수 증가
+					qnaService.addReadNum(qId);
+					model.addAttribute("vo", vo);
+					model.addAttribute("pag", pag);
+					model.addAttribute("pageSize", pageSize);
+					return "board/qContent";
+				}
+				else {
+					return "member/login";
+				}
+			}
+			else {
+				// 조회수 증가
+				qnaService.addReadNum(qId);
+				model.addAttribute("vo", vo);
+				model.addAttribute("pag", pag);
+				model.addAttribute("pageSize", pageSize);
+				return "board/qContent";
+			}
+		}
 	}
 	
 	@SuppressWarnings("deprecation")

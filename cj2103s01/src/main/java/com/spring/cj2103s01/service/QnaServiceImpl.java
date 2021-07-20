@@ -81,5 +81,10 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaVO> getQnaMemberList(String mId, int startIndexNo, int qpageSize) {
 		return qnaDAO.getQnaMemberList(mId, startIndexNo, qpageSize);
 	}
+
+	@Override
+	public int qnaCheck(int qId) {
+		return qnaDAO.qnaCheck(qId);
+	}
 	
 }

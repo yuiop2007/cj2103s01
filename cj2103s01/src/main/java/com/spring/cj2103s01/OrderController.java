@@ -56,6 +56,7 @@ public class OrderController {
 		List<CartVO> vos = orderService.getCartList(mId);
 		int cart = 0;
 		
+		//장바구니 등록
 		if(check==2) {
 			for(int i=0; i<orderName.length; i++) {
 				if(!vos.isEmpty()) {
@@ -74,6 +75,7 @@ public class OrderController {
 			cart = orderService.getCartCnt(mId);
 			session.setAttribute("cart", cart);
 		}
+		//바로구매
 		else if(check==1) {
 			for(int i=0; i<orderName.length; i++) {
 				if(!vos.isEmpty()) {
@@ -252,7 +254,8 @@ public class OrderController {
 		for (String idx : idxs) {
 			cartvo = orderService.getIdxVo(Integer.parseInt(idx));
 			productService.setStockUpdate(cartvo.getpId(), cartvo.getpCnt());
-			orderService.setOrderDetail(cartvo, lastoId);
+			int sale = productService.getSalePrice(cartvo.getpId());
+			orderService.setOrderDetail(cartvo, lastoId, sale);
 			orderService.cartDelete(Integer.parseInt(idx));
 			cart = cart - 1;
 		}

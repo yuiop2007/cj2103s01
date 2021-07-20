@@ -7,7 +7,7 @@
 	</insert>
 	
 	<insert id="setOrderDetail">
-		insert into orders_detail values (default, #{lastoId}, #{cartvo.mId}, #{cartvo.pId}, #{cartvo.pOption}, #{cartvo.pCnt}, #{cartvo.pPrice});
+		insert into orders_detail values (default, #{lastoId}, #{cartvo.mId}, #{cartvo.pId}, #{cartvo.pOption}, #{cartvo.pCnt}, #{cartvo.pPrice}-#{sale});
 	</insert>
 	
 	<select id="getLastoId" resultType="int">
@@ -71,7 +71,7 @@
 	</select>
 	
 	<select id="totSellMoney" resultType="int">
-	    select sum(oPrice) from orders where oStatus = '배송완료' and oChange = '구매확정';
+	    select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (b.oStatus = '배송완료' and b.oChange = '구매확정');
 	</select>
 	
 	<select id="totOrderCnt" resultType="int">
@@ -209,5 +209,46 @@
 	<select id="pre4Month" resultType="String">
 		select date_format(DATE_SUB(now(),  INTERVAL 4 month), '%Y/%m');
 	</select>
+	
+	<select id="nowMonthPrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(now(), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정');
+	</select>
+	
+	<select id="pre1MonthPrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 1 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정');
+	</select>
+	
+	<select id="pre2MonthPrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 2 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정');
+	</select>
+	
+	<select id="pre3MonthPrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 3 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정');
+	</select>
+	
+	<select id="pre4MonthPrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 4 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정');
+	</select>
+	
+	<select id="nowCatePrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(now(), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정') and c.pCate = #{Cate};
+	</select>
+	
+	<select id="pre1CatePrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 1 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정') and c.pCate = #{Cate};
+	</select>
+	
+	<select id="pre2CatePrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 2 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정') and c.pCate = #{Cate};
+	</select>
+	
+	<select id="pre3CatePrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 3 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정') and c.pCate = #{Cate};
+	</select>
+	
+	<select id="pre4CatePrice" resultType="int">
+		select IFNULL(SUM(a.odPrice), 0) from orders_detail as a left join orders as b on a.oId = b.oId right join product as c on a.pId = c.pId where (date_format(DATE_SUB(now(),  INTERVAL 4 month), '%Y/%m') = date_format(b.oRdate, '%Y/%m')) and (b.oStatus = '배송완료' and b.oChange = '구매확정') and c.pCate = #{Cate};
+	</select>
+
 	
 </mapper>

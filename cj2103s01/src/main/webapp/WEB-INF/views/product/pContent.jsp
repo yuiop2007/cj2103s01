@@ -97,7 +97,6 @@
 	}
 	
 	function cartCheck() {
-		
 		var check = 2;
 		var oName = document.getElementsByName("orderName[]");
 		var oNum = document.getElementsByName("orderNum[]");

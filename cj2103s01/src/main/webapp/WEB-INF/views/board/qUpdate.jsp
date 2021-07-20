@@ -19,7 +19,7 @@
 	</div>
 	<div class="container">
 		<form name="qUpdateform" method="post" action="${ctp}/board/qUpdate" enctype="multipart/form-data">
-			<h6>Q&A 등록</h6>
+			<h6>Q&A 수정</h6>
 			<hr />
 				<input type="hidden" name="qWriter" value="${smid}">
 				<input type="hidden" name="qName" value="${sname}">
@@ -57,7 +57,7 @@
 					<input type="password" id="qPwd" name="qPwd" required>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/'">취소</button>
-				<button type="submit" class="btn btn-dark">등록하기</button>
+				<button type="submit" class="btn btn-dark">수정하기</button>
 			</div>
 		</form>
 	</div>

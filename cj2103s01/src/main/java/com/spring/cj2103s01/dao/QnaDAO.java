@@ -42,5 +42,7 @@ public interface QnaDAO {
 
 	List<QnaVO> getQnaMemberList(@Param("mId") String mId,@Param("startIndexNo") int startIndexNo,@Param("qpageSize") int qpageSize);
 
+	int qnaCheck(@Param("qId") int qId);
+
 
 }

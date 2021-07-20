@@ -54,6 +54,10 @@
 	    select * from qna where qId = #{qId};
 	</select>
 	
+	<select id="qnaCheck" resultType="int">
+	    select count(*) from qna where qId = #{qId};
+	</select>
+	
 	<delete id="qDelete">
 		delete from qna where qId = #{qId};
 	</delete>

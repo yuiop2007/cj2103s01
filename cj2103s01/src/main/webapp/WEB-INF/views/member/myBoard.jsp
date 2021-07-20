@@ -75,7 +75,7 @@
 							<c:if test="${vo.rRating eq 4}">⭐⭐⭐⭐</c:if>
 							<c:if test="${vo.rRating eq 5}">⭐⭐⭐⭐⭐</c:if>
 							</td>
-							<td class="td3" style="width: 50%; text-align: left;"><a href="${ctp}/board/rContent?rId=${vo.rId}&pId=${param.pId}&pag=${pag}&pageSize=${pageSize}">${vo.rTitle}</a></td>
+							<td class="td3" style="width: 50%; text-align: left;"><a href="${ctp}/board/rContent?rId=${vo.rId}&pId=${vo.pId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}">${vo.rTitle}</a></td>
 							<td class="td3" style="width: 10%;">${vo.rName}</td>
 							<td class="td4" style="width: 10%;">
 								<c:if test="${vo.diffTime <= 24}">${fn:substring(vo.rRdate,11,19)}</c:if>

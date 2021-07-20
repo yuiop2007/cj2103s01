@@ -477,7 +477,49 @@ public class AdminController {
 		model.addAttribute("Pre3Month", orderService.pre3Month()); // 현재 년도와 -3월
 		model.addAttribute("Pre4Month", orderService.pre4Month()); // 현재 년도와 -4월
 		
-		// 월별 총 판매가격 and 카테고리별 월별 판매가격
+		// 월별 총 판매가격
+		model.addAttribute("NowMonthPrice", orderService.nowMonthPrice());
+		model.addAttribute("Pre1MonthPrice", orderService.pre1MonthPrice());
+		model.addAttribute("Pre2MonthPrice", orderService.pre2MonthPrice());
+		model.addAttribute("Pre3MonthPrice", orderService.pre3MonthPrice());
+		model.addAttribute("Pre4MonthPrice", orderService.pre4MonthPrice());
+
+		// 월별 MADE 총 판매가격
+		model.addAttribute("NowMadePrice", orderService.nowCatePrice("MADE"));
+		model.addAttribute("Pre1MadePrice", orderService.pre1CatePrice("MADE"));
+		model.addAttribute("Pre2MadePrice", orderService.pre2CatePrice("MADE"));
+		model.addAttribute("Pre3MadePrice", orderService.pre3CatePrice("MADE"));
+		model.addAttribute("Pre4MadePrice", orderService.pre4CatePrice("MADE"));
+		
+		// 월별 OUTER 총 판매가격
+		model.addAttribute("NowOuterPrice", orderService.nowCatePrice("OUTER"));
+		model.addAttribute("Pre1OuterPrice", orderService.pre1CatePrice("OUTER"));
+		model.addAttribute("Pre2OuterPrice", orderService.pre2CatePrice("OUTER"));
+		model.addAttribute("Pre3OuterPrice", orderService.pre3CatePrice("OUTER"));
+		model.addAttribute("Pre4OuterPrice", orderService.pre4CatePrice("OUTER"));
+		
+		// 월별 TOP 총 판매가격
+		model.addAttribute("NowTopPrice", orderService.nowCatePrice("TOP"));
+		model.addAttribute("Pre1TopPrice", orderService.pre1CatePrice("TOP"));
+		model.addAttribute("Pre2TopPrice", orderService.pre2CatePrice("TOP"));
+		model.addAttribute("Pre3TopPrice", orderService.pre3CatePrice("TOP"));
+		model.addAttribute("Pre4TopPrice", orderService.pre4CatePrice("TOP"));
+		
+		// 월별 BOTTOM 총 판매가격
+		model.addAttribute("NowBottomPrice", orderService.nowCatePrice("BOTTOM"));
+		model.addAttribute("Pre1BottomPrice", orderService.pre1CatePrice("BOTTOM"));
+		model.addAttribute("Pre2BottomPrice", orderService.pre2CatePrice("BOTTOM"));
+		model.addAttribute("Pre3BottomPrice", orderService.pre3CatePrice("BOTTOM"));
+		model.addAttribute("Pre4BottomPrice", orderService.pre4CatePrice("BOTTOM"));
+		
+		// 월별 ACC 총 판매가격
+		model.addAttribute("NowAccPrice", orderService.nowCatePrice("ACC"));
+		model.addAttribute("Pre1AccPrice", orderService.pre1CatePrice("ACC"));
+		model.addAttribute("Pre2AccPrice", orderService.pre2CatePrice("ACC"));
+		model.addAttribute("Pre3AccPrice", orderService.pre3CatePrice("ACC"));
+		model.addAttribute("Pre4AccPrice", orderService.pre4CatePrice("ACC"));
+		
+		
 		
 		return "admin/charts";
 	}

@@ -32,7 +32,7 @@
 			if(slevel==0){
 				$.ajax({
 					type : "post",
-					url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${param.pId}&qPwd=admin&pag=${pag}&pageSize=${pageSize}",
+					url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${vo.pId}&qPwd=admin&pag=${pag}&pageSize=${pageSize}",
 					success: function(data) {
 						alert("삭제처리 되었습니다.");
 						location.href="${ctp}/board/qna";
@@ -49,7 +49,7 @@
 				else {
 					$.ajax({
 						type : "post",
-						url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${param.pId}&qPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
+						url  : "${ctp}/board/qDelete?qId=${vo.qId}&pId=${vo.pId}&qPwd="+pwd+"&pag=${pag}&pageSize=${pageSize}",
 						success: function(data) {
 							alert("삭제처리 되었습니다.");
 							location.href="${ctp}/board/qna";
@@ -69,7 +69,7 @@
 		<jsp:include page="/WEB-INF/views/include/nav.jsp"/>
 	</div>
 	<div class="container">
-		<h6>리뷰</h6>
+		<h6>Q&A</h6>
 		<br/><br/><br/><br/>
 		<form name=contentform method="post">
 			<div class=board>

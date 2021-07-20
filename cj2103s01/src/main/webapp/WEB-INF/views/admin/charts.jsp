@@ -50,22 +50,52 @@
 		var Pre2Month = $("#Pre2Month").val();
 		var Pre3Month = $("#Pre3Month").val();
 		var Pre4Month = $("#Pre4Month").val();
+		var NowMonthPrice = parseInt($("#NowMonthPrice").val());
+		var Pre1MonthPrice = parseInt($("#Pre1MonthPrice").val());
+		var Pre2MonthPrice = parseInt($("#Pre2MonthPrice").val());
+		var Pre3MonthPrice = parseInt($("#Pre3MonthPrice").val());
+		var Pre4MonthPrice = parseInt($("#Pre4MonthPrice").val());
+		var NowMadePrice = parseInt($("#NowMadePrice").val());
+		var Pre1MadePrice = parseInt($("#Pre1MadePrice").val());
+		var Pre2MadePrice = parseInt($("#Pre2MadePrice").val());
+		var Pre3MadePrice = parseInt($("#Pre3MadePrice").val());
+		var Pre4MadePrice = parseInt($("#Pre4MadePrice").val());
+		var NowOuterPrice = parseInt($("#NowOuterPrice").val());
+		var Pre1OuterPrice = parseInt($("#Pre1OuterPrice").val());
+		var Pre2OuterPrice = parseInt($("#Pre2OuterPrice").val());
+		var Pre3OuterPrice = parseInt($("#Pre3OuterPrice").val());
+		var Pre4OuterPrice = parseInt($("#Pre4OuterPrice").val());
+		var NowTopPrice = parseInt($("#NowTopPrice").val());
+		var Pre1TopPrice = parseInt($("#Pre1TopPrice").val());
+		var Pre2TopPrice = parseInt($("#Pre2TopPrice").val());
+		var Pre3TopPrice = parseInt($("#Pre3TopPrice").val());
+		var Pre4TopPrice = parseInt($("#Pre4TopPrice").val());
+		var NowBottomPrice = parseInt($("#NowBottomPrice").val());
+		var Pre1BottomPrice = parseInt($("#Pre1BottomPrice").val());
+		var Pre2BottomPrice = parseInt($("#Pre2BottomPrice").val());
+		var Pre3BottomPrice = parseInt($("#Pre3BottomPrice").val());
+		var Pre4BottomPrice = parseInt($("#Pre4BottomPrice").val());
+		var NowAccPrice = parseInt($("#NowAccPrice").val());
+		var Pre1AccPrice = parseInt($("#Pre1AccPrice").val());
+		var Pre2AccPrice = parseInt($("#Pre2AccPrice").val());
+		var Pre3AccPrice = parseInt($("#Pre3AccPrice").val());
+		var Pre4AccPrice = parseInt($("#Pre4AccPrice").val());
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
           ['Month', 'MADE', 'OUTER', 'TOP', 'BOTTOM', 'ACC', 'Average'],
-          [Pre4Month,  100,      200,         100,             200,           100,      614.6],
-          [Pre3Month,  135,      1120,        599,             1268,          288,      682],
-          [Pre2Month,  157,      1167,        587,             807,           397,      623],
-          [Pre1Month,  139,      1110,        615,             968,           215,      609.4],
-          [NowMonth,  136,      691,         629,             1026,          366,      569.6]
+          [Pre4Month,  Pre4MadePrice,      Pre4OuterPrice,         Pre4TopPrice,             Pre4BottomPrice,           Pre4AccPrice,      Pre4MonthPrice],
+          [Pre3Month,  Pre3MadePrice,      Pre3OuterPrice,        Pre3TopPrice,             Pre3BottomPrice,          Pre3AccPrice,      Pre3MonthPrice],
+          [Pre2Month,  Pre2MadePrice,      Pre2OuterPrice,        Pre2TopPrice,             Pre2BottomPrice,           Pre2AccPrice,      Pre2MonthPrice],
+          [Pre1Month,  Pre1MadePrice,      Pre1OuterPrice,        Pre1TopPrice,             Pre1BottomPrice,           Pre1AccPrice,      Pre1MonthPrice],
+          [NowMonth,  NowMadePrice,      NowOuterPrice,         NowTopPrice,             NowBottomPrice,          NowAccPrice,      NowMonthPrice]
         ]);
 
         var options = {
           title : '월별 총 판매량',
-          vAxis: {title: '단위(만원)',
+          vAxis: {title: '단위(원)',
         	  viewWindowMode:'explicit',
               viewWindow: {
-                max:500,
+                max:1000000,
                 min:0
               }  
           },
@@ -103,6 +133,36 @@
 			<input type="hidden" value="${Pre2Month}" id="Pre2Month">
 			<input type="hidden" value="${Pre3Month}" id="Pre3Month">
 			<input type="hidden" value="${Pre4Month}" id="Pre4Month">
+			<input type="hidden" value="${NowMonthPrice}" id="NowMonthPrice">
+			<input type="hidden" value="${Pre1MonthPrice}" id="Pre1MonthPrice">
+			<input type="hidden" value="${Pre2MonthPrice}" id="Pre2MonthPrice">
+			<input type="hidden" value="${Pre3MonthPrice}" id="Pre3MonthPrice">
+			<input type="hidden" value="${Pre4MonthPrice}" id="Pre4MonthPrice">
+			<input type="hidden" value="${NowMadePrice}" id="NowMadePrice">
+			<input type="hidden" value="${Pre1MadePrice}" id="Pre1MadePrice">
+			<input type="hidden" value="${Pre2MadePrice}" id="Pre2MadePrice">
+			<input type="hidden" value="${Pre3MadePrice}" id="Pre3MadePrice">
+			<input type="hidden" value="${Pre4MadePrice}" id="Pre4MadePrice">
+			<input type="hidden" value="${NowOuterPrice}" id="NowOuterPrice">
+			<input type="hidden" value="${Pre1OuterPrice}" id="Pre1OuterPrice">
+			<input type="hidden" value="${Pre2OuterPrice}" id="Pre2OuterPrice">
+			<input type="hidden" value="${Pre3OuterPrice}" id="Pre3OuterPrice">
+			<input type="hidden" value="${Pre4OuterPrice}" id="Pre4OuterPrice">
+			<input type="hidden" value="${NowTopPrice}" id="NowTopPrice">
+			<input type="hidden" value="${Pre1TopPrice}" id="Pre1TopPrice">
+			<input type="hidden" value="${Pre2TopPrice}" id="Pre2TopPrice">
+			<input type="hidden" value="${Pre3TopPrice}" id="Pre3TopPrice">
+			<input type="hidden" value="${Pre4TopPrice}" id="Pre4TopPrice">
+			<input type="hidden" value="${NowBottomPrice}" id="NowBottomPrice">
+			<input type="hidden" value="${Pre1BottomPrice}" id="Pre1BottomPrice">
+			<input type="hidden" value="${Pre2BottomPrice}" id="Pre2BottomPrice">
+			<input type="hidden" value="${Pre3BottomPrice}" id="Pre3BottomPrice">
+			<input type="hidden" value="${Pre4BottomPrice}" id="Pre4BottomPrice">
+			<input type="hidden" value="${NowAccPrice}" id="NowAccPrice">
+			<input type="hidden" value="${Pre1AccPrice}" id="Pre1AccPrice">
+			<input type="hidden" value="${Pre2AccPrice}" id="Pre2AccPrice">
+			<input type="hidden" value="${Pre3AccPrice}" id="Pre3AccPrice">
+			<input type="hidden" value="${Pre4AccPrice}" id="Pre4AccPrice">
 		</div>
 	</div>
 	<div class="jumbotron">

@@ -86,14 +86,9 @@ public class MailController {
 			// 메세지 내용을 전송한다.(전송전에 필요한 '텍스트+사진' 등에 대한 작업..)
 			content = content.replace("\n", "<br>");
 			content += "<br><hr><h3>임시비밀번호 : <font color='red'>"+pwd+"</font></h3><hr><br>";
-//			content += "<p><img src=\"cid:11.jpg\" width='500px'></p><hr>";
 			content += "<p>Have a good time!!!</p>";
 			content += "<p>접속주소 : <a href='http://218.236.203.166:9090/cj2103s01'>cj2103s01</a></p>";
 			messageHelper.setText(content, true);
-			// 본문 내부에 그림파일을 함께 보내고자 할때.. 그림을 먼저 저장하고, 저장경로와 함께 파일명을 적는다.
-//			FileSystemResource file = new FileSystemResource(new File("C:/11.jpg"));
-//			messageHelper.addInline("11.jpg", file);
-			
 			mailSender.send(message);
 			
 		} catch (Exception e) {
@@ -108,7 +103,7 @@ public class MailController {
 		@RequestMapping(value = "/idConfirmMailForm/{mEmail}/{content}/", method = RequestMethod.GET)
 		public String idConfirmMailFormGet(@PathVariable String mEmail, @PathVariable String content) {
 			String fromMail = "ehgmd17@gmail.com";
-			String title = ">> 임시 비밀번호를 발급하였습니다.";
+			String title = ">> 아이디 찾기에 대한 메일입니다.";
 			String id = content;
 			content = "cj2103s01에서 발송한 메일입니다.\n 가입하신 아이디입니다.\n";
 			

@@ -14,7 +14,7 @@ public interface OrderDAO {
 
 	int getLastoId(@Param("mId") String mId);
 
-	void setOrderDetail(@Param("cartvo") CartVO cartvo,@Param("lastoId") int lastoId);
+	void setOrderDetail(@Param("cartvo") CartVO cartvo,@Param("lastoId") int lastoId,@Param("sale") int sale);
 
 	int notPayCnt();
 
@@ -113,5 +113,25 @@ public interface OrderDAO {
 	String pre3Month();
 
 	String pre4Month();
+
+	int nowMonthPrice();
+
+	int pre1MonthPrice();
+
+	int pre2MonthPrice();
+
+	int pre3MonthPrice();
+
+	int pre4MonthPrice();
+
+	int nowCatePrice(@Param("Cate") String Cate);
+
+	int pre1CatePrice(@Param("Cate") String Cate);
+
+	int pre2CatePrice(@Param("Cate") String Cate);
+
+	int pre3CatePrice(@Param("Cate") String Cate);
+
+	int pre4CatePrice(@Param("Cate") String Cate);
 
 }

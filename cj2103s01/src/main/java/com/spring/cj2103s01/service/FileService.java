@@ -19,12 +19,11 @@ public class FileService {
 		public void writeFile(MultipartFile mFile, String saveFileName, String root) throws IOException {
 			byte[] data = mFile.getBytes();
 
-			// request객체의 사용으로 인한 작업처리.......
+			// request객체의 사용으로 인한 작업처리
 			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 					.getRequest();
 
-			// ServletContext application = ((HttpSession) request).getServletContext();
-			// String uploadPath = application.getRealPath(saveFileName);
+			//저장되는 폴더
 			if(root.equals("pInput")) {
 				root = "pMainImages";
 			}

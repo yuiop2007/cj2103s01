@@ -24,7 +24,7 @@ public interface OrderService {
 
 	public int getLastoId(String mId);
 
-	public void setOrderDetail(CartVO cartvo, int lastoId);
+	public void setOrderDetail(CartVO cartvo, int lastoId, int sale);
 
 	public int notPayCnt();
 
@@ -117,5 +117,25 @@ public interface OrderService {
 	public String pre3Month();
 
 	public String pre4Month();
+
+	public int nowMonthPrice();
+
+	public int pre1MonthPrice();
+
+	public int pre2MonthPrice();
+
+	public int pre3MonthPrice();
+
+	public int pre4MonthPrice();
+
+	public int nowCatePrice(String Cate);
+
+	public int pre1CatePrice(String Cate);
+
+	public int pre2CatePrice(String Cate);
+
+	public int pre3CatePrice(String Cate);
+
+	public int pre4CatePrice(String Cate);
 
 }

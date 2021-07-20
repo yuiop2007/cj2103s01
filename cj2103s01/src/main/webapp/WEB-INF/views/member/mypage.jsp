@@ -18,7 +18,7 @@
 		  var ans = confirm("정말 탈퇴 하시겠습니까?");
 		  if(ans) {
 			  ans = confirm("탈퇴하시게되면 1개원간 같은 아이디로 재가입 불가입니다.\n탈퇴 하시겠습니까?");
-			  if(ans) location.href = "${ctp}/mDelete?mId=${smid}";
+			  if(ans) location.href = "${ctp}/member/mDelete?mId=${smid}";
 		  }
 	}
 </script>

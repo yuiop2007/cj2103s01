@@ -32,5 +32,7 @@ public interface QnaService {
 
 	List<QnaVO> getQnaMemberList(String mId, int startIndexNo, int qpageSize);
 
+	int qnaCheck(int qId);
+
 }
  

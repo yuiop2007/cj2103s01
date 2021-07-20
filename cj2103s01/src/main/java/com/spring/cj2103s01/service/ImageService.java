@@ -47,12 +47,8 @@ public class ImageService {
 		boolean sw = true;
 
 		while (sw) {
-			System.out.println(nextImg);
-			
 			String imgFile = nextImg.substring(0, nextImg.indexOf("\"")); // 순수한 그림파일명만 발췌
 			String delFilePath = uploadPath + imgFile; // 원본 그림이 들어있는 '경로명+파일명'
-			System.out.println(imgFile);
-			System.out.println(delFilePath);
 			fileService.fileDeleteCheck(delFilePath); // 기존파일을 삭제한다.
 			
 			if (nextImg.indexOf("src=\"/") == -1) {

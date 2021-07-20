@@ -45,3 +45,5 @@ select count(*) from qna where pId;
 select qId from qna  where pId=12 order by qId desc limit 1;
 
 select * from qna, review where qna.qWriter=review.rWriter;
+
+select count(*) from qna where qId = 4;

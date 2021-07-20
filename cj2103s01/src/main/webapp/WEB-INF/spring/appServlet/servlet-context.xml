@@ -32,6 +32,7 @@
 	    <mapping path="/member/**"/>
     	    <exclude-mapping path="/member/login"/>
     	    <exclude-mapping path="/member/join"/>
+    	    <exclude-mapping path="/member/idCheck"/>
     	    <exclude-mapping path="/member/mPwdSearch"/>
     	    <exclude-mapping path="/member/mIdSearch"/>
 	    <beans:ref bean="memberInterceptor"/>

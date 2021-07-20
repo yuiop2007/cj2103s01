@@ -48,4 +48,6 @@ public interface ProductService {
 
 	public int AccSellCnt();
 
+	public int getSalePrice(int pId);
+
 }

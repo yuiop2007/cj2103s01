@@ -61,8 +61,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public void setOrderDetail(CartVO cartvo, int lastoId) {
-		orderDAO.setOrderDetail(cartvo, lastoId);
+	public void setOrderDetail(CartVO cartvo, int lastoId, int sale) {
+		orderDAO.setOrderDetail(cartvo, lastoId, sale);
 	}
 
 	@Override
@@ -294,6 +294,58 @@ public class OrderServiceImpl implements OrderService{
 	public String pre4Month() {
 		return orderDAO.pre4Month();
 	}
+
+	@Override
+	public int nowMonthPrice() {
+		return orderDAO.nowMonthPrice();
+	}
+
+	@Override
+	public int pre1MonthPrice() {
+		return orderDAO.pre1MonthPrice();
+	}
+
+	@Override
+	public int pre2MonthPrice() {
+		return orderDAO.pre2MonthPrice();
+	}
+
+	@Override
+	public int pre3MonthPrice() {
+		return orderDAO.pre3MonthPrice();
+	}
+
+	@Override
+	public int pre4MonthPrice() {
+		return orderDAO.pre4MonthPrice();
+	}
+
+	@Override
+	public int nowCatePrice(String Cate) {
+		return orderDAO.nowCatePrice(Cate);
+	}
+
+	@Override
+	public int pre1CatePrice(String Cate) {
+		return orderDAO.pre1CatePrice(Cate);
+	}
+
+	@Override
+	public int pre2CatePrice(String Cate) {
+		return orderDAO.pre2CatePrice(Cate);
+	}
+
+	@Override
+	public int pre3CatePrice(String Cate) {
+		return orderDAO.pre3CatePrice(Cate);
+	}
+
+	@Override
+	public int pre4CatePrice(String Cate) {
+		return orderDAO.pre4CatePrice(Cate);
+	}
+
+
 
 
 

@@ -90,7 +90,6 @@ public class Pagenation {
 				totRecCnt = qnaDAO.totRecCnt();
 			}
 			else {
-				System.out.println(search);
 				totRecCnt = qnaDAO.totSearchRecCnt(search, searchString);
 			}
 		}

@@ -41,7 +41,7 @@
 					<input type="password" id="nPwd" name="nPwd" required>
 			<div class="jumbotron text-center">
 				<button type="button" class="btn btn-outline-dark" onclick="location.href='${ctp}/board/nContent?idx=${vo.nId}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}'">취소</button>
-				<button type="submit" class="btn btn-dark">등록하기</button>
+				<button type="submit" class="btn btn-dark">수정하기</button>
 				<input type="hidden" name="nId" value="${vo.nId}"/>
 			    <input type="hidden" name="pag" value="${pageVO.pag}"/>
 			    <input type="hidden" name="pageSize" value="${pageVO.pageSize}"/>
