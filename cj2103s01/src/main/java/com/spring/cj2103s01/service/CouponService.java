@@ -10,7 +10,7 @@ public interface CouponService {
 
 	public int setCouponInput(CouponVO vo);
 
-	public void cDeleteOk(int cId);
+	public void cDeleteOk(String cName);
 
 	public List<CouponVO> getaCouponList();
 

@@ -25,11 +25,11 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 <script>
 
 
-	function delCheck(cId) {
+	function delCheck(cName) {
 		var ans = confirm("쿠폰을 삭제하시겠습니까?");
 		
 		if(ans) {
-			location.href="${ctp}/admin/cDelete?cId="+cId;
+			location.href="${ctp}/admin/cDelete?cName="+cName;
 		}
 	}
 </script>
@@ -74,7 +74,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 						<td class="" style="width: 15%;">${vo.cDiscount}% / <fmt:formatNumber value="${vo.cPrice}" pattern="#,###" />원</td>
 						<td class="" style="width: 10%;">${vo.cRdate}</td>
 						<td class="" style="width: 10%;">${vo.cEnddate}</td>
-						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck(${vo.cId})">삭제</a></div></c:if></td>
+						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck('${vo.cName}')">삭제</a></div></c:if></td>
 					</tr>
 					<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
 				</c:if>
@@ -96,7 +96,7 @@ int level = session.getAttribute("slevel") == null ? 99 : (int) session.getAttri
 						<td class="" style="width: 15%;">${vo.cDiscount}% / <fmt:formatNumber value="${vo.cPrice}" pattern="#,###" />원</td>
 						<td class="" style="width: 10%;">${vo.cRdate}</td>
 						<td class="" style="width: 10%;">${vo.cEnddate}</td>
-						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck(${vo.cId})">삭제</a></div></c:if></td>
+						<td><c:if test="${slevel eq 0}"><div class=boardbtn><a href="#" onclick="delCheck('${vo.cName}')">삭제</a></div></c:if></td>
 					</tr>
 					<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
 				</c:if>

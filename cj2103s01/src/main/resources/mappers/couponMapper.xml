@@ -32,7 +32,7 @@
 	</insert>
 	
 	<delete id="cDeleteOk">
-		delete from coupon where cId = #{cId};
+		delete from coupon where cName = #{cName};
 	</delete>
 	
 <!-- 	<select id="getReviewList" resultType="com.spring.cj2103s01.vo.ReviewVO">

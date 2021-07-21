@@ -32,8 +32,8 @@ public class CouponServiceImpl implements CouponService{
 	}
 
 	@Override
-	public void cDeleteOk(int cId) {
-		couponDAO.cDeleteOk(cId);
+	public void cDeleteOk(String cName) {
+		couponDAO.cDeleteOk(cName);
 	}
 
 	@Override

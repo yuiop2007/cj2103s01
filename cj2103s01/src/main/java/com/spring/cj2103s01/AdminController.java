@@ -223,11 +223,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/cDelete", method = RequestMethod.GET)
-	public String cDeleteGet(int cId, HttpSession session) {
-		String smid = (String) session.getAttribute("smid");
+	public String cDeleteGet(String cName, HttpSession session) {
 		int slevel = (int) session.getAttribute("slevel");
-		if(smid.equals("yuiop2007")&&slevel==0) {
-			couponService.cDeleteOk(cId);
+		if(slevel==0) {
+			couponService.cDeleteOk(cName);
 			msgFlag = "cDeleteOk";
 		}
 		else {

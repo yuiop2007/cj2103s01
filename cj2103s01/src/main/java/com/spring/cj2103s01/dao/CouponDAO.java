@@ -14,7 +14,7 @@ public interface CouponDAO {
 
 	public void setCouponInput(@Param("vo") CouponVO vo);
 
-	public void cDeleteOk(@Param("cId") int cId);
+	public void cDeleteOk(@Param("cName") String cName);
 
 	public List<CouponVO> getaCouponList();
 
