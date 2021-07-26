@@ -493,7 +493,7 @@ public class BoardController {
 			String uploadPath = request.getRealPath("/resources/ckeditor/images/src/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
 			imageService.imgCheck(vo.getrContent(), uploadPath, 46);
 
-			msgFlag = "reviewPasswordOk$rId=" + rId +"&pId="+ pId + "&pag=" + pag + "&pageSize=" + pageSize;
+			msgFlag = "reviewPasswordOk$rId=" + rId +"&pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;
 		}
 	}
@@ -705,7 +705,7 @@ public class BoardController {
 			String uploadPath = request.getRealPath("/resources/ckeditor/images/src/"); // ckeditor를 통해서 저장된 모든 파일이 있는곳
 			imageService.imgCheck(vo.getqContent(), uploadPath, 46);
 
-			msgFlag = "qnaPasswordOk$qId=" + qId +"&pId="+ pId + "&pag=" + pag + "&pageSize=" + pageSize;
+			msgFlag = "qnaPasswordOk$qId=" + qId +"&pag=" + pag + "&pageSize=" + pageSize;
 			return "redirect:/msg/" + msgFlag;
 		}
 	}
