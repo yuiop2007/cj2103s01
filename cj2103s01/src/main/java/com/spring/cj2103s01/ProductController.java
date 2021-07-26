@@ -141,18 +141,19 @@ public class ProductController {
 		if (rpag < 1) {
 			rpag = 1;
 		}
+		if (qpag < 1) {
+			qpag = 1;
+		}
 		// 조회수 증가
 		productService.addReadNum(pId);
 		
 		PagenationVO rpageVO = pagenation.pagenation(rpag, rpageSize, "preview", Integer.toString(pId) , "");
-		
 		List<ReviewVO> rvos = reviewService.getReviewContentList(pId ,rpageVO.getStartIndexNo(), rpageSize);
-
+		
 		model.addAttribute("rvos", rvos);
 		model.addAttribute("rpageVO", rpageVO);
 		
 		PagenationVO qpageVO = pagenation.pagenation(qpag, qpageSize, "pqna", Integer.toString(pId) , "");
-		
 		List<QnaVO> qvos = qnaService.getQnaContentList(pId ,qpageVO.getStartIndexNo(), qpageSize);
 		
 		model.addAttribute("qvos", qvos);
