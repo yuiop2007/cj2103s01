@@ -125,8 +125,13 @@ public class AdminController {
 
 		PagenationVO pageVO = pagenation.pagenation(pag, pageSize, "mList", mId, "");
 
-		List<MemberVO> vos = memberService.getMemberListMid(pageVO.getStartIndexNo(), pageSize, mId);
-
+		List<MemberVO> vos;
+		if (!mId.equals("")) {
+			vos = memberService.getMemberListMid(pageVO.getStartIndexNo(), pageSize, mId);
+		} else {
+			vos = memberService.getMemberList();
+		}
+		
 		model.addAttribute("vos", vos);
 		model.addAttribute("pageVO", pageVO);
 		model.addAttribute("mId", mId);

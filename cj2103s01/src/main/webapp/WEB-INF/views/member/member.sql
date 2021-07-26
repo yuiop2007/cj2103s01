@@ -37,3 +37,5 @@ select sum(mBuy) from member where mLevel > 0;
 update member set mBuy=mBuy-1 mPoint=mPoint-550 where mId='admin';
 
 select count(*) from member where mId like concat('%', 'y' ,'%') and NOT mLevel IN ('0');
+
+select * from member where mId = 'yuiop2012' and mLevel > 0 limit 0, 5;

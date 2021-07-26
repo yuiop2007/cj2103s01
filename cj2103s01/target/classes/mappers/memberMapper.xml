@@ -63,7 +63,7 @@
 	</select>
 	
 	<select id="getMemberListMid" resultType="com.spring.cj2103s01.vo.MemberVO">
-		select * from member where mId = #{mId} limit #{startIndexNo}, #{pageSize} and mLevel > 0;
+		select * from member where mId = #{mId} and mLevel > 0 limit #{startIndexNo}, #{pageSize};
 	</select>
 	
 	<select id="totRecCntLevel" resultType="int">
