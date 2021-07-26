@@ -40,7 +40,7 @@
 				});
 			}
 			else{
-				var pwd = contentform.qPwd.value;
+				var pwd = contentform.rPwd.value;
 				if(pwd == "") {
 		    		alert("비밀번호를 입력하세요")
 		    		contentform.rPwd.focus();

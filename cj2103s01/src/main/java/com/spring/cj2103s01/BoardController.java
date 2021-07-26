@@ -480,10 +480,12 @@ public class BoardController {
 	
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/rContent", method = RequestMethod.POST)
-	public String rContentPost(int rId,  int pId, String rPwd, HttpServletRequest request,
+	public String rContentPost(String rId,  String pId, String rPwd, HttpServletRequest request,
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize, Model model) {
-		ReviewVO vo = reviewService.getIdCheck(rId);
+		
+		
+		ReviewVO vo = reviewService.getIdCheck(Integer.parseInt(rId));
 
 		if (!bCryptPasswordEncoder.matches(rPwd, vo.getrPwd())) { // 비밀번호 오류일때 처리
 			msgFlag = "reviewPasswordNo$rId=" + rId +"&pId="+ pId + "&pag=" + pag + "&pageSize=" + pageSize;
